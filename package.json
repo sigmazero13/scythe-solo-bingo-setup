@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "start": "vue-cli-service serve",
+    "start": "node server.js",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
@@ -13,19 +13,7 @@
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.21.1",
-    "vue": "^2.6.11",
-  
-  
-    "@vue/cli-plugin-babel": "~4.5.15",
-    "@vue/cli-plugin-eslint": "~4.5.15",
-    "@vue/cli-service": "~4.5.15",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-vue": "^6.2.2",
-    "prettier": "^2.2.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.15",
@@ -36,7 +24,9 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^6.2.2",
+    "express": "^4.17.3",
     "prettier": "^2.2.1",
+    "serve-static": "^1.14.2",
     "vue-template-compiler": "^2.6.11"
   },
   "engines": {
