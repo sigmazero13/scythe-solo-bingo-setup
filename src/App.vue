@@ -1,17 +1,31 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h1>Scythe Solo Campaign Game Setup</h1>
+    <b-button @click="selectOptions()" variant="primary" class="randobutton">
+      Randomize Selections
+    </b-button>
+    <VictoryTrack ref="vtrack" />
+    <WindGambit ref="windgambit" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import VictoryTrack from "./components/VictoryTrack.vue";
+import WindGambit from "./components/WindGambit.vue";
+import { BButton } from "bootstrap-vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    VictoryTrack,
+    WindGambit,
+    BButton,
+  },
+  methods: {
+    selectOptions() {
+      this.$refs.vtrack.makeSelection();
+      this.$refs.windgambit.makeSelection();
+    },
   },
 };
 </script>
@@ -24,5 +38,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.randobutton {
+  margin-bottom: 1em;
+}
+
+h3 {
+  margin-top: 0.5em;
 }
 </style>
