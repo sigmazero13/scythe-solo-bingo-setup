@@ -3,10 +3,13 @@
     <h3>Victory Track:</h3>
     <p>{{ track }}</p>
     <b-container v-if="show_track">
-      <b-row>
+      <b-row
+        v-for="(row, row_index) in formattedTrack"
+        v-bind:key="`track-row-${row_index}`"
+      >
         <b-col
-          v-for="(item, index) in track_items"
-          v-bind:key="`track-${index}`"
+          v-for="(item, index) in row"
+          v-bind:key="`track-col-${row_index}-${index}`"
           class="track-col"
         >
           {{ item }}
@@ -179,7 +182,6 @@ export default {
       //   "Objective",
       //   "5 Stars",
       // ]
-      this.track_items = [];
       var track_options = [];
 
       while (track_options.length < 10) {
@@ -189,10 +191,21 @@ export default {
         }
       }
 
-      track_options.sort();
-      for (var option_num in track_options) {
+      track_options.sort((a, b) => a - b);
+      this.track_items = [];
+      for (var option_num of track_options) {
         this.track_items.push(options[option_num]);
       }
+    },
+  },
+
+  computed: {
+    formattedTrack() {
+      return this.track_items.reduce((rows, value, i) => {
+        if (i % 5 === 0) rows.push([]);
+        rows[rows.length - 1].push(value);
+        return rows;
+      }, []);
     },
   },
 };
