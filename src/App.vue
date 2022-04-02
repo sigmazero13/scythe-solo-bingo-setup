@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Scythe Solo Campaign Game Setup</h1>
+    <h1>Scythe Bingo Reloaded</h1>
     <b-button @click="selectOptions()" variant="primary" class="randobutton">
       Randomize Selections
     </b-button>
