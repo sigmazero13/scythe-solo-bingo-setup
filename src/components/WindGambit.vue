@@ -1,8 +1,15 @@
 <template>
   <div>
     <h3>Wind Gambit Modules:</h3>
-    <p><b>Airships: </b>{{ airship }}</p>
-    <p><b>Resolution: </b>{{ resolution }}</p>
+    <h4>Airships:</h4>
+    <p v-if="ship_status == 0">No yet selected...</p>
+    <p v-else-if="ship_status == 1">Not used</p>
+    <p v-else>
+      <b>Active:</b> {{ active }}<br />
+      <b>Passive:</b> {{ passive }}
+    </p>
+    <h4>Resolution:</h4>
+    <p>{{ resolution }}</p>
   </div>
 </template>
 
@@ -11,7 +18,9 @@ export default {
   name: "WindGambit",
   data() {
     return {
-      airship: "Not yet selected...",
+      ship_status: 0,
+      active: "Not yet selected...",
+      passive: "Not yet selected...",
       resolution: "Not yet selected...",
     };
   },
@@ -19,9 +28,13 @@ export default {
     makeSelection() {
       var choice = Math.floor(Math.random() * 6);
       if (choice == 2 || choice >= 4) {
-        this.airship = this.pickAirship();
+        this.ship_status = 2;
+        this.active = this.pickActive();
+        this.passive = this.pickPassive();
       } else {
-        this.airship = "Not used";
+        this.ship_status = 1;
+        this.active = "Not used";
+        this.passive = "Not used in this game";
       }
 
       if (choice == 3 || choice >= 4) {
@@ -31,8 +44,8 @@ export default {
       }
     },
 
-    pickAirship() {
-      var airships = [
+    pickActive() {
+      var actives = [
         "(1) Bombard",
         "(2) Bounty",
         "(3) Siege Engine",
@@ -42,8 +55,24 @@ export default {
         "(8) War Correspondant",
       ];
 
-      var ship = Math.floor(Math.random() * 7);
-      return airships[ship];
+      var active = Math.floor(Math.random() * 7);
+      return actives[active];
+    },
+
+    pickPassive() {
+      var passives = [
+        "(9) Ferry",
+        "(10) Boost",
+        "(11) Drill",
+        "(12) Hero",
+        "(13) Safe Haven",
+        "(14) Reap",
+        "(15) Craft",
+        "(16) Negotiate",
+      ];
+
+      var passive = Math.floor(Math.random() * 8);
+      return passives[passive];
     },
 
     pickResolution() {
