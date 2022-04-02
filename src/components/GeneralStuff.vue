@@ -2,7 +2,11 @@
   <div>
     <h3>General:</h3>
     <p>
-      <b>Player Board:</b> {{ player_board }}<span v-if="player_board_2 !== ''"> ({{faction}}: {{ player_board_2 }})</span><br />
+      <b>Player Board:</b> {{ player_board }}
+      <span v-if="player_board_2 !== ''">
+        ({{ faction }}: {{ player_board_2 }})
+      </span>
+      <br />
       <b>Structure Bonus:</b> {{ structure_bonus }}<br />
       <b>Fenris/Vesna Offset:</b> {{ fv_offset }}
     </p>
@@ -17,7 +21,7 @@ export default {
       player_board: "Not yet selected...",
       player_board_2: "",
       structure_bonus: "Not yet selected...",
-      fv_offset: "..."
+      fv_offset: "...",
     };
   },
   methods: {
@@ -56,7 +60,6 @@ export default {
         if (board2_num >= 3) board2_num += 1;
         board2 = boards[board2_num];
       }
-      
       return [board1, board2, faction];
     },
 

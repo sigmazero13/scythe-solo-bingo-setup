@@ -11,8 +11,9 @@
           v-for="(item, index) in row"
           v-bind:key="`track-col-${row_index}-${index}`"
           class="track-col"
+          v-bind:class="trackClass(item['influence'])"
         >
-          {{ item }}
+          {{ item["text"] }}
         </b-col>
       </b-row>
     </b-container>
@@ -39,12 +40,12 @@ export default {
       track: "Not yet selected...",
       track_items: [],
       tunnels: [
-        "North Tunnel",
-        "Northeast Tunnel",
-        "Southeast Tunnel",
-        "South Tunnel",
-        "Southwest Tunnel",
-        "Northwest Tunnel",
+        "N Tunnel",
+        "NE Tunnel",
+        "SE Tunnel",
+        "S Tunnel",
+        "SW Tunnel",
+        "N Tunnel",
       ],
       influence: [
         { num: 97, text: "Not selected..." },
@@ -61,17 +62,17 @@ export default {
         case 0:
         case 1:
           this.track = "Standard Track";
-          this.show_track = false;
+          this.show_track = true;
           this.buildNormalTrack();
           break;
         case 2:
           this.track = "Peace Track";
-          this.show_track = false;
+          this.show_track = true;
           this.buildPeaceTrack();
           break;
         case 3:
           this.track = "War Track";
-          this.show_track = false;
+          this.show_track = true;
           this.buildWarTrack();
           break;
         case 4:
@@ -95,6 +96,7 @@ export default {
             num: choice,
             text: this.track_items[choice],
           });
+          this.track_items[choice]["influence"] = true;
         } else {
           do {
             choice = Math.floor(Math.random() * 6) + 10;
@@ -112,75 +114,75 @@ export default {
 
     buildNormalTrack() {
       this.track_items = [
-        "6 Upgrades",
-        "4 Mechs",
-        "4 Structures",
-        "4 Recruits",
-        "8 Workers",
-        "Objective",
-        "Combat",
-        "Combat",
-        "18 Popularity",
-        "16 Power",
+        { text: "6 Upg" },
+        { text: "4 Mch" },
+        { text: "4 Str" },
+        { text: "4 Rec" },
+        { text: "8 Wrk" },
+        { text: "Obj" },
+        { text: "Cbt" },
+        { text: "Cbt" },
+        { text: "18 Pop" },
+        { text: "16 Pow" },
       ];
     },
 
     buildWarTrack() {
       this.track_items = [
-        "6 Upg / 4 Str",
-        "4 Mechs",
-        "4 Recruits",
-        "Objective",
-        "Combat",
-        "Combat",
-        "Combat",
-        "Combat",
-        "16 Power",
-        "8 Combat Cards",
+        { text: "6 Upg/4 Str" },
+        { text: "4 Mch" },
+        { text: "4 Rec" },
+        { text: "Obj" },
+        { text: "Cbt" },
+        { text: "Cbt" },
+        { text: "Cbt" },
+        { text: "Cbt" },
+        { text: "16 Pow" },
+        { text: "8 CCrd" },
       ];
     },
 
     buildPeaceTrack() {
       this.track_items = [
-        "6 Upgrades",
-        "4 Structures",
-        "4 Mech / 4 Recr",
-        "8 Workers",
-        "Objective",
-        "Objective",
-        "13 Popularity",
-        "3 Encounters",
-        "Factory Card",
-        "16 Resources",
+        { text: "6 Upg" },
+        { text: "4 Str" },
+        { text: "4 Mch/4 Rec" },
+        { text: "8 Wrk" },
+        { text: "Obj" },
+        { text: "Obj" },
+        { text: "13 Pop" },
+        { text: "3 Enc" },
+        { text: "Fact" },
+        { text: "16 Res" },
       ];
     },
 
     buildRandomTrack() {
       var options = [
-        "6 Upgrades",
-        "4 Mechs",
-        "4 Structures",
-        "4 Recruits",
-        "8 Workers",
-        "Objective",
-        "Combat",
-        "Combat",
-        "Combat",
-        "Combat",
-        "18 Popularity",
-        "3 Encounters",
-        "Factory Card",
-        "16 Power",
-        "8 Combat Cards",
-        "16 Resources",
+        "6 Upg",
+        "4 Mch",
+        "4 Str",
+        "4 Rec",
+        "8 Wkr",
+        "Obj",
+        "Cbt",
+        "Cbt",
+        "Cbt",
+        "Cbt",
+        "18 Pop",
+        "3 Enc",
+        "Fact",
+        "16 Pow",
+        "8 CCrd",
+        "16 Res",
       ];
 
       // var desolation = [
-      //   "7 Areas",
-      //   "20 Coins",
-      //   "9-Point Structure Bonus",
-      //   "Objective",
-      //   "5 Stars",
+      //   "7 Hex",
+      //   "20 $$",
+      //   "9-pt Bonus",
+      //   "Obj",
+      //   "5 Star",
       // ]
       var track_options = [];
 
@@ -194,7 +196,7 @@ export default {
       track_options.sort((a, b) => a - b);
       this.track_items = [];
       for (var option_num of track_options) {
-        this.track_items.push(options[option_num]);
+        this.track_items.push({ text: options[option_num] });
       }
     },
   },
@@ -206,6 +208,11 @@ export default {
         rows[rows.length - 1].push(value);
         return rows;
       }, []);
+    },
+    trackClass() {
+      return (influence) => {
+        return influence ? "track-infl" : "";
+      };
     },
   },
 };
@@ -225,5 +232,9 @@ ul {
 .influence-col {
   border: 1px solid black;
   white-space: nowrap;
+}
+
+.track-infl {
+  background-color: #ee5555;
 }
 </style>
