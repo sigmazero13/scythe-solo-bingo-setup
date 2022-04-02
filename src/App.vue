@@ -6,12 +6,14 @@
     </b-button>
     <VictoryTrack ref="vtrack" />
     <WindGambit ref="windgambit" />
+    <GeneralStuff ref="general" />
   </div>
 </template>
 
 <script>
 import VictoryTrack from "./components/VictoryTrack.vue";
 import WindGambit from "./components/WindGambit.vue";
+import GeneralStuff from "./components/GeneralStuff.vue";
 import { BButton } from "bootstrap-vue";
 
 export default {
@@ -19,12 +21,14 @@ export default {
   components: {
     VictoryTrack,
     WindGambit,
+    GeneralStuff,
     BButton,
   },
   methods: {
     selectOptions() {
       this.$refs.vtrack.makeSelection();
       this.$refs.windgambit.makeSelection();
+      this.$refs.general.makeSelection();
     },
   },
 };
