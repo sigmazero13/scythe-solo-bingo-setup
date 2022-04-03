@@ -132,7 +132,7 @@ export default {
       this.track_items = [
         { text: "6 Upg" },
         { text: "4 Str" },
-        { text: "4 Mch/4 Rec" },
+        { text: "4 Mch/Rec" },
         { text: "8 Wrk" },
         { text: "Obj" },
         { text: "Obj" },
