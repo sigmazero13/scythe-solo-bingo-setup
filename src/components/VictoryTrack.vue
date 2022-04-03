@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h3>Victory Track:</h3>
-    <p>{{ track }}</p>
-    <b-container v-if="show_track">
+    <b-container>
+      <b-row>
+        <b-col cols="5"><b>Victory Track:</b></b-col>
+        <b-col cols="7">{{ track }}</b-col>
+      </b-row>
       <b-row
         v-for="(row, row_index) in formattedTrack"
         v-bind:key="`track-row-${row_index}`"
@@ -11,20 +13,21 @@
           v-for="(item, index) in row"
           v-bind:key="`track-col-${row_index}-${index}`"
           class="track-col"
+          v-bind:class="trackClass(item['influence'])"
         >
-          {{ item }}
+          {{ item["text"] }}
         </b-col>
       </b-row>
-    </b-container>
-    <h3>Influence:</h3>
-    <b-container class="influence-row">
-      <b-row>
+      <br />
+      <b-row align-v="center">
+        <b-col><b>Tunnels: </b></b-col>
         <b-col
-          v-for="inf in influence"
-          v-bind:key="inf.num"
-          class="influence-col"
+          v-for="(tunnel, tunnel_index) in tunnels"
+          v-bind:key="`tunnel-col-${tunnel_index}`"
+          class="tunnel-col"
+          v-bind:class="trackClass(tunnel['influence'])"
         >
-          {{ inf.text }}
+          {{ tunnel.text }}
         </b-col>
       </b-row>
     </b-container>
@@ -37,21 +40,15 @@ export default {
   data() {
     return {
       track: "Not yet selected...",
-      track_items: [],
+      track_items: Array(10).fill({ text: "..." }),
       tunnels: [
-        "North Tunnel",
-        "Northeast Tunnel",
-        "Southeast Tunnel",
-        "South Tunnel",
-        "Southwest Tunnel",
-        "Northwest Tunnel",
+        { text: "N" },
+        { text: "NE" },
+        { text: "SE" },
+        { text: "S" },
+        { text: "SW" },
+        { text: "N" },
       ],
-      influence: [
-        { num: 97, text: "Not selected..." },
-        { num: 98, text: "Not selected..." },
-        { num: 99, text: "Not selected..." },
-      ],
-      show_track: false,
     };
   },
   methods: {
@@ -60,30 +57,29 @@ export default {
       switch (choice) {
         case 0:
         case 1:
-          this.track = "Standard Track";
-          this.show_track = false;
+          this.track = "Standard";
           this.buildNormalTrack();
           break;
         case 2:
-          this.track = "Peace Track";
-          this.show_track = false;
+          this.track = "Peace";
           this.buildPeaceTrack();
           break;
         case 3:
-          this.track = "War Track";
-          this.show_track = false;
+          this.track = "War";
           this.buildWarTrack();
           break;
         case 4:
         case 5:
-          this.track = "Random Track";
-          this.show_track = true;
+          this.track = "Random";
           this.buildRandomTrack();
           break;
       }
 
+      for (var i = 0; i < this.tunnels.length; i++) {
+        this.tunnels[i]["influence"] = false;
+      }
+
       var infChoices = [];
-      this.influence = [];
       while (infChoices.length < 3) {
         choice = Math.floor(Math.random() * 12);
         if (infChoices.includes(choice)) {
@@ -91,96 +87,88 @@ export default {
         }
         if (choice < 10) {
           infChoices.push(choice);
-          this.influence.push({
-            num: choice,
-            text: this.track_items[choice],
-          });
+          this.track_items[choice]["influence"] = true;
         } else {
           do {
-            choice = Math.floor(Math.random() * 6) + 10;
-          } while (infChoices.includes(choice));
-          infChoices.push(choice);
-          this.influence.push({
-            num: choice,
-            text: this.tunnels[choice - 10],
-          });
+            choice = Math.floor(Math.random() * 6);
+          } while (infChoices.includes(choice + 10));
+          infChoices.push(choice + 10);
+          this.tunnels[choice]["influence"] = true;
         }
       }
-
-      this.influence.sort((a, b) => a.num - b.num);
     },
 
     buildNormalTrack() {
       this.track_items = [
-        "6 Upgrades",
-        "4 Mechs",
-        "4 Structures",
-        "4 Recruits",
-        "8 Workers",
-        "Objective",
-        "Combat",
-        "Combat",
-        "18 Popularity",
-        "16 Power",
+        { text: "6 Upg" },
+        { text: "4 Mch" },
+        { text: "4 Str" },
+        { text: "4 Rec" },
+        { text: "8 Wrk" },
+        { text: "Obj" },
+        { text: "Cbt" },
+        { text: "Cbt" },
+        { text: "18 Pop" },
+        { text: "16 Pow" },
       ];
     },
 
     buildWarTrack() {
       this.track_items = [
-        "6 Upg / 4 Str",
-        "4 Mechs",
-        "4 Recruits",
-        "Objective",
-        "Combat",
-        "Combat",
-        "Combat",
-        "Combat",
-        "16 Power",
-        "8 Combat Cards",
+        { text: "6 Upg/4 Str" },
+        { text: "4 Mch" },
+        { text: "4 Rec" },
+        { text: "Obj" },
+        { text: "Cbt" },
+        { text: "Cbt" },
+        { text: "Cbt" },
+        { text: "Cbt" },
+        { text: "16 Pow" },
+        { text: "8 CCrd" },
       ];
     },
 
     buildPeaceTrack() {
       this.track_items = [
-        "6 Upgrades",
-        "4 Structures",
-        "4 Mech / 4 Recr",
-        "8 Workers",
-        "Objective",
-        "Objective",
-        "13 Popularity",
-        "3 Encounters",
-        "Factory Card",
-        "16 Resources",
+        { text: "6 Upg" },
+        { text: "4 Str" },
+        { text: "4 Mch/4 Rec" },
+        { text: "8 Wrk" },
+        { text: "Obj" },
+        { text: "Obj" },
+        { text: "13 Pop" },
+        { text: "3 Enc" },
+        { text: "Fact" },
+        { text: "16 Res" },
       ];
     },
 
     buildRandomTrack() {
       var options = [
-        "6 Upgrades",
-        "4 Mechs",
-        "4 Structures",
-        "4 Recruits",
-        "8 Workers",
-        "Objective",
-        "Combat",
-        "Combat",
-        "Combat",
-        "Combat",
-        "18 Popularity",
-        "3 Encounters",
-        "Factory Card",
-        "16 Power",
-        "8 Combat Cards",
-        "16 Resources",
+        "6 Upg",
+        "4 Mch",
+        "4 Str",
+        "4 Rec",
+        "8 Wkr",
+        "Obj",
+        "Cbt",
+        "Cbt",
+        "Cbt",
+        "Cbt",
+        "18 Pop",
+        "3 Enc",
+        "Fact",
+        "16 Pow",
+        "8 CCrd",
+        "16 Res",
       ];
 
       // var desolation = [
-      //   "7 Areas",
-      //   "20 Coins",
-      //   "9-Point Structure Bonus",
-      //   "Objective",
-      //   "5 Stars",
+      //   "7 Hex",
+      //   "20 $$",
+      //   "9-pt Bonus",
+      //   "Obj",
+      //   "5 Star",
       // ]
       var track_options = [];
 
@@ -194,7 +182,7 @@ export default {
       track_options.sort((a, b) => a - b);
       this.track_items = [];
       for (var option_num of track_options) {
-        this.track_items.push(options[option_num]);
+        this.track_items.push({ text: options[option_num] });
       }
     },
   },
@@ -206,6 +194,11 @@ export default {
         rows[rows.length - 1].push(value);
         return rows;
       }, []);
+    },
+    trackClass() {
+      return (influence) => {
+        return influence ? "influence" : "";
+      };
     },
   },
 };
@@ -221,9 +214,20 @@ ul {
   padding: 0.5em;
 }
 
-.track-col,
-.influence-col {
+.track-col {
   border: 1px solid black;
   white-space: nowrap;
+  font-size: 0.75em;
+}
+
+.tunnel-col {
+  border: 1px solid black;
+  white-space: nowrap;
+  font-size: 0.65em;
+  padding: 2px;
+}
+
+.influence {
+  background-color: #ee5555;
 }
 </style>
