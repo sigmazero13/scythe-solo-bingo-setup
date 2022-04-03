@@ -1,15 +1,19 @@
 <template>
   <div>
-    <h3>General:</h3>
-    <p>
-      <b>Player Board:</b> {{ player_board }}
-      <span v-if="player_board_2 !== ''">
-        ({{ faction }}: {{ player_board_2 }})
-      </span>
-      <br />
-      <b>Structure Bonus:</b> {{ structure_bonus }}<br />
-      <b>Fenris/Vesna Offset:</b> {{ fv_offset }}
-    </p>
+    <b-container>
+      <b-row>
+        <b-col class="gen-header" cols="6"><b>Player Board:</b></b-col>
+        <b-col class="gen-col" cols="6">{{ player_board }}</b-col>
+      </b-row>
+      <b-row>
+        <b-col class="gen-header" cols="6"><b>Structure Bonus:</b></b-col>
+        <b-col class="gen-col" cols="6">{{ structure_bonus }}</b-col>
+      </b-row>
+      <b-row>
+        <b-col class="gen-header" cols="6"><b>Fenris/Vesna Offset:</b></b-col>
+        <b-col class="gen-col" cols="6">{{ fv_offset }}</b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -19,22 +23,18 @@ export default {
   data() {
     return {
       player_board: "Not yet selected...",
-      player_board_2: "",
       structure_bonus: "Not yet selected...",
       fv_offset: "...",
     };
   },
   methods: {
-    makeSelection() {
-      var boards = this.pickBoard();
-      this.player_board = boards[0];
-      this.player_board_2 = boards[1];
-      this.faction = boards[2];
+    makeSelection(faction) {
+      this.player_board = this.pickBoard(faction);
       this.structure_bonus = this.pickBonus();
       this.fv_offset = Math.floor(Math.random() * 6);
     },
 
-    pickBoard() {
+    pickBoard(faction) {
       var boards = [
         "Industrial (1)",
         "Engineering (2)",
@@ -47,20 +47,16 @@ export default {
 
       var board1_num = Math.floor(Math.random() * 7);
       var board2_num = Math.floor(Math.random() * 6);
-      var board1 = boards[board1_num];
-      var board2 = "";
-      var faction = "";
+      var board = boards[board1_num];
 
-      if (board1_num == 0) {
-        faction = "Rusviet";
+      if (board1_num === 0 && faction === "rusviet") {
         board2_num += 1;
-        board2 = boards[board2_num];
-      } else if (board1_num == 3) {
-        faction = "Crimea";
+        board = boards[board2_num];
+      } else if (board1_num === 3 && faction === "crimea") {
         if (board2_num >= 3) board2_num += 1;
-        board2 = boards[board2_num];
+        board = boards[board2_num];
       }
-      return [board1, board2, faction];
+      return board;
     },
 
     pickBonus() {
@@ -89,4 +85,14 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.gen-header {
+  text-align: right;
+  font-size: 0.9em;
+}
+
+.gen-col {
+  text-align: left;
+  font-size: 0.75em;
+}
+</style>

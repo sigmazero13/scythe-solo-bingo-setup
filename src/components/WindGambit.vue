@@ -1,15 +1,28 @@
 <template>
   <div>
-    <h3>Wind Gambit Modules:</h3>
-    <h4>Airships:</h4>
-    <p v-if="ship_status == 0">No yet selected...</p>
-    <p v-else-if="ship_status == 1">Not used</p>
-    <p v-else>
-      <b>Active:</b> {{ active }}<br />
-      <b>Passive:</b> {{ passive }}
-    </p>
-    <h4>Resolution:</h4>
-    <p>{{ resolution }}</p>
+    <b-container>
+      <b-row align-v="center">
+        <b-col cols="3" class="wg-header"><b>Airships:</b></b-col>
+        <b-col cols="9" class="wg-col" v-if="ship_status == 0">
+          Not yet selected...
+        </b-col>
+        <b-col cols="9" class="wg-col" v-else-if="ship_status == 1">
+          Not used
+        </b-col>
+        <template v-else>
+          <b-col cols="5" class="wg-col air-active">
+            <b>A:</b> {{ active }}
+          </b-col>
+          <b-col cols="4" class="wg-col air-passive">
+            <b>P:</b> {{ passive }}
+          </b-col>
+        </template>
+      </b-row>
+      <b-row align-v="center">
+        <b-col cols="3" class="wg-header"><b>Resolution:</b></b-col>
+        <b-col cols="9" class="wg-col">{{ resolution }}</b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -94,4 +107,22 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.wg-header {
+  text-align: right;
+  font-size: 0.9em;
+}
+
+.wg-col {
+  text-align: left;
+  font-size: 0.65em;
+}
+
+.air-active {
+  color: #990000;
+}
+
+.air-passive {
+  color: #009900;
+}
+</style>

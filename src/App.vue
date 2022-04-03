@@ -1,12 +1,29 @@
 <template>
   <div id="app">
-    <h1>Scythe Bingo Reloaded</h1>
-    <b-button @click="selectOptions()" variant="primary" class="randobutton">
-      Randomize Selections
-    </b-button>
-    <VictoryTrack ref="vtrack" />
-    <WindGambit ref="windgambit" />
-    <GeneralStuff ref="general" />
+    <b-container>
+      <h1>Scythe Bingo Reloaded</h1>
+      <b>Your Faction: </b>
+      <b-form-group>
+        <b-form-radio-group
+          id="player-faction"
+          v-model="faction"
+          button-variant="outline-info"
+          buttons
+          size="sm"
+        >
+          <b-form-radio value="crimea">Crimea</b-form-radio>
+          <b-form-radio value="rusviet">Rusviet</b-form-radio>
+          <b-form-radio value="other">Other</b-form-radio>
+        </b-form-radio-group>
+      </b-form-group>
+      <b-button @click="selectOptions()" variant="primary" class="randobutton">
+        Randomize Selections
+      </b-button>
+      <VictoryTrack ref="vtrack" />
+      <br />
+      <WindGambit ref="windgambit" />
+      <GeneralStuff ref="general" />
+    </b-container>
   </div>
 </template>
 
@@ -24,11 +41,16 @@ export default {
     GeneralStuff,
     BButton,
   },
+  data() {
+    return {
+      faction: "other",
+    };
+  },
   methods: {
     selectOptions() {
       this.$refs.vtrack.makeSelection();
       this.$refs.windgambit.makeSelection();
-      this.$refs.general.makeSelection();
+      this.$refs.general.makeSelection(this.faction);
     },
   },
 };
@@ -48,7 +70,7 @@ export default {
   margin-bottom: 1em;
 }
 
-h3 {
-  margin-top: 0.5em;
+h1 {
+  font-size: 1.7rem;
 }
 </style>
