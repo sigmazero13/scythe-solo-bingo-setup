@@ -93,6 +93,6 @@ export default {
 
 .gen-col {
   text-align: left;
-  font-size: 0.75em;
+  font-size: 0.8em;
 }
 </style>

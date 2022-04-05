@@ -1,26 +1,16 @@
 <template>
   <div>
     <b-container>
-      <b-row align-v="center">
-        <b-col cols="3" class="wg-header"><b>Airships:</b></b-col>
-        <b-col cols="9" class="wg-col" v-if="ship_status == 0">
-          Not yet selected...
+      <b-row align-v="top">
+        <b-col cols="6" class="wg-header"><b>Airships:</b></b-col>
+        <b-col cols="6">
+          <span class="wg-col air-active"><b>A:</b> {{ active }}</span>
+          <span class="wg-col air-passive"><b>P:</b> {{ passive }}</span>
         </b-col>
-        <b-col cols="9" class="wg-col" v-else-if="ship_status == 1">
-          Not used
-        </b-col>
-        <template v-else>
-          <b-col cols="5" class="wg-col air-active">
-            <b>A:</b> {{ active }}
-          </b-col>
-          <b-col cols="4" class="wg-col air-passive">
-            <b>P:</b> {{ passive }}
-          </b-col>
-        </template>
       </b-row>
       <b-row align-v="center">
-        <b-col cols="3" class="wg-header"><b>Resolution:</b></b-col>
-        <b-col cols="9" class="wg-col">{{ resolution }}</b-col>
+        <b-col cols="6" class="wg-header"><b>Resolution:</b></b-col>
+        <b-col cols="6" class="wg-col">{{ resolution }}</b-col>
       </b-row>
     </b-container>
   </div>
@@ -47,7 +37,7 @@ export default {
       } else {
         this.ship_status = 1;
         this.active = "Not used";
-        this.passive = "Not used in this game";
+        this.passive = "Not used";
       }
 
       if (choice == 3 || choice >= 4) {
@@ -115,7 +105,9 @@ export default {
 
 .wg-col {
   text-align: left;
-  font-size: 0.65em;
+  font-size: 0.8em;
+  width: 100%;
+  display: block;
 }
 
 .air-active {
