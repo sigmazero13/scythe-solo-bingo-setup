@@ -2,20 +2,6 @@
   <div id="app">
     <b-container>
       <h1>Scythe Bingo Reloaded</h1>
-      <b>Your Faction: </b>
-      <b-form-group>
-        <b-form-radio-group
-          id="player-faction"
-          v-model="faction"
-          button-variant="outline-info"
-          buttons
-          size="sm"
-        >
-          <b-form-radio value="crimea">Crimea</b-form-radio>
-          <b-form-radio value="rusviet">Rusviet</b-form-radio>
-          <b-form-radio value="other">Other</b-form-radio>
-        </b-form-radio-group>
-      </b-form-group>
       <b-button @click="selectOptions()" variant="primary" class="randobutton">
         Randomize Selections
       </b-button>
@@ -41,16 +27,11 @@ export default {
     GeneralStuff,
     BButton,
   },
-  data() {
-    return {
-      faction: "other",
-    };
-  },
+  data() {},
   methods: {
     selectOptions() {
       this.$refs.vtrack.makeSelection();
       this.$refs.windgambit.makeSelection();
-      this.$refs.general.makeSelection(this.faction);
     },
   },
 };

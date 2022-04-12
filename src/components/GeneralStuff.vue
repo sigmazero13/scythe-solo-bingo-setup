@@ -2,6 +2,20 @@
   <div>
     <b-container>
       <b-row>
+        <b-col>
+          <b>Your Faction: </b>
+          <b-button class="faction-button" @click="makeSelection('crimea')">
+            Crimea
+          </b-button>
+          <b-button class="faction-button" @click="makeSelection('rusviet')">
+            Rusviet
+          </b-button>
+          <b-button class="faction-button" @click="makeSelection('other')">
+            Other
+          </b-button>
+        </b-col>
+      </b-row>
+      <b-row>
         <b-col class="gen-header" cols="6"><b>Player Board:</b></b-col>
         <b-col class="gen-col" cols="6">{{ player_board }}</b-col>
       </b-row>
@@ -31,7 +45,7 @@ export default {
     makeSelection(faction) {
       this.player_board = this.pickBoard(faction);
       this.structure_bonus = this.pickBonus();
-      this.fv_offset = Math.floor(Math.random() * 6);
+      this.fv_offset = Math.floor(Math.random() * 6) + 1;
     },
 
     pickBoard(faction) {
@@ -94,5 +108,12 @@ export default {
 .gen-col {
   text-align: left;
   font-size: 0.8em;
+}
+
+.faction-button {
+  margin-left: 7px;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  padding: 2px;
 }
 </style>
