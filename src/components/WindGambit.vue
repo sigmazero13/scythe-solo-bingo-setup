@@ -1,14 +1,14 @@
 <template>
   <div>
     <b-container>
-      <b-row align-v="top">
+      <b-row align-v="start">
         <b-col cols="6" class="wg-header"><b>Airships:</b></b-col>
         <b-col cols="6">
           <span class="wg-col air-active"><b>A:</b> {{ active }}</span>
           <span class="wg-col air-passive"><b>P:</b> {{ passive }}</span>
         </b-col>
       </b-row>
-      <b-row align-v="center">
+      <b-row align-v="start">
         <b-col cols="6" class="wg-header"><b>Resolution:</b></b-col>
         <b-col cols="6" class="wg-col">{{ resolution }}</b-col>
       </b-row>

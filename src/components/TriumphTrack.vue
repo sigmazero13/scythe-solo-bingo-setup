@@ -2,7 +2,7 @@
   <div>
     <b-container>
       <b-row>
-        <b-col cols="5"><b>Victory Track:</b></b-col>
+        <b-col cols="5"><b>Triumph Track:</b></b-col>
         <b-col cols="7">{{ track }}</b-col>
       </b-row>
       <b-row
@@ -15,7 +15,7 @@
           class="track-col"
           v-bind:class="trackClass(item['influence'])"
         >
-          {{ item["text"] }}
+          <TriumphTile :goal="item['text']" :count="item['count']" />
         </b-col>
       </b-row>
       <br />
@@ -35,12 +35,17 @@
 </template>
 
 <script>
+import TriumphTile from "./TriumphTile.vue";
+
 export default {
-  name: "VictoryTrack",
+  name: "TriumphTrack",
+  components: {
+    TriumphTile,
+  },
   data() {
     return {
       track: "Not yet selected...",
-      track_items: Array(10).fill({ text: "..." }),
+      track_items: Array(10).fill({ text: "", count: "0" }),
       tunnels: [
         { text: "N" },
         { text: "NE" },
@@ -100,67 +105,67 @@ export default {
 
     buildNormalTrack() {
       this.track_items = [
-        { text: "6 Upg" },
-        { text: "4 Mch" },
-        { text: "4 Str" },
-        { text: "4 Rec" },
-        { text: "8 Wrk" },
-        { text: "Obj" },
-        { text: "Cbt" },
-        { text: "Cbt" },
-        { text: "18 Pop" },
-        { text: "16 Pow" },
+        { text: "Upg", count: "6" },
+        { text: "Mch", count: "4" },
+        { text: "Str", count: "4" },
+        { text: "Rec", count: "4" },
+        { text: "Wrk", count: "8" },
+        { text: "Obj", count: "1" },
+        { text: "Cbt", count: "1" },
+        { text: "Cbt", count: "1" },
+        { text: "Pop", count: "18" },
+        { text: "Pow", count: "16" },
       ];
     },
 
     buildWarTrack() {
       this.track_items = [
-        { text: "6 Upg/4 Str" },
-        { text: "4 Mch" },
-        { text: "4 Rec" },
-        { text: "Obj" },
-        { text: "Cbt" },
-        { text: "Cbt" },
-        { text: "Cbt" },
-        { text: "Cbt" },
-        { text: "16 Pow" },
-        { text: "8 CCrd" },
+        { text: "Upg/Str", count: "6/4" },
+        { text: "Mch", count: "4" },
+        { text: "Rec", count: "4" },
+        { text: "Obj", count: "1" },
+        { text: "Cbt", count: "1" },
+        { text: "Cbt", count: "1" },
+        { text: "Cbt", count: "1" },
+        { text: "Cbt", count: "1" },
+        { text: "Pow", count: "16" },
+        { text: "CCrd", count: "8" },
       ];
     },
 
     buildPeaceTrack() {
       this.track_items = [
-        { text: "6 Upg" },
-        { text: "4 Str" },
-        { text: "4 Mch/Rec" },
-        { text: "8 Wrk" },
-        { text: "Obj" },
-        { text: "Obj" },
-        { text: "13 Pop" },
-        { text: "3 Enc" },
-        { text: "Fact" },
-        { text: "16 Res" },
+        { text: "Upg", count: "6" },
+        { text: "Str", count: "4" },
+        { text: "Mch/Rec", count: "4/4" },
+        { text: "Wrk", count: "8" },
+        { text: "Obj", count: "1" },
+        { text: "Obj", count: "1" },
+        { text: "Pop", count: "13" },
+        { text: "Enc", count: "3" },
+        { text: "Fact", count: "1" },
+        { text: "Res", count: "16" },
       ];
     },
 
     buildRandomTrack() {
       var options = [
-        "6 Upg",
-        "4 Mch",
-        "4 Str",
-        "4 Rec",
-        "8 Wkr",
-        "Obj",
-        "Cbt",
-        "Cbt",
-        "Cbt",
-        "Cbt",
-        "18 Pop",
-        "3 Enc",
-        "Fact",
-        "16 Pow",
-        "8 CCrd",
-        "16 Res",
+        { text: "Upg", count: "6" },
+        { text: "Mch", count: "4" },
+        { text: "Str", count: "4" },
+        { text: "Rec", count: "4" },
+        { text: "Wrk", count: "8" },
+        { text: "Obj", count: "1" },
+        { text: "Cbt", count: "1" },
+        { text: "Cbt", count: "1" },
+        { text: "Cbt", count: "1" },
+        { text: "Cbt", count: "1" },
+        { text: "Pop", count: "18" },
+        { text: "Enc", count: "3" },
+        { text: "Fact", count: "1" },
+        { text: "Pow", count: "16" },
+        { text: "CCrd", count: "8" },
+        { text: "Res", count: "16" },
       ];
 
       // var desolation = [
@@ -182,7 +187,7 @@ export default {
       track_options.sort((a, b) => a - b);
       this.track_items = [];
       for (var option_num of track_options) {
-        this.track_items.push({ text: options[option_num] });
+        this.track_items.push(options[option_num]);
       }
     },
   },
@@ -218,6 +223,9 @@ ul {
   border: 1px solid black;
   white-space: nowrap;
   font-size: 0.75em;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 0px;
 }
 
 .tunnel-col {
