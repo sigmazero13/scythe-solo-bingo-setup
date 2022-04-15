@@ -223,8 +223,8 @@ ul {
   border: 1px solid black;
   white-space: nowrap;
   font-size: 0.75em;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 2px;
+  padding-right: 2px;
   padding-bottom: 0px;
 }
 
