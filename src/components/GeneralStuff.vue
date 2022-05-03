@@ -23,7 +23,7 @@
       </b-row>
       <b-row>
         <b-col class="gen-header" cols="6"><b>Structure Bonus:</b></b-col>
-        <b-col class="gen-col" cols="6">{{ structure_bonus }}</b-col>
+        <b-col class="gen-col" cols="6">{{ structure_bonus["name"] }}</b-col>
       </b-row>
       <b-row>
         <b-col class="gen-header" cols="6"><b>Fenris/Vesna Offset:</b></b-col>
@@ -34,14 +34,14 @@
 </template>
 
 <script>
-import { Factions, PlayerMats } from "../constants.js";
+import { Factions, PlayerMats, StructureBonuses } from "../constants.js";
 
 export default {
   name: "GeneralStuff",
   data() {
     return {
-      player_board: "Not yet selected...",
-      structure_bonus: "Not yet selected...",
+      player_board: { name: "Not yet selected...", num: "..." },
+      structure_bonus: { name: "Not yet selected..." },
       fv_offset: "...",
     };
   },
@@ -66,26 +66,8 @@ export default {
     },
 
     pickBonus() {
-      var bonuses = [
-        "Adjacent Tunnels",
-        "Adjacent Lakes",
-        "Adjacent Encounters",
-        "On Tunnels",
-        "Straight Line",
-        "On Farms/Tundras",
-
-        "Adj. to Base/Factory",
-        "Adj. to Same Lake",
-        "On Villages",
-        "On Encounters",
-        "Not Adj. to structures",
-        "Diamond pattern",
-        "On Mountains/Forests",
-        "Adj. to Same Encounter",
-      ];
-
-      var bonus = Math.floor(Math.random() * 14);
-      return bonuses[bonus];
+      var bonus = Math.floor(Math.random() * StructureBonuses.length);
+      return StructureBonuses[bonus];
     },
   },
 };

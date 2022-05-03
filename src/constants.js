@@ -22,6 +22,24 @@ export const PlayerMats = Object.freeze([
   Object.freeze({ name: "Agricultural", num: "5" }),
 ]);
 
+export const StructureBonuses = Object.freeze([
+  Object.freeze({ name: "Adjacent Tunnels", from: "core" }),
+  Object.freeze({ name: "Adjacent Lakes", from: "core" }),
+  Object.freeze({ name: "Adjacent Encounters", from: "core" }),
+  Object.freeze({ name: "On Tunnels", from: "core" }),
+  Object.freeze({ name: "Straight Line", from: "core" }),
+  Object.freeze({ name: "On Farms/Tundras", from: "core" }),
+
+  Object.freeze({ name: "Adj. to Base/Factory", from: "modular" }),
+  Object.freeze({ name: "Adj. to Same Lake", from: "modular" }),
+  Object.freeze({ name: "On Villages", from: "modular" }),
+  Object.freeze({ name: "On Encounters", from: "modular" }),
+  Object.freeze({ name: "Not Adj. to structures", from: "modular" }),
+  Object.freeze({ name: "Diamond pattern", from: "modular" }),
+  Object.freeze({ name: "On Mountains/Forests", from: "modular" }),
+  Object.freeze({ name: "Adj. to Same Encounter", from: "modular" }),
+]);
+
 export const TriumphIcons = Object.freeze({
   Upg: Object.freeze({ name: "Upgrades", offset: 0 }),
   Cbt: Object.freeze({ name: "Combat", offset: 1 }),
