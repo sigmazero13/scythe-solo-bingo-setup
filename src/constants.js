@@ -2,15 +2,25 @@
 
 export const Factions = Object.freeze({
   a: Object.freeze({ name: "Albion", offset: 6 }),
-  c: Object.freeze({ name: "Crimea", offset: 3 }),
+  c: Object.freeze({ name: "Crimea", offset: 3, exclude: "3" }),
   f: Object.freeze({ name: "Fenris", offset: 8 }),
   n: Object.freeze({ name: "Nordic", offset: 1 }),
   p: Object.freeze({ name: "Polania", offset: 4 }),
-  r: Object.freeze({ name: "Rusviet", offset: 2 }),
+  r: Object.freeze({ name: "Rusviet", offset: 2, exclude: "1" }),
   s: Object.freeze({ name: "Saxony", offset: 0 }),
   t: Object.freeze({ name: "Togawa", offset: 5 }),
   v: Object.freeze({ name: "Vesna", offset: 8 }),
 });
+
+export const PlayerMats = Object.freeze([
+  Object.freeze({ name: "Industrial", num: "1" }),
+  Object.freeze({ name: "Engineering", num: "2" }),
+  Object.freeze({ name: "Militant", num: "2a" }),
+  Object.freeze({ name: "Patriotic", num: "3" }),
+  Object.freeze({ name: "Innovative", num: "3a" }),
+  Object.freeze({ name: "Mechanical", num: "4" }),
+  Object.freeze({ name: "Agricultural", num: "5" }),
+]);
 
 export const TriumphIcons = Object.freeze({
   Upg: Object.freeze({ name: "Upgrades", offset: 0 }),
@@ -38,7 +48,7 @@ export const Difficulties = Object.freeze({
   7: "Ultimaszyna",
 });
 
-export const InfluenceBonuses = Array.freeze([
+export const InfluenceBonuses = Object.freeze([
   Object.freeze({
     offset: 0,
     bonus: "Your workers can each move once before the game starts",

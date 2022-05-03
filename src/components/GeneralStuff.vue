@@ -4,20 +4,22 @@
       <b-row>
         <b-col>
           <b>Your Faction: </b>
-          <b-button class="faction-button" @click="makeSelection('crimea')">
+          <b-button class="faction-button" @click="makeSelection('c')">
             Crimea
           </b-button>
-          <b-button class="faction-button" @click="makeSelection('rusviet')">
+          <b-button class="faction-button" @click="makeSelection('r')">
             Rusviet
           </b-button>
-          <b-button class="faction-button" @click="makeSelection('other')">
+          <b-button class="faction-button" @click="makeSelection('x')">
             Other
           </b-button>
         </b-col>
       </b-row>
       <b-row>
         <b-col class="gen-header" cols="6"><b>Player Board:</b></b-col>
-        <b-col class="gen-col" cols="6">{{ player_board }}</b-col>
+        <b-col class="gen-col" cols="6">
+          {{ player_board["name"] }} ({{ player_board["num"] }})
+        </b-col>
       </b-row>
       <b-row>
         <b-col class="gen-header" cols="6"><b>Structure Bonus:</b></b-col>
@@ -32,6 +34,8 @@
 </template>
 
 <script>
+import { Factions, PlayerMats } from "../constants.js";
+
 export default {
   name: "GeneralStuff",
   data() {
@@ -42,35 +46,23 @@ export default {
     };
   },
   methods: {
-    makeSelection(faction) {
-      this.player_board = this.pickBoard(faction);
+    makeSelection(faction_id) {
+      this.player_board = this.pickBoard(faction_id);
       this.structure_bonus = this.pickBonus();
       this.fv_offset = Math.floor(Math.random() * 6) + 1;
     },
 
-    pickBoard(faction) {
-      var boards = [
-        "Industrial (1)",
-        "Engineering (2)",
-        "Militant (2a)",
-        "Patriotic (3)",
-        "Innovative (3a)",
-        "Mechanical (4)",
-        "Agricultural (5)",
-      ];
-
-      var board1_num = Math.floor(Math.random() * 7);
-      var board2_num = Math.floor(Math.random() * 6);
-      var board = boards[board1_num];
-
-      if (board1_num === 0 && faction === "rusviet") {
-        board2_num += 1;
-        board = boards[board2_num];
-      } else if (board1_num === 3 && faction === "crimea") {
-        if (board2_num >= 3) board2_num += 1;
-        board = boards[board2_num];
+    pickBoard(faction_id) {
+      const faction = Factions[faction_id];
+      if ("exclude" in faction) {
+        var board_num = Math.floor(Math.random() * 6);
+        if (faction["exclude"] === PlayerMats[board_num]["num"]) {
+          board_num = 6;
+        }
+        return PlayerMats[board_num];
+      } else {
+        return PlayerMats[Math.floor(Math.random() * 7)];
       }
-      return board;
     },
 
     pickBonus() {
