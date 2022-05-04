@@ -1,58 +1,58 @@
 <template>
   <div id="app">
-    <b-container class="app-container">
+    <div class="header">
       <h1>Scythe Bingo Reloaded</h1>
-      <b-button @click="selectOptions()" variant="primary" class="randobutton">
-        Randomize Selections
-      </b-button>
-      <TriumphTrack ref="vtrack" />
-      <br />
-      <WindGambit ref="windgambit" />
-      <GeneralStuff ref="general" />
+    </div>
+    <b-container class="app-container">
+      <b-tabs
+        content-class="mt-3"
+        nav-wrapper-class="sticky-top tab-custom bg-light"
+      >
+        <b-tab title="New Game">THIS IS WHERE IT WILL GO</b-tab>
+        <b-tab title="Randomize" active><RandomizerView /></b-tab>
+        <b-tab title="Log">THE LOG GOES HERE</b-tab>
+      </b-tabs>
     </b-container>
-    <p class="disclaimer">
-      "Bingo Reloaded" variant created by Steven St. John
-    </p>
-    <p class="disclaimer">
-      Scythe Icons are &copy;Stonemeier Games, and are used with permission.
-    </p>
+    <div class="footer">
+      <p class="disclaimer">
+        "Bingo Reloaded" variant created by Steven St. John
+      </p>
+      <p class="disclaimer">
+        Scythe Icons are &copy;Stonemeier Games, and are used with permission.
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-import TriumphTrack from "./components/TriumphTrack.vue";
-import WindGambit from "./components/WindGambit.vue";
-import GeneralStuff from "./components/GeneralStuff.vue";
-import { BButton } from "bootstrap-vue";
+import RandomizerView from "./components/RandomizerView.vue";
 
 export default {
   name: "App",
   components: {
-    TriumphTrack,
-    WindGambit,
-    GeneralStuff,
-    BButton,
+    RandomizerView,
   },
   data() {
     return {};
   },
-  methods: {
-    selectOptions() {
-      this.$refs.vtrack.makeSelection();
-      this.$refs.windgambit.makeSelection();
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style>
+html,
+body {
+  height: 100%;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 50px;
+  height: 100%;
 }
 
 .randobutton {
@@ -65,6 +65,28 @@ h1 {
 
 .app-container {
   margin-bottom: 5px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  padding-top: 10px;
+  height: 50px;
+  width: 100%;
+  background-color: #fff;
+  z-index: 2000;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding-top: 5px;
+  background-color: #fff;
+}
+
+.tab-custom {
+  top: 50px;
 }
 
 .disclaimer {
