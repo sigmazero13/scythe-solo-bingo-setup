@@ -40,6 +40,103 @@ export const StructureBonuses = Object.freeze([
   Object.freeze({ name: "Adj. to Same Encounter", from: "modular" }),
 ]);
 
+export const TriumphVariants = Object.freeze([
+  "Standard",
+  "Standard",
+  "Peace",
+  "War",
+  "Random",
+  "Random",
+]);
+
+export const Triumphs = Object.freeze([
+  Object.freeze({
+    text: "Upg",
+    count: "6",
+    tracks: Object.freeze(["standard", "peace", "random"]),
+  }),
+  Object.freeze({
+    text: "Upg/Str",
+    count: "6/4",
+    tracks: Object.freeze(["war"]),
+  }),
+  Object.freeze({
+    text: "Mch",
+    count: "4",
+    tracks: Object.freeze(["standard", "war", "random"]),
+  }),
+  Object.freeze({
+    text: "Str",
+    count: "4",
+    tracks: Object.freeze(["standard", "peace", "random"]),
+  }),
+  Object.freeze({
+    text: "Mch/Rec",
+    count: "4",
+    tracks: Object.freeze(["peace"]),
+  }),
+  Object.freeze({
+    text: "Rec",
+    count: "4",
+    tracks: Object.freeze(["standard", "war", "random"]),
+  }),
+  Object.freeze({
+    text: "Wrk",
+    count: "8",
+    tracks: Object.freeze(["standard", "peace", "random"]),
+  }),
+  Object.freeze({
+    text: "Obj",
+    count: "1",
+    tracks: Object.freeze(["standard", "war", "peace", "random"]),
+  }),
+  Object.freeze({ text: "Obj", count: "1", tracks: Object.freeze(["peace"]) }),
+  Object.freeze({
+    text: "Cbt",
+    count: "1",
+    tracks: Object.freeze(["standard", "war", "random"]),
+  }),
+  Object.freeze({
+    text: "Cbt",
+    count: "1",
+    tracks: Object.freeze(["standard", "war", "random"]),
+  }),
+  Object.freeze({
+    text: "Cbt",
+    count: "1",
+    tracks: Object.freeze(["war", "random"]),
+  }),
+  Object.freeze({
+    text: "Cbt",
+    count: "1",
+    tracks: Object.freeze(["war", "random"]),
+  }),
+  Object.freeze({ text: "Pop", count: "13", tracks: Object.freeze(["peace"]) }),
+  Object.freeze({
+    text: "Pop",
+    count: "18",
+    tracks: Object.freeze(["standard", "random"]),
+  }),
+  Object.freeze({
+    text: "Pow",
+    count: "16",
+    tracks: Object.freeze(["standard", "war", "random"]),
+  }),
+  Object.freeze({
+    text: "CCrd",
+    count: "8",
+    tracks: Object.freeze(["war", "random"]),
+  }),
+  Object.freeze({ text: "Enc", count: "3", tracks: Object.freeze(["peace"]) }),
+  Object.freeze({ text: "Fact", count: "1", tracks: Object.freeze(["peace"]) }),
+  Object.freeze({
+    text: "Res",
+    count: "16",
+    tracks: Object.freeze(["peace", "random"]),
+  }),
+]);
+// Desolation: 7 Hex, 20 Coins, 9-pt Bonus, 1 Obj, 5 Stars
+
 export const TriumphIcons = Object.freeze({
   Upg: Object.freeze({ name: "Upgrades", offset: 0 }),
   Cbt: Object.freeze({ name: "Combat", offset: 1 }),
