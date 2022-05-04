@@ -153,6 +153,38 @@ export const TriumphIcons = Object.freeze({
   Fact: Object.freeze({ name: "Factory Card", offset: 12 }),
 });
 
+export const AirshipActives = Object.freeze([
+  Object.freeze({ name: "Bombard", num: 1 }),
+  Object.freeze({ name: "Bounty", num: 2 }),
+  Object.freeze({ name: "Siege Engine", num: 3 }),
+  Object.freeze({ name: "Distract", num: 4 }),
+  Object.freeze({ name: "Espionage", num: 5 }),
+  Object.freeze({ name: "Blitzkreig", num: 6 }),
+  Object.freeze({ name: "War Correspondant", num: 8 }),
+]);
+
+export const AirshipPassives = Object.freeze([
+  Object.freeze({ name: "Ferry", num: 9 }),
+  Object.freeze({ name: "Boost", num: 10 }),
+  Object.freeze({ name: "Drill", num: 11 }),
+  Object.freeze({ name: "Hero", num: 12 }),
+  Object.freeze({ name: "Safe Haven", num: 13 }),
+  Object.freeze({ name: "Reap", num: 14 }),
+  Object.freeze({ name: "Craft", num: 15 }),
+  Object.freeze({ name: "Negotiate", num: 16 }),
+]);
+
+export const Resolutions = Object.freeze([
+  Object.freeze({ name: "Land Rush", num: 1 }),
+  Object.freeze({ name: "Factory Explosion", num: 2 }),
+  Object.freeze({ name: "Spoils of War", num: 3 }),
+  Object.freeze({ name: "King of the Hill", num: 4 }),
+  Object.freeze({ name: "Deja Vu", num: 5 }),
+  Object.freeze({ name: "Mission Possible", num: 6 }),
+  Object.freeze({ name: "Doomsday Clock", num: 7 }),
+  Object.freeze({ name: "Backup Plan", num: 8 }),
+]);
+
 export const Difficulties = Object.freeze({
   1: "Autometta",
   2: "Automa -",
