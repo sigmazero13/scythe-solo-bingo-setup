@@ -26,7 +26,7 @@ export default {
       ship_status: 0,
       active: { name: "Not yet selected...", num: 0 },
       passive: { name: "Not yet selected...", num: 0 },
-      resolution: "Not yet selected...",
+      resolution: { name: "Not yet selected...", num: 0 },
     };
   },
   methods: {
