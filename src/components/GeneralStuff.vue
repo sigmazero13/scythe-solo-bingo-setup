@@ -50,6 +50,11 @@ export default {
       this.player_board = this.pickBoard(faction_id);
       this.structure_bonus = this.pickBonus();
       this.fv_offset = Math.floor(Math.random() * 6) + 1;
+
+      this.$emit("update", {
+        field: "player-mat",
+        value: this.player_board["num"],
+      });
     },
 
     pickBoard(faction_id) {

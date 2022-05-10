@@ -8,8 +8,10 @@
         content-class="mt-3"
         nav-wrapper-class="sticky-top tab-custom bg-light"
       >
-        <b-tab title="New Game">THIS IS WHERE IT WILL GO</b-tab>
-        <b-tab title="Randomize" active><RandomizerView /></b-tab>
+        <b-tab title="New Game"><GameView ref="game" /></b-tab>
+        <b-tab title="Randomize" active>
+          <RandomizerView @update="update_from_randomizer" />
+        </b-tab>
         <b-tab title="Log">THE LOG GOES HERE</b-tab>
       </b-tabs>
     </b-container>
@@ -25,17 +27,24 @@
 </template>
 
 <script>
+import GameView from "./components/GameView.vue";
 import RandomizerView from "./components/RandomizerView.vue";
 
 export default {
   name: "App",
   components: {
     RandomizerView,
+    GameView,
   },
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    update_from_randomizer(data) {
+      console.log("App received update event: " + data["field"]);
+      this.$refs.game.update(data);
+    },
+  },
 };
 </script>
 

@@ -84,6 +84,8 @@ export default {
           this.tunnels[choice]["influence"] = true;
         }
       }
+
+      this.$emit("update", { field: "triumph-track", value: this.track });
     },
 
     buildTrackOptions(track_type) {
