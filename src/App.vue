@@ -82,7 +82,7 @@ h1 {
   padding-top: 10px;
   height: 50px;
   width: 100%;
-  background-color: #fff;
+  background-color: #ddf;
   z-index: 2000;
 }
 
@@ -91,7 +91,7 @@ h1 {
   bottom: 0;
   width: 100%;
   padding-top: 5px;
-  background-color: #fff;
+  background-color: #ddf;
 }
 
 .tab-custom {
