@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { TriumphVariants, Triumphs } from "../constants.js";
 import TriumphTile from "./TriumphTile.vue";
 
 export default {
@@ -58,27 +59,9 @@ export default {
   },
   methods: {
     makeSelection() {
-      var choice = Math.floor(Math.random() * 6);
-      switch (choice) {
-        case 0:
-        case 1:
-          this.track = "Standard";
-          this.buildNormalTrack();
-          break;
-        case 2:
-          this.track = "Peace";
-          this.buildPeaceTrack();
-          break;
-        case 3:
-          this.track = "War";
-          this.buildWarTrack();
-          break;
-        case 4:
-        case 5:
-          this.track = "Random";
-          this.buildRandomTrack();
-          break;
-      }
+      var choice = Math.floor(Math.random() * TriumphVariants.length);
+      this.track = TriumphVariants[choice];
+      this.track_items = this.buildTrack(TriumphVariants[choice].toLowerCase());
 
       for (var i = 0; i < this.tunnels.length; i++) {
         this.tunnels[i]["influence"] = false;
@@ -101,80 +84,20 @@ export default {
           this.tunnels[choice]["influence"] = true;
         }
       }
+
+      this.$emit("update", { field: "triumph-track", value: this.track });
     },
 
-    buildNormalTrack() {
-      this.track_items = [
-        { text: "Upg", count: "6" },
-        { text: "Mch", count: "4" },
-        { text: "Str", count: "4" },
-        { text: "Rec", count: "4" },
-        { text: "Wrk", count: "8" },
-        { text: "Obj", count: "1" },
-        { text: "Cbt", count: "1" },
-        { text: "Cbt", count: "1" },
-        { text: "Pop", count: "18" },
-        { text: "Pow", count: "16" },
-      ];
-    },
-
-    buildWarTrack() {
-      this.track_items = [
-        { text: "Upg/Str", count: "6/4" },
-        { text: "Mch", count: "4" },
-        { text: "Rec", count: "4" },
-        { text: "Obj", count: "1" },
-        { text: "Cbt", count: "1" },
-        { text: "Cbt", count: "1" },
-        { text: "Cbt", count: "1" },
-        { text: "Cbt", count: "1" },
-        { text: "Pow", count: "16" },
-        { text: "CCrd", count: "8" },
-      ];
-    },
-
-    buildPeaceTrack() {
-      this.track_items = [
-        { text: "Upg", count: "6" },
-        { text: "Str", count: "4" },
-        { text: "Mch/Rec", count: "4/4" },
-        { text: "Wrk", count: "8" },
-        { text: "Obj", count: "1" },
-        { text: "Obj", count: "1" },
-        { text: "Pop", count: "13" },
-        { text: "Enc", count: "3" },
-        { text: "Fact", count: "1" },
-        { text: "Res", count: "16" },
-      ];
+    buildTrackOptions(track_type) {
+      return Triumphs.filter((t) => t["tracks"].includes(track_type)).map(
+        (t) => {
+          return { text: t["text"], count: t["count"] };
+        }
+      );
     },
 
     buildRandomTrack() {
-      var options = [
-        { text: "Upg", count: "6" },
-        { text: "Mch", count: "4" },
-        { text: "Str", count: "4" },
-        { text: "Rec", count: "4" },
-        { text: "Wrk", count: "8" },
-        { text: "Obj", count: "1" },
-        { text: "Cbt", count: "1" },
-        { text: "Cbt", count: "1" },
-        { text: "Cbt", count: "1" },
-        { text: "Cbt", count: "1" },
-        { text: "Pop", count: "18" },
-        { text: "Enc", count: "3" },
-        { text: "Fact", count: "1" },
-        { text: "Pow", count: "16" },
-        { text: "CCrd", count: "8" },
-        { text: "Res", count: "16" },
-      ];
-
-      // var desolation = [
-      //   "7 Hex",
-      //   "20 $$",
-      //   "9-pt Bonus",
-      //   "Obj",
-      //   "5 Star",
-      // ]
+      var options = this.buildTrackOptions("random");
       var track_options = [];
 
       while (track_options.length < 10) {
@@ -185,9 +108,20 @@ export default {
       }
 
       track_options.sort((a, b) => a - b);
-      this.track_items = [];
+
+      var track_items = [];
       for (var option_num of track_options) {
-        this.track_items.push(options[option_num]);
+        track_items.push(options[option_num]);
+      }
+
+      return track_items;
+    },
+
+    buildTrack(track_type) {
+      if (track_type === "random") {
+        return this.buildRandomTrack();
+      } else {
+        return this.buildTrackOptions(track_type);
       }
     },
   },
