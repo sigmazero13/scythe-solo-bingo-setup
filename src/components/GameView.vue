@@ -2,7 +2,7 @@
   <div class="game-view">
     <h1>Game Info</h1>
     <b-form>
-      <b-form-group label="Game ID:" label-cols="3">9999</b-form-group>
+      <b-form-group label="Game ID:" label-cols="3">{{ game_id }}</b-form-group>
       <b-form-group label="Inf. Bonus:" label-cols="3">
         Something...
       </b-form-group>
@@ -40,7 +40,7 @@
           />
         </b-form-group>
         <b-form-group label="Score:" label-cols="3" label-for="a_score">
-          <b-form-input id="a_score" v-model="p_score" />
+          <b-form-input id="a_score" v-model="a_score" />
         </b-form-group>
       </b-form-group>
       <b-form-group label="Airship:" label-cols="3">
@@ -71,7 +71,7 @@
           id="tokens"
           v-model="tokens"
           stars="3"
-          show-clear="true"
+          show-clear
           icon-empty="circle"
           icon-full="circle-fill"
         />
@@ -90,15 +90,21 @@ import {
   Resolutions,
 } from "../constants.js";
 
+import saveState from "vue-save-state";
+
 export default {
   name: "GameView",
+  mixins: [saveState],
   data() {
     return {
+      game_id: Math.floor(Math.random() * 9999),
       track: "...",
       p_faction: null,
       p_mat: null,
+      p_score: null,
       a_faction: null,
       a_level: 2,
+      a_score: null,
       airship_active: 0,
       airship_passive: 0,
       resolution: 0,
@@ -115,6 +121,9 @@ export default {
           this.track = data["value"];
           break;
       }
+    },
+    getSaveStateConfig() {
+      return { cacheKey: "GameView" };
     },
   },
   computed: {
