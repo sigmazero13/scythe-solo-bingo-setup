@@ -11,7 +11,7 @@
         <b-tab title="Campaign">THE LOG GOES HERE</b-tab>
         <b-tab title="Game"><GameView ref="game" /></b-tab>
         <b-tab title="Random" active>
-          <RandomizerView @update="update_from_randomizer" />
+          <RandomizerView @update="updateFromRandomizer" />
         </b-tab>
       </b-tabs>
     </b-container>
@@ -40,7 +40,7 @@ export default {
     return {};
   },
   methods: {
-    update_from_randomizer(data) {
+    updateFromRandomizer(data) {
       this.$refs.game.update(data);
     },
   },

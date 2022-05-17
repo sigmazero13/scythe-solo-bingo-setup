@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isDoubleGoal">
+  <div v-if="is_double_goal">
     <div class="goal-div">
       <span class="goal-first">
         <TriumphIcon :icon="goals[0]" :scale="0.4" />
@@ -35,7 +35,7 @@ export default {
     return {};
   },
   computed: {
-    isDoubleGoal() {
+    is_double_goal() {
       return this.goal.includes("/");
     },
     goals() {

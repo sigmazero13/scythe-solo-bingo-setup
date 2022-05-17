@@ -4,13 +4,13 @@
       <b-row align-v="start">
         <b-col cols="6" class="wg-header"><b>Airships:</b></b-col>
         <b-col cols="6">
-          <span class="wg-col air-active"><b>A:</b> {{ activeString }}</span>
-          <span class="wg-col air-passive"><b>P:</b> {{ passiveString }}</span>
+          <span class="wg-col air-active"><b>A:</b> {{ active_string }}</span>
+          <span class="wg-col air-passive"><b>P:</b> {{ passive_string }}</span>
         </b-col>
       </b-row>
       <b-row align-v="start">
         <b-col cols="6" class="wg-header"><b>Resolution:</b></b-col>
-        <b-col cols="6" class="wg-col">{{ resolutionString }}</b-col>
+        <b-col cols="6" class="wg-col">{{ resolution_string }}</b-col>
       </b-row>
     </b-container>
   </div>
@@ -76,15 +76,15 @@ export default {
   },
 
   computed: {
-    activeString() {
+    active_string() {
       return this.formatCardString(this.active);
     },
 
-    passiveString() {
+    passive_string() {
       return this.formatCardString(this.passive);
     },
 
-    resolutionString() {
+    resolution_string() {
       return this.formatCardString(this.resolution);
     },
   },

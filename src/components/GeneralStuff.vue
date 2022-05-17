@@ -31,7 +31,7 @@
             @click="makeSelection()"
             variant="primary"
             class="randobutton"
-            :disabled="disableButton"
+            :disabled="button_disabled"
           >
             Randomize Player Options
           </b-button>
@@ -87,7 +87,6 @@ export default {
         value: this.player_board["num"],
       });
     },
-
     pickBoard(faction_id) {
       const faction = Factions[faction_id];
       if ("exclude" in faction) {
@@ -114,7 +113,7 @@ export default {
     },
   },
   computed: {
-    disableButton() {
+    button_disabled() {
       return this.p_faction === null || this.a_faction === null;
     },
   },

@@ -1,9 +1,9 @@
 <template>
   <div
-    v-if="validIcon"
+    v-if="icon_valid"
     :title="icon.name"
     class="triumph-icon"
-    :style="offsetStyle"
+    :style="offset_style"
   />
   <div v-else class="triumph-icon" />
 </template>
@@ -36,10 +36,10 @@ export default {
     };
   },
   computed: {
-    validIcon: function () {
+    icon_valid: function () {
       return this.icon !== "";
     },
-    offsetStyle: function () {
+    offset_style: function () {
       var w = this.size * this.scale;
       var h = this.size * this.scale;
       var s = this.size * this.scale;
@@ -53,7 +53,7 @@ export default {
       };
     },
 
-    iconType: function () {
+    icon_type: function () {
       return this.type + "icon";
     },
   },

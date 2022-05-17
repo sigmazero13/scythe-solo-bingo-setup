@@ -6,14 +6,14 @@
         <b-col cols="7">{{ track }}</b-col>
       </b-row>
       <b-row
-        v-for="(row, row_index) in formattedTrack"
+        v-for="(row, row_index) in formatted_track"
         v-bind:key="`track-row-${row_index}`"
       >
         <b-col
           v-for="(item, index) in row"
           v-bind:key="`track-col-${row_index}-${index}`"
           class="track-col"
-          v-bind:class="trackClass(item['influence'])"
+          v-bind:class="track_class(item['influence'])"
         >
           <TriumphTile :goal="item['text']" :count="item['count']" />
         </b-col>
@@ -25,7 +25,7 @@
           v-for="(tunnel, tunnel_index) in tunnels"
           v-bind:key="`tunnel-col-${tunnel_index}`"
           class="tunnel-col"
-          v-bind:class="trackClass(tunnel['influence'])"
+          v-bind:class="track_class(tunnel['influence'])"
         >
           {{ tunnel.text }}
         </b-col>
@@ -125,16 +125,15 @@ export default {
       }
     },
   },
-
   computed: {
-    formattedTrack() {
+    formatted_track() {
       return this.track_items.reduce((rows, value, i) => {
         if (i % 5 === 0) rows.push([]);
         rows[rows.length - 1].push(value);
         return rows;
       }, []);
     },
-    trackClass() {
+    track_class() {
       return (influence) => {
         return influence ? "influence" : "";
       };
