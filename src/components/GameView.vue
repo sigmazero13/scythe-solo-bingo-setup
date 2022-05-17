@@ -7,16 +7,17 @@
         Something...
       </b-form-group>
       <b-form-group label="Track:" label-cols="3">
-        {{ track }}
+        <b-form-select id="track" v-model="track" :options="tracks" />
       </b-form-group>
       <b-form-group label="Player:" label-cols="3">
-        <b-form-group label="Faction:" label-cols="3" label-for="p_faction">
-          <b-form-select
-            id="p_faction"
-            v-model="p_faction"
-            :options="factions"
-          />
-        </b-form-group>
+        <FactionButtonBar
+          id="p_faction"
+          name="p_faction"
+          selected="p_faction"
+          v-model="p_faction"
+          @update="p_faction = $event"
+        />
+        <br />
         <b-form-group label="Mat:" label-cols="3" label-for="p_mat">
           <b-form-select id="p_mat" v-model="p_mat" :options="mats" />
         </b-form-group>
@@ -25,13 +26,14 @@
         </b-form-group>
       </b-form-group>
       <b-form-group label="Automa:" label-cols="3">
-        <b-form-group label="Faction:" label-cols="3" label-for="a_faction">
-          <b-form-select
-            id="a_faction"
-            v-model="a_faction"
-            :options="factions"
-          />
-        </b-form-group>
+        <FactionButtonBar
+          id="a_faction"
+          name="a_faction"
+          selected="a_faction"
+          v-model="a_faction"
+          @update="a_faction = $event"
+        />
+        <br />
         <b-form-group label="Diff.:" label-cols="3" label-for="a_level">
           <b-form-select
             id="a_level"
@@ -90,10 +92,13 @@ import {
   Resolutions,
 } from "../constants.js";
 
+import FactionButtonBar from "./FactionButtonBar.vue";
+
 import saveState from "vue-save-state";
 
 export default {
   name: "GameView",
+  components: { FactionButtonBar },
   mixins: [saveState],
   data() {
     return {
@@ -109,6 +114,7 @@ export default {
       airship_passive: 0,
       resolution: 0,
       tokens: 0,
+      test: "bob",
     };
   },
   methods: {
@@ -120,6 +126,15 @@ export default {
         case "triumph-track":
           this.track = data["value"];
           break;
+        case "air-active":
+          this.airship_active = data["value"];
+          break;
+        case "air-passive":
+          this.airship_passive = data["value"];
+          break;
+        case "resolution":
+          this.resolution = data["value"];
+          break;
       }
     },
     getSaveStateConfig() {
@@ -127,9 +142,14 @@ export default {
     },
   },
   computed: {
+    tracks() {
+      return ["Standard", "War", "Peace", "Random"].map((k) => {
+        return { value: k, text: k };
+      });
+    },
     factions() {
       return Object.entries(Factions).map(([k, v]) => {
-        return { value: k, text: v["name"] };
+        return { id: k, name: v["name"], offset: v["offset"] };
       });
     },
     mats() {

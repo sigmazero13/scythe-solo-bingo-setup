@@ -8,11 +8,11 @@
         content-class="mt-3"
         nav-wrapper-class="sticky-top tab-custom bg-light"
       >
-        <b-tab title="New Game"><GameView ref="game" /></b-tab>
-        <b-tab title="Randomize" active>
+        <b-tab title="Campaign">THE LOG GOES HERE</b-tab>
+        <b-tab title="Game"><GameView ref="game" /></b-tab>
+        <b-tab title="Random" active>
           <RandomizerView @update="update_from_randomizer" />
         </b-tab>
-        <b-tab title="Log">THE LOG GOES HERE</b-tab>
       </b-tabs>
     </b-container>
     <div class="footer">
@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     update_from_randomizer(data) {
-      console.log("App received update event: " + data["field"]);
       this.$refs.game.update(data);
     },
   },

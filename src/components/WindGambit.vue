@@ -47,6 +47,19 @@ export default {
       } else {
         this.resolution = { name: "Not used", num: 0 };
       }
+
+      this.$emit("update", {
+        field: "air-active",
+        value: this.active["num"],
+      });
+      this.$emit("update", {
+        field: "air-passive",
+        value: this.passive["num"],
+      });
+      this.$emit("update", {
+        field: "resolution",
+        value: this.resolution["num"],
+      });
     },
 
     pickCardOption(card_type) {

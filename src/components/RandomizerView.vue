@@ -1,11 +1,11 @@
 <template>
   <div class="random-view">
     <b-button @click="selectOptions()" variant="primary" class="randobutton">
-      Randomize Selections
+      Randomize Game Options
     </b-button>
     <TriumphTrack ref="vtrack" @update="update" />
     <br />
-    <WindGambit ref="windgambit" />
+    <WindGambit ref="windgambit" @update="update" />
     <GeneralStuff ref="general" @update="update" />
   </div>
 </template>
@@ -33,7 +33,6 @@ export default {
       this.$refs.windgambit.makeSelection();
     },
     update(data) {
-      console.log("RandomizerView received update event: " + data["field"]);
       this.$emit("update", data);
     },
   },
