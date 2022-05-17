@@ -102,8 +102,8 @@ export default {
   mixins: [saveState],
   data() {
     return {
-      game_id: Math.floor(Math.random() * 9999),
-      track: "...",
+      game_id: 0,
+      track: "Standard",
       p_faction: null,
       p_mat: null,
       p_score: null,
@@ -114,7 +114,7 @@ export default {
       airship_passive: 0,
       resolution: 0,
       tokens: 0,
-      test: "bob",
+      combats: false,
     };
   },
   methods: {
