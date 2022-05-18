@@ -7,8 +7,11 @@
       <b-tabs
         content-class="mt-3"
         nav-wrapper-class="sticky-top tab-custom bg-light"
+        v-model="cur_tab"
       >
-        <b-tab title="Campaign">THE LOG GOES HERE</b-tab>
+        <b-tab title="Campaign">
+          <CampaignView ref="campaign" @newgame="newGame" />
+        </b-tab>
         <b-tab title="Game"><GameView ref="game" /></b-tab>
         <b-tab title="Random" active>
           <RandomizerView @update="updateFromRandomizer" />
@@ -27,19 +30,30 @@
 </template>
 
 <script>
+import CampaignView from "./components/CampaignView.vue";
 import GameView from "./components/GameView.vue";
 import RandomizerView from "./components/RandomizerView.vue";
 
 export default {
   name: "App",
   components: {
-    RandomizerView,
+    CampaignView,
     GameView,
+    RandomizerView,
   },
   data() {
-    return {};
+    return {
+      cur_tab: 2,
+    };
   },
   methods: {
+    newGame(data) {
+      this.$refs.game.newGame(data["game_id"]);
+      this.cur_tab = 1;
+    },
+    saveGame(data) {
+      this.$refs.campaign.saveGame(data);
+    },
     updateFromRandomizer(data) {
       this.$refs.game.update(data);
     },
