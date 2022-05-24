@@ -9,11 +9,13 @@
         nav-wrapper-class="sticky-top tab-custom bg-light"
         v-model="cur_tab"
       >
-        <b-tab title="Campaign">
+        <b-tab title="Campaign" active>
           <CampaignView ref="campaign" @newgame="newGame" />
         </b-tab>
-        <b-tab title="Game"><GameView ref="game" /></b-tab>
-        <b-tab title="Random" active>
+        <b-tab title="Game">
+          <GameView ref="game" @savegame="saveGame" />
+        </b-tab>
+        <b-tab title="Random">
           <RandomizerView @update="updateFromRandomizer" />
         </b-tab>
       </b-tabs>
@@ -53,6 +55,7 @@ export default {
     },
     saveGame(data) {
       this.$refs.campaign.saveGame(data);
+      this.cur_tab = 0;
     },
     updateFromRandomizer(data) {
       this.$refs.game.update(data);
@@ -73,7 +76,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 50px;
+  padding-top: 50px;
   height: 100%;
 }
 

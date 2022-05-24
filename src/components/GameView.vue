@@ -85,6 +85,9 @@
           />
         </b-form-group>
       </b-form>
+      <div>
+        <b-button @click="save" :disabled="invalid_game">SAVE</b-button>
+      </div>
     </div>
   </div>
 </template>
@@ -135,6 +138,15 @@ export default {
       }
       this.game_id = game_id;
     },
+    save() {
+      var game = {};
+      for (const key in DEFAULT_DATA) {
+        game[key] = this[key];
+      }
+      this.$emit("savegame", game);
+      this.game_id = 0;
+      // window.scrollTo(0, 0);
+    },
     update(data) {
       switch (data["field"]) {
         case "player-mat":
@@ -161,6 +173,17 @@ export default {
   computed: {
     inf_bonus() {
       return InfluenceBonuses[this.bonus]["short"];
+    },
+    invalid_game() {
+      return (
+        this.p_faction === null ||
+        this.p_mat === null ||
+        this.a_faction === null ||
+        this.p_score === null ||
+        this.a_score === null ||
+        (this.airship_active === 0 && this.airship_passive !== 0) ||
+        (this.airship_active !== 0 && this.airship_passive === 0)
+      );
     },
     tracks() {
       return ["Standard", "War", "Peace", "Random"].map((k) => {
