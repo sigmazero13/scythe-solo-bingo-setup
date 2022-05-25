@@ -39,19 +39,19 @@
             <b-col cols="4"><b>Track:</b> {{ row.item.track }}</b-col>
             <b-col cols="4"><b>Mat:</b> {{ row.item.p_mat }}</b-col>
             <b-col cols="4"><b>Automa:</b> {{ automaLevel(row.item) }}</b-col>
+            <b-col cols="4"><b>Airships: </b>{{ airshipInfo(row.item) }}</b-col>
             <b-col cols="4">
-              <b>Airship</b>: A:{{ row.item.airship_active }}, P:{{
-                row.item.airship_passive
-              }}
+              <b>Resolution: </b>
+              {{ resolution(row.item) }}
+            </b-col>
+            <b-col cols="4">
+              <b>Combats?</b> {{ row.item.combats ? "Yes" : "No" }}
             </b-col>
             <b-col cols="4">
               <b>Bonus:</b>&nbsp;
               <InfluenceIcon :icon_num="row.item.bonus" :width="30" />
             </b-col>
             <b-col cols="4"><b>Influence:</b> {{ row.item.tokens }}</b-col>
-            <b-col cols="4">
-              <b>Combats?</b> {{ row.item.combats ? "Yes" : "No" }}
-            </b-col>
           </b-row>
         </b-card>
       </template>
@@ -64,9 +64,12 @@ import FactionIcon from "./FactionIcon.vue";
 import InfluenceIcon from "./InfluenceIcon.vue";
 import { Difficulties } from "../constants.js";
 
+import saveState from "vue-save-state";
+
 export default {
   name: "CampaignView",
   components: { FactionIcon, InfluenceIcon },
+  mixins: [saveState],
   data() {
     return {
       fields: [
@@ -95,6 +98,27 @@ export default {
     },
     automaLevel(info) {
       return Difficulties[info.a_level];
+    },
+    airshipInfo(info) {
+      var active = info.airship_active;
+      var passive = info.airship_passive;
+      if (active === 0 || passive === 0) {
+        return "None";
+      } else {
+        return "A:" + active + " P:" + passive;
+      }
+    },
+    resolution(info) {
+      if (info.resolution === 0) {
+        return "None";
+      } else {
+        return info.resolution;
+      }
+    },
+    getSaveStateConfig() {
+      return {
+        cacheKey: "CampaignView",
+      };
     },
   },
   computed: {

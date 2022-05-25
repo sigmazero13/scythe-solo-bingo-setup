@@ -28,6 +28,11 @@ export default {
     return {};
   },
   methods: {
+    reset() {
+      this.$refs.vtrack.reset();
+      this.$refs.windgambit.reset();
+      this.$refs.general.reset();
+    },
     selectOptions() {
       this.$refs.vtrack.makeSelection();
       this.$refs.windgambit.makeSelection();

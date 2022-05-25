@@ -73,6 +73,13 @@ export default {
     };
   },
   methods: {
+    reset() {
+      this.player_board = { name: "Not yet selected...", num: "..." };
+      this.structure_bonus = { name: "Not yet selected..." };
+      this.fv_offset = "...";
+      this.p_faction = null;
+      this.a_faction = null;
+    },
     makeSelection() {
       this.player_board = this.pickBoard(this.p_faction);
       this.structure_bonus = this.pickBonus();
@@ -123,7 +130,7 @@ export default {
     },
     updateFaction(who, faction) {
       this[who[0] + "_faction"] = faction;
-      this.$emit('update', { field: who + "-faction", value: faction });
+      this.$emit("update", { field: who + "-faction", value: faction });
     },
   },
   computed: {

@@ -30,6 +30,12 @@ export default {
     };
   },
   methods: {
+    reset() {
+      this.ship_status = 0;
+      this.active = { name: "Not yet selected...", num: 0 };
+      this.passive = { name: "Not yet selected...", num: 0 };
+      this.resolution = { name: "Not yet selected...", num: 0 };
+    },
     makeSelection() {
       var choice = Math.floor(Math.random() * 6);
       if (choice == 2 || choice >= 4) {

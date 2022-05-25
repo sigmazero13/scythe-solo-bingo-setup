@@ -138,6 +138,15 @@ export default {
   data() {
     return { ...DEFAULT_DATA };
   },
+  mounted() {
+    if (this.p_faction !== null) {
+      this.updateFaction("player", this.p_faction);
+    }
+
+    if (this.a_faction !== null) {
+      this.updateFaction("automa", this.a_faction);
+    }
+  },
   methods: {
     newGame(game_id) {
       for (const key in DEFAULT_DATA) {
@@ -182,7 +191,9 @@ export default {
       }
     },
     getSaveStateConfig() {
-      return { cacheKey: "GameView" };
+      return {
+        cacheKey: "GameView",
+      };
     },
     updateFaction(who, faction) {
       this[who[0] + "_faction"] = faction;

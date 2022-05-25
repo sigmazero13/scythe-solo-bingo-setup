@@ -44,20 +44,29 @@ export default {
     TriumphTile,
   },
   data() {
-    return {
-      track: "Not yet selected...",
-      track_items: Array(10).fill({ text: "", count: "0" }),
-      tunnels: [
-        { text: "N" },
-        { text: "NE" },
-        { text: "SE" },
-        { text: "S" },
-        { text: "SW" },
-        { text: "N" },
-      ],
-    };
+    return this.new_data();
   },
   methods: {
+    new_data() {
+      return {
+        track: "Not yet selected...",
+        track_items: Array(10).fill({ text: "", count: "0" }),
+        tunnels: [
+          { text: "N" },
+          { text: "NE" },
+          { text: "SE" },
+          { text: "S" },
+          { text: "SW" },
+          { text: "N" },
+        ],
+      };
+    },
+    reset() {
+      var clean = this.new_data();
+      this.track = clean.track;
+      this.track_items = clean.track_items;
+      this.tunnels = clean.tunnels;
+    },
     makeSelection() {
       var choice = Math.floor(Math.random() * TriumphVariants.length);
       this.track = TriumphVariants[choice];

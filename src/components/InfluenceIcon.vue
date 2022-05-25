@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="influence-icon"
-    :style="offsetStyle"
-  />
+  <div class="influence-icon" :style="offsetStyle" />
 </template>
 
 <script>
