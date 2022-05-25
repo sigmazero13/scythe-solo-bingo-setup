@@ -3,7 +3,7 @@
     <b-button class="cbutton" variant="primary" @click="newGame">
       NEW GAME
     </b-button>
-    <b-button class="cbutton" variant="danger">
+    <b-button class="cbutton" variant="danger" @click="resetCampaign">
       RESET CAMPAIGN
     </b-button>
     <b-table
@@ -18,11 +18,9 @@
       <template #empty>
         <h4>No games recorded...</h4>
       </template>
-      
+
       <template #cell(show_details)="row">
-        <b-button size="sm" @click="row.toggleDetails">
-          ...
-        </b-button>
+        <b-button size="sm" @click="row.toggleDetails">...</b-button>
       </template>
 
       <template #cell(player)="row">
@@ -38,15 +36,22 @@
       <template #row-details="row">
         <b-card>
           <b-row>
-            <b-col>Track: {{ row.item.track }}</b-col>
-            <b-col>Mat: {{ row.item.mat }}</b-col>
-            <b-col>Automa: {{ row.item.a_level }}</b-col>
-            <b-col>
-              Airship: A-{{ row.item.airship_active }},
-              P-{{ row.item.airship_passive }}
+            <b-col cols="4"><b>Track:</b> {{ row.item.track }}</b-col>
+            <b-col cols="4"><b>Mat:</b> {{ row.item.p_mat }}</b-col>
+            <b-col cols="4"><b>Automa:</b> {{ automaLevel(row.item) }}</b-col>
+            <b-col cols="4">
+              <b>Airship</b>: A:{{ row.item.airship_active }}, P:{{
+                row.item.airship_passive
+              }}
             </b-col>
-            <b-col>Bonus: {{ row.item.bonus }}</b-col>
-            <b-col>Influence: {{ row.item.tokens }}</b-col>
+            <b-col cols="4">
+              <b>Bonus:</b>&nbsp;
+              <InfluenceIcon :icon_num="row.item.bonus" :width="30" />
+            </b-col>
+            <b-col cols="4"><b>Influence:</b> {{ row.item.tokens }}</b-col>
+            <b-col cols="4">
+              <b>Combats?</b> {{ row.item.combats ? "Yes" : "No" }}
+            </b-col>
           </b-row>
         </b-card>
       </template>
@@ -56,10 +61,12 @@
 
 <script>
 import FactionIcon from "./FactionIcon.vue";
+import InfluenceIcon from "./InfluenceIcon.vue";
+import { Difficulties } from "../constants.js";
 
 export default {
   name: "CampaignView",
-  components: { FactionIcon },
+  components: { FactionIcon, InfluenceIcon },
   data() {
     return {
       fields: [
@@ -75,6 +82,9 @@ export default {
     };
   },
   methods: {
+    resetCampaign() {
+      // Do nothing yet
+    },
     newGame() {
       var max_id = Math.max(...this.log.map((g) => g.game_id));
       if (max_id === -Infinity) max_id = 0;
@@ -83,8 +93,14 @@ export default {
     saveGame(data) {
       this.log.push(data);
     },
+    automaLevel(info) {
+      return Difficulties[info.a_level];
+    },
   },
   computed: {
+    automa_level(info) {
+      return Difficulties[info.a_level];
+    },
     log_items() {
       return this.log.map((g) => {
         return {

@@ -13,10 +13,10 @@
           <CampaignView ref="campaign" @newgame="newGame" />
         </b-tab>
         <b-tab title="Game">
-          <GameView ref="game" @savegame="saveGame" />
+          <GameView ref="game" @savegame="saveGame" @update="updateFromGame" />
         </b-tab>
         <b-tab title="Random">
-          <RandomizerView @update="updateFromRandomizer" />
+          <RandomizerView ref="random" @update="updateFromRandomizer" />
         </b-tab>
       </b-tabs>
     </b-container>
@@ -56,6 +56,9 @@ export default {
     saveGame(data) {
       this.$refs.campaign.saveGame(data);
       this.cur_tab = 0;
+    },
+    updateFromGame(data) {
+      this.$refs.random.updateFaction(data);
     },
     updateFromRandomizer(data) {
       this.$refs.game.update(data);

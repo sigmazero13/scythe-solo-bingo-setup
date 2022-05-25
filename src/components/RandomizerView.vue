@@ -35,6 +35,9 @@ export default {
     update(data) {
       this.$emit("update", data);
     },
+    updateFaction(data) {
+      this.$refs.general.changeFaction(data);
+    },
   },
 };
 </script>

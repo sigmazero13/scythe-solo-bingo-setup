@@ -10,7 +10,8 @@
           {{ game_id }}
         </b-form-group>
         <b-form-group label="Inf. Bonus:" label-cols="3">
-          {{ inf_bonus }}
+          <InfluenceIcon :width="30" :icon_num="this.bonus" />
+          <div class="bonus-text">{{ inf_bonus }}</div>
         </b-form-group>
         <b-form-group label="Track:" label-cols="3">
           <b-form-select id="track" v-model="track" :options="tracks" />
@@ -21,7 +22,7 @@
             name="p_faction"
             selected="p_faction"
             v-model="p_faction"
-            @update="p_faction = $event"
+            @update="updateFaction('player', $event)"
           />
           <br />
           <b-form-group label="Mat:" label-cols="3" label-for="p_mat">
@@ -37,7 +38,7 @@
             name="a_faction"
             selected="a_faction"
             v-model="a_faction"
-            @update="a_faction = $event"
+            @update="updateFaction('automa', $event)"
           />
           <br />
           <b-form-group label="Diff.:" label-cols="3" label-for="a_level">
@@ -84,9 +85,14 @@
             icon-full="circle-fill"
           />
         </b-form-group>
+        <b-form-group label="Combat Fought?" label-cols="4">
+          <b-form-checkbox id="combats" v-model="combats" />
+        </b-form-group>
       </b-form>
       <div>
-        <b-button @click="save" :disabled="invalid_game">SAVE</b-button>
+        <b-button @click="save" :disabled="invalid_game" variant="success">
+          SAVE
+        </b-button>
       </div>
     </div>
   </div>
@@ -104,6 +110,7 @@ import {
 } from "../constants.js";
 
 import FactionButtonBar from "./FactionButtonBar.vue";
+import InfluenceIcon from "./InfluenceIcon.vue";
 
 import saveState from "vue-save-state";
 
@@ -126,7 +133,7 @@ const DEFAULT_DATA = Object.freeze({
 
 export default {
   name: "GameView",
-  components: { FactionButtonBar },
+  components: { FactionButtonBar, InfluenceIcon },
   mixins: [saveState],
   data() {
     return { ...DEFAULT_DATA };
@@ -137,6 +144,8 @@ export default {
         this[key] = DEFAULT_DATA[key];
       }
       this.game_id = game_id;
+      // this.bonus = Math.floor(Math.random() * 14);
+      this.bonus = 12;
     },
     save() {
       var game = {};
@@ -149,6 +158,12 @@ export default {
     },
     update(data) {
       switch (data["field"]) {
+        case "automa-faction":
+          this.a_faction = data["value"];
+          break;
+        case "player-faction":
+          this.p_faction = data["value"];
+          break;
         case "player-mat":
           this.p_mat = data["value"];
           break;
@@ -168,6 +183,10 @@ export default {
     },
     getSaveStateConfig() {
       return { cacheKey: "GameView" };
+    },
+    updateFaction(who, faction) {
+      this[who[0] + "_faction"] = faction;
+      this.$emit("update", { field: who + "-faction", value: faction });
     },
   },
   computed: {
@@ -233,5 +252,10 @@ export default {
 <style scoped>
 .game-view {
   padding-bottom: 30px;
+}
+
+.bonus-text {
+  padding-left: 10px;
+  display: inline-block;
 }
 </style>
