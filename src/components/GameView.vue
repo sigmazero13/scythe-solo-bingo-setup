@@ -148,13 +148,13 @@ export default {
     }
   },
   methods: {
-    newGame(game_id) {
+    newGame(game_id, bonus) {
       for (const key in DEFAULT_DATA) {
         this[key] = DEFAULT_DATA[key];
       }
       this.game_id = game_id;
       // this.bonus = Math.floor(Math.random() * 14);
-      this.bonus = 12;
+      this.bonus = bonus;
     },
     save() {
       var game = {};

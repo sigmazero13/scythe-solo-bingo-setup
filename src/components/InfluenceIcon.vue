@@ -1,5 +1,10 @@
 <template>
-  <div class="influence-icon" :style="offsetStyle" />
+  <div
+    class="influence-icon"
+    :style="offsetStyle"
+    v-b-tooltip.hover
+    title="INFLUENCE ICON"
+  />
 </template>
 
 <script>
