@@ -9,10 +9,6 @@
         <b-form-group label="Game ID:" label-cols="3">
           {{ game_id }}
         </b-form-group>
-        <b-form-group label="Inf. Bonus:" label-cols="3">
-          <InfluenceIcon :width="30" :icon_num="this.bonus" />
-          <div class="bonus-text">{{ inf_bonus }}</div>
-        </b-form-group>
         <b-form-group label="Track:" label-cols="3">
           <b-form-select id="track" v-model="track" :options="tracks" />
         </b-form-group>
@@ -75,6 +71,16 @@
             :options="resolutions"
           />
         </b-form-group>
+        <b-form-group label="Inf. Bonus:" label-cols="3">
+          <InfluenceIcon
+            :width="25"
+            :icon_num="this.bonus"
+            v-b-modal="'bonus-modal'"
+          />
+          <div class="bonus-text" v-b-modal="'bonus-modal'">
+            {{ inf_bonus }}
+          </div>
+        </b-form-group>
         <b-form-group label="Influence:" label-cols="3">
           <b-form-rating
             id="tokens"
@@ -95,6 +101,18 @@
         </b-button>
       </div>
     </div>
+
+    <b-modal id="bonus-modal" title="Influence Bonus" ok-only ok-title="Cancel">
+      <div
+        v-for="(bonus, inf_idx) in all_bonuses"
+        :key="inf_idx"
+        :class="infBonusClass(inf_idx)"
+        @click="chooseBonus(inf_idx)"
+      >
+        <InfluenceIcon :width="20" :icon_num="inf_idx" />
+        {{ bonus.short }}
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -190,17 +208,32 @@ export default {
           break;
       }
     },
+    updateFaction(who, faction) {
+      this[who[0] + "_faction"] = faction;
+      this.$emit("update", { field: who + "-faction", value: faction });
+    },
+    infBonusClass(bonus_idx) {
+      var bonus_class = "bonus-choose";
+      if (bonus_idx == this.bonus) {
+        bonus_class = bonus_class + " bonus-choose-highlight";
+      }
+
+      return bonus_class;
+    },
+    chooseBonus(new_bonus) {
+      this.bonus = new_bonus;
+      this.$bvModal.hide("bonus-modal");
+    },
     getSaveStateConfig() {
       return {
         cacheKey: "GameView",
       };
     },
-    updateFaction(who, faction) {
-      this[who[0] + "_faction"] = faction;
-      this.$emit("update", { field: who + "-faction", value: faction });
-    },
   },
   computed: {
+    all_bonuses() {
+      return InfluenceBonuses;
+    },
     inf_bonus() {
       return InfluenceBonuses[this.bonus]["short"];
     },
@@ -268,5 +301,17 @@ export default {
 .bonus-text {
   padding-left: 10px;
   display: inline-block;
+}
+
+#bonus-modal {
+  padding-top: 50px;
+}
+
+.bonus-choose {
+  padding: 2px;
+}
+
+.bonus-choose-highlight {
+  background-color: #ffffaa;
 }
 </style>

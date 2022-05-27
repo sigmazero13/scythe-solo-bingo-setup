@@ -31,12 +31,12 @@
       </template>
 
       <template #cell(player)="row">
-        <FactionIcon :icon="row.item.p_faction" :scale="0.3" />
+        <FactionIcon :icon="row.item.p_faction" :scale="0.25" />
         {{ row.item.p_score }}
       </template>
 
       <template #cell(automa)="row">
-        <FactionIcon :icon="row.item.a_faction" :scale="0.3" />
+        <FactionIcon :icon="row.item.a_faction" :scale="0.25" />
         {{ row.item.a_score }}
       </template>
 
@@ -167,7 +167,7 @@ export default {
       return this.log.reduce((sum, game) => {
         var diff = game.a_score - game.p_score;
 
-        return diff > 0 ? diff : 0;
+        return diff > 0 ? sum + diff : sum;
       }, 0);
     },
     log_items() {

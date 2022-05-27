@@ -103,7 +103,7 @@ h1 {
   height: 50px;
   width: 100%;
   background-color: #ddf;
-  z-index: 2000;
+  z-index: 1000;
 }
 
 .footer {
