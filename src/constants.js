@@ -288,7 +288,7 @@ export const InfluenceBonuses = Object.freeze([
     offset: 749,
     width: 152,
     height: 70,
-    short: "Peek at Automa's combat cards",
+    short: "Peek at Automa's cards",
     bonus:
       "Peek at Automa's starting combat cards (or the first one they draw if 0 at start)",
   }),

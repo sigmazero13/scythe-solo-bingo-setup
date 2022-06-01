@@ -3,7 +3,7 @@
     class="influence-icon"
     :style="offsetStyle"
     v-b-tooltip.hover
-    title="INFLUENCE ICON"
+    :title="title"
   />
 </template>
 
@@ -55,6 +55,9 @@ export default {
     },
     iconType: function () {
       return this.type + "icon";
+    },
+    title: function () {
+      return InfluenceBonuses[this.icon_num].short;
     },
   },
 };

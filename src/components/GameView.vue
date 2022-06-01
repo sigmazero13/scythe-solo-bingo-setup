@@ -71,7 +71,7 @@
             :options="resolutions"
           />
         </b-form-group>
-        <b-form-group label="Inf. Bonus:" label-cols="3">
+        <b-form-group label="Bonus:" label-cols="3">
           <InfluenceIcon
             :width="25"
             :icon_num="this.bonus"

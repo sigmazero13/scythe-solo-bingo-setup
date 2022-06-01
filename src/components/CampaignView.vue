@@ -235,7 +235,7 @@ td.log-details {
   margin-bottom: 10px;
 }
 
-/deep/ .table td {
+::v-deep .table td {
   padding: 0.4rem;
   vertical-align: middle;
 }
