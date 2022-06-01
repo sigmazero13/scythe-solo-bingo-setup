@@ -112,6 +112,7 @@ h1 {
   width: 100%;
   padding-top: 5px;
   background-color: #ddf;
+  z-index: 1000;
 }
 
 .tab-custom {

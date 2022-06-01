@@ -7,7 +7,7 @@
       <h1>Game Info</h1>
       <b-form>
         <b-form-group label="Game ID:" label-cols="3">
-          {{ game_id }}
+          <b-form-input id="game-id" v-model="game_id" readonly />
         </b-form-group>
         <b-form-group label="Track:" label-cols="3">
           <b-form-select id="track" v-model="track" :options="tracks" />
@@ -91,8 +91,8 @@
             icon-full="circle-fill"
           />
         </b-form-group>
-        <b-form-group label="Combat Fought?" label-cols="4">
-          <b-form-checkbox id="combats" v-model="combats" />
+        <b-form-group label="Combat Fought During Game?" label-cols="8">
+          <b-form-checkbox v-model="combats" class="field-offset" />
         </b-form-group>
       </b-form>
       <div>
@@ -313,5 +313,10 @@ export default {
 
 .bonus-choose-highlight {
   background-color: #ffffaa;
+}
+
+.field-offset {
+  top: 5px;
+  z-index: 10;
 }
 </style>

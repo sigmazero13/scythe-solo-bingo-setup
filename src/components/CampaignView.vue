@@ -11,6 +11,8 @@
       <b>Current Automa Score: {{ automa_score }}</b>
     </span>
     <b-table
+      tbody-class="logrow"
+      details-td-class="log-details"
       striped
       hover
       :items="log"
@@ -24,13 +26,14 @@
       </template>
 
       <template #cell(show_details)="row">
-        <b-button size="sm" @click="row.toggleDetails">
-          <b-icon-chevron-up v-if="row.detailsShowing" />
-          <b-icon-chevron-down v-else />
-        </b-button>
+        <b-icon-chevron-up
+          @click="row.toggleDetails"
+          v-if="row.detailsShowing"
+        />
+        <b-icon-chevron-down @click="row.toggleDetails" v-else />
       </template>
 
-      <template #cell(player)="row">
+      <template #cell(player)="row" class="tablecell">
         <FactionIcon :icon="row.item.p_faction" :scale="0.25" />
         {{ row.item.p_score }}
       </template>
@@ -54,24 +57,44 @@
       </template>
 
       <template #row-details="row">
-        <b-card>
+        <b-card class="log-details">
           <b-row>
-            <b-col cols="4"><b>Track:</b> {{ row.item.track }}</b-col>
-            <b-col cols="4"><b>Mat:</b> {{ row.item.p_mat }}</b-col>
-            <b-col cols="4"><b>Automa:</b> {{ automaLevel(row.item) }}</b-col>
-            <b-col cols="4"><b>Airships: </b>{{ airshipInfo(row.item) }}</b-col>
-            <b-col cols="4">
-              <b>Resolution: </b>
+            <b-col cols="4" class="detail">
+              <b>Track:</b>
+              <br />
+              {{ row.item.track }}
+            </b-col>
+            <b-col cols="4" class="detail">
+              <b>Mat:</b>
+              <br />
+              {{ row.item.p_mat }}
+            </b-col>
+            <b-col cols="4" class="detail">
+              <b>Automa:</b>
+              <br />
+              {{ automaLevel(row.item) }}
+            </b-col>
+            <b-col cols="4" class="detail">
+              <b>Airships:</b>
+              <br />
+              {{ airshipInfo(row.item) }}
+            </b-col>
+            <b-col cols="4" class="detail">
+              <b>Resolution:</b><br />
               {{ resolution(row.item) }}
             </b-col>
-            <b-col cols="4">
-              <b>Combats?</b> {{ row.item.combats ? "Yes" : "No" }}
+            <b-col cols="4" class="detail">
+              <b>Combats?</b><br />{{ row.item.combats ? "Yes" : "No" }}
             </b-col>
-            <b-col cols="4">
-              <b>Bonus:</b>&nbsp;
+            <b-col cols="4" class="detail">
+              <b>Bonus:</b><br />
               <InfluenceIcon :icon_num="row.item.bonus" :width="30" />
             </b-col>
-            <b-col cols="4"><b>Influence:</b> {{ row.item.tokens }}</b-col>
+            <b-col cols="4" class="detail">
+              <b>Influence:</b>
+              <br />
+              {{ row.item.tokens }}
+            </b-col>
           </b-row>
         </b-card>
       </template>
@@ -190,5 +213,30 @@ export default {
   margin-bottom: 1em;
   margin-left: 0.5em;
   margin-right: 0.5em;
+}
+
+.logrow {
+  color: #ff0000;
+}
+
+.log-details {
+  font-size: 0.85rem;
+}
+
+td.log-details {
+  padding: 0.3rem;
+}
+
+.log-details .card-body {
+  padding: 0.2rem;
+}
+
+.log-details .detail {
+  margin-bottom: 10px;
+}
+
+/deep/ .table td {
+  padding: 0.4rem;
+  vertical-align: middle;
 }
 </style>
