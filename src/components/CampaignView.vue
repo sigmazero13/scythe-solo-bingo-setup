@@ -3,7 +3,7 @@
     <b-button class="cbutton" variant="primary" @click="newGame">
       NEW GAME
     </b-button>
-    <b-button class="cbutton" variant="danger" @click="resetCampaign">
+    <b-button class="cbutton" variant="danger" v-b-modal.confirm-reset-modal>
       RESET CAMPAIGN
     </b-button>
     <br />
@@ -95,10 +95,40 @@
               <br />
               {{ row.item.tokens }}
             </b-col>
+            <b-col cols="4" class="detail">
+              <span @click="editGame(row.item)">
+                <b-icon-pencil />
+                EDIT
+              </span>
+              <br />
+              <span @click="openDeleteModal(row.item.game_id)">
+                <b-icon-trash />
+                DELETE
+              </span>
+            </b-col>
           </b-row>
         </b-card>
       </template>
     </b-table>
+
+    <b-modal
+      id="confirm-delete-modal"
+      ref="confirm-delete-modal"
+      title="Delete Game?"
+      @ok="deleteGame"
+    >
+      <h4>Delete game #{{ game_id_to_delete }}? This cannot be undone!</h4>
+    </b-modal>
+
+    <b-modal
+      id="confirm-reset-modal"
+      title="Reset Campaign?"
+      @ok="resetCampaign"
+    >
+      <h3>
+        Do you really want to reset the campaign? This action cannot be undone!
+      </h3>
+    </b-modal>
   </div>
 </template>
 
@@ -131,7 +161,7 @@ export default {
   },
   methods: {
     resetCampaign() {
-      // Do nothing yet
+      this.log = [];
     },
     newGame() {
       var max_id = Math.max(...this.log.map((g) => g.game_id));
@@ -140,6 +170,21 @@ export default {
         game_id: max_id + 1,
         bonus: this.nextInfluenceBonus(),
       });
+    },
+    editGame(game_data) {
+      this.$emit("editgame", game_data);
+    },
+    openDeleteModal(game_id) {
+      this.game_id_to_delete = game_id;
+      this.$refs["confirm-delete-modal"].show();
+    },
+    deleteGame() {
+      for (let i in this.log) {
+        if (this.log[i].game_id === this.game_id_to_delete) {
+          this.log.splice(i, 1);
+          return;
+        }
+      }
     },
     nextInfluenceBonus() {
       var options = Array.from(Array(InfluenceBonuses.length).keys());
@@ -153,6 +198,16 @@ export default {
       return options[newBonusIdx];
     },
     saveGame(data) {
+      for (let i in this.log) {
+        if (this.log[i].game_id === data.game_id) {
+          for (let key in data) {
+            this.log[i][key] = data[key];
+          }
+          return;
+        }
+      }
+
+      // If it gets here, it's a new game.
       this.log.push(data);
     },
     automaLevel(info) {
@@ -236,7 +291,7 @@ td.log-details {
 }
 
 ::v-deep .table td {
-  padding: 0.4rem;
+  padding: 0.3rem;
   vertical-align: middle;
 }
 </style>

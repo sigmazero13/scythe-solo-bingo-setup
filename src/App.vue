@@ -10,7 +10,11 @@
         v-model="cur_tab"
       >
         <b-tab title="Campaign" active>
-          <CampaignView ref="campaign" @newgame="newGame" />
+          <CampaignView
+            ref="campaign"
+            @newgame="newGame"
+            @editgame="editGame"
+          />
         </b-tab>
         <b-tab title="Game">
           <GameView ref="game" @savegame="saveGame" @update="updateFromGame" />
@@ -51,6 +55,11 @@ export default {
   methods: {
     newGame(data) {
       this.$refs.game.newGame(data["game_id"], data["bonus"]);
+      this.$refs.random.reset();
+      this.cur_tab = 1;
+    },
+    editGame(data) {
+      this.$refs.game.editGame(data);
       this.$refs.random.reset();
       this.cur_tab = 1;
     },

@@ -174,6 +174,11 @@ export default {
       // this.bonus = Math.floor(Math.random() * 14);
       this.bonus = bonus;
     },
+    editGame(game_data) {
+      for (const key in DEFAULT_DATA) {
+        this[key] = game_data[key];
+      }
+    },
     save() {
       var game = {};
       for (const key in DEFAULT_DATA) {
