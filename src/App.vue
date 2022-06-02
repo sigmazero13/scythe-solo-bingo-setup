@@ -23,7 +23,7 @@
           <template v-slot:title>
             <b-icon-award />
           </template>
-          ACHIEVEMENTS HERE
+          <AchievementView ref="achievement" />
         </b-tab>
         <b-tab>
           <template v-slot:title>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import AchievementView from "./components/AchievementView.vue";
 import CampaignView from "./components/CampaignView.vue";
 import GameView from "./components/GameView.vue";
 import RandomizerView from "./components/RandomizerView.vue";
@@ -58,6 +59,7 @@ import RandomizerView from "./components/RandomizerView.vue";
 export default {
   name: "App",
   components: {
+    AchievementView,
     CampaignView,
     GameView,
     RandomizerView,

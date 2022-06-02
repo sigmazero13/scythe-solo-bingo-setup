@@ -302,69 +302,85 @@ export const InfluenceBonuses = Object.freeze([
   }),
 ]);
 
-export const Achievements = Object.freeze({
-  "3cons": Object.freeze({
+export const Achievements = Object.freeze([
+  Object.freeze({
+    key: "3cons",
     text: "Win 3 consecutive games",
     points: 4,
   }),
-  "automa+": Object.freeze({
+  Object.freeze({
+    key: "automa+",
     text: "Win a game at Automa+ difficulty",
     points: 3,
   }),
-  automaszyna: Object.freeze({
+  Object.freeze({
+    key: "automaszyna",
     text: "Win a game at Automaszyna difficulty",
     points: 4,
   }),
-  asexp: Object.freeze({
+  Object.freeze({
+    key: "asexp",
     text: "Win using an expansion faction (Albion, Fenris, Togawa, Vesna)",
     points: 2,
   }),
-  vsexp: Object.freeze({
+  Object.freeze({
+    key: "vsexp",
     text: "Defeat an expansion faction (Albion, Fenris, Togawa, Vesna",
     points: 2,
   }),
-  tunnel: Object.freeze({
+  Object.freeze({
+    key: "tunnel",
     text: "Win a game on one of the 'tunnel' spaces on the Bingo Board",
     points: 3,
   }),
-  factory: Object.freeze({
+  Object.freeze({
+    key: "factory",
     text: "Win a game on the Factory space",
     points: 2,
   }),
-  airships: Object.freeze({
+  Object.freeze({
+    key: "airships",
     text: "Win a game with air ships",
     points: 3,
   }),
-  resolution: Object.freeze({
+  Object.freeze({
+    key: "resolution",
     text: "Win a game with a Resolution Tile in play",
     points: 2,
   }),
-  "25+": Object.freeze({
+  Object.freeze({
+    key: "25+",
     text: "Win a game by more than 25 points",
     points: 4,
   }),
-  "3inf3": Object.freeze({
+  Object.freeze({
+    key: "3inf3",
     text: "Claim all 3 influence tokens during a game for the third time",
     points: 4,
   }),
-  nobonus: Object.freeze({
+  Object.freeze({
+    key: "nobonus",
     text: "Win a game without having the advantage of an Influence Bonus",
     points: 3,
   }),
-  peace: Object.freeze({
+  Object.freeze({
+    key: "peace",
     text: "Win a game using the Peace Triumph Track",
     points: 3,
   }),
-  war: Object.freeze({
+  Object.freeze({
+    key: "war",
     text: "Win a game using the War Triumph Track",
     points: 3,
   }),
-  random: Object.freeze({
+  Object.freeze({
+    key: "random",
     text: "Win a game using the randomized Triump Track",
     points: 3,
   }),
-  nocombat: Object.freeze({
+  Object.freeze({
+    key: "nocombat",
     text: "Win a game in which no combats took place",
     points: 4,
   }),
-});
+]);

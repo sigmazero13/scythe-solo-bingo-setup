@@ -129,13 +129,26 @@
         Do you really want to reset the campaign? This action cannot be undone!
       </h3>
     </b-modal>
+
+    <b-modal
+      id="achievement-modal"
+      ref="achievement-modal"
+      title="Achievements"
+      @ok="saveAchievements"
+    >
+      You qualified for the following achievements:
+      <span v-for="a in qualified_achievements" v-bind:key="a.key">
+        {{ a.text }} ({{ a.points }})
+      </span>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import FactionIcon from "./FactionIcon.vue";
 import InfluenceIcon from "./InfluenceIcon.vue";
-import { Difficulties, InfluenceBonuses } from "../constants.js";
+import { validAchievements } from "../helpers/achievementHelper";
+import { Achievements, Difficulties, InfluenceBonuses } from "../constants.js";
 
 import saveState from "vue-save-state";
 
@@ -154,7 +167,10 @@ export default {
         { key: "show_details", label: "" },
       ],
       log: [],
+      achieved: [],
       game_id_to_delete: -1,
+      new_achievement_keys: [],
+      selected_achievements: [],
     };
   },
   methods: {
@@ -205,6 +221,13 @@ export default {
         }
       }
 
+      var new_achievements = validAchievements(this.log, this.achieved);
+      for (let a of new_achievements) {
+        console.log(a);
+      }
+      this.new_achievement_keys = new_achievements;
+      this.$refs["achievement-modal"].show();
+
       // If it gets here, it's a new game.
       this.log.push(data);
     },
@@ -234,7 +257,12 @@ export default {
     getSaveStateConfig() {
       return {
         cacheKey: "CampaignView",
-        ignoreProperties: ["fields", "game_id_to_delete"],
+        ignoreProperties: [
+          "fields",
+          "game_id_to_delete",
+          "new_achievement_keys",
+          "selected_achievements",
+        ],
       };
     },
   },
@@ -256,6 +284,16 @@ export default {
           a_score: g["a_score"],
         };
       });
+    },
+    qualified_achievements() {
+      var q = [];
+      for (let a of Achievements) {
+        if (this.new_achievement_keys.includes(a.key)) {
+          q.push(a);
+        }
+      }
+
+      return q;
     },
   },
 };
