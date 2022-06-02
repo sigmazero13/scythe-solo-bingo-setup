@@ -94,6 +94,19 @@
         <b-form-group label="Combat Fought During Game?" label-cols="8">
           <b-form-checkbox v-model="combats" class="field-offset" />
         </b-form-group>
+        <b-form-group label="Location" label-cols="3">
+          <b-form-radio-group id="location" :checked="location" buttons>
+            <b-form-radio value="normal" button-variant="info">
+              Normal
+            </b-form-radio>
+            <b-form-radio value="tunnel" button-variant="info">
+              Tunnel
+            </b-form-radio>
+            <b-form-radio value="factory" button-variant="info">
+              Factory
+            </b-form-radio>
+          </b-form-radio-group>
+        </b-form-group>
       </b-form>
       <div>
         <b-button @click="save" :disabled="invalid_game" variant="success">
@@ -147,6 +160,7 @@ const DEFAULT_DATA = Object.freeze({
   tokens: 0,
   bonus: 0,
   combats: false,
+  location: "normal",
 });
 
 export default {

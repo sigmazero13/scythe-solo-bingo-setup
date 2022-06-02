@@ -301,3 +301,70 @@ export const InfluenceBonuses = Object.freeze([
       "Don't use the die during setup - just choose all the options for this game",
   }),
 ]);
+
+export const Achievements = Object.freeze({
+  "3cons": Object.freeze({
+    text: "Win 3 consecutive games",
+    points: 4,
+  }),
+  "automa+": Object.freeze({
+    text: "Win a game at Automa+ difficulty",
+    points: 3,
+  }),
+  automaszyna: Object.freeze({
+    text: "Win a game at Automaszyna difficulty",
+    points: 4,
+  }),
+  asexp: Object.freeze({
+    text: "Win using an expansion faction (Albion, Fenris, Togawa, Vesna)",
+    points: 2,
+  }),
+  vsexp: Object.freeze({
+    text: "Defeat an expansion faction (Albion, Fenris, Togawa, Vesna",
+    points: 2,
+  }),
+  tunnel: Object.freeze({
+    text: "Win a game on one of the 'tunnel' spaces on the Bingo Board",
+    points: 3,
+  }),
+  factory: Object.freeze({
+    text: "Win a game on the Factory space",
+    points: 2,
+  }),
+  airships: Object.freeze({
+    text: "Win a game with air ships",
+    points: 3,
+  }),
+  resolution: Object.freeze({
+    text: "Win a game with a Resolution Tile in play",
+    points: 2,
+  }),
+  "25+": Object.freeze({
+    text: "Win a game by more than 25 points",
+    points: 4,
+  }),
+  "3inf3": Object.freeze({
+    text: "Claim all 3 influence tokens during a game for the third time",
+    points: 4,
+  }),
+  nobonus: Object.freeze({
+    text: "Win a game without having the advantage of an Influence Bonus",
+    points: 3,
+  }),
+  peace: Object.freeze({
+    text: "Win a game using the Peace Triumph Track",
+    points: 3,
+  }),
+  war: Object.freeze({
+    text: "Win a game using the War Triumph Track",
+    points: 3,
+  }),
+  random: Object.freeze({
+    text: "Win a game using the randomized Triump Track",
+    points: 3,
+  }),
+  nocombat: Object.freeze({
+    text: "Win a game in which no combats took place",
+    points: 4,
+  }),
+});

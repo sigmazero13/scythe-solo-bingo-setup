@@ -9,17 +9,32 @@
         nav-wrapper-class="sticky-top tab-custom bg-light"
         v-model="cur_tab"
       >
-        <b-tab title="Campaign" active>
+        <b-tab active>
+          <template v-slot:title>
+            <b-icon-journal-text />
+          </template>
           <CampaignView
             ref="campaign"
             @newgame="newGame"
             @editgame="editGame"
           />
         </b-tab>
-        <b-tab title="Game">
+        <b-tab>
+          <template v-slot:title>
+            <b-icon-award />
+          </template>
+          ACHIEVEMENTS HERE
+        </b-tab>
+        <b-tab>
+          <template v-slot:title>
+            <b-icon-gear-wide-connected />
+          </template>
           <GameView ref="game" @savegame="saveGame" @update="updateFromGame" />
         </b-tab>
-        <b-tab title="Random">
+        <b-tab>
+          <template v-slot:title>
+            <b-icon-dice6 />
+          </template>
           <RandomizerView ref="random" @update="updateFromRandomizer" />
         </b-tab>
       </b-tabs>
@@ -49,19 +64,19 @@ export default {
   },
   data() {
     return {
-      cur_tab: 2,
+      cur_tab: 0,
     };
   },
   methods: {
     newGame(data) {
       this.$refs.game.newGame(data["game_id"], data["bonus"]);
       this.$refs.random.reset();
-      this.cur_tab = 1;
+      this.cur_tab = 2;
     },
     editGame(data) {
       this.$refs.game.editGame(data);
       this.$refs.random.reset();
-      this.cur_tab = 1;
+      this.cur_tab = 2;
     },
     saveGame(data) {
       this.$refs.campaign.saveGame(data);

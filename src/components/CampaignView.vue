@@ -153,10 +153,8 @@ export default {
         { key: "bonus", label: "Bonus" },
         { key: "show_details", label: "" },
       ],
-      log: [
-        // { game_id: 1, p_faction: "f", p_score: 5, a_faction: "p", a_score: 10 },
-        // { game_id: 2, p_faction: "s", p_score: 10, a_faction: "r", a_score: 2 },
-      ],
+      log: [],
+      game_id_to_delete: -1,
     };
   },
   methods: {
@@ -236,7 +234,7 @@ export default {
     getSaveStateConfig() {
       return {
         cacheKey: "CampaignView",
-        ignoreProperties: "fields",
+        ignoreProperties: ["fields", "game_id_to_delete"],
       };
     },
   },
