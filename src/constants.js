@@ -304,7 +304,7 @@ export const InfluenceBonuses = Object.freeze([
 
 export const Achievements = Object.freeze([
   Object.freeze({
-    key: "3cons",
+    key: "3wins",
     text: "Win 3 consecutive games",
     points: 4,
   }),

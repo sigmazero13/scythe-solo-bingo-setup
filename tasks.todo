@@ -1,0 +1,15 @@
+Campaign:
+  ☐ Save achievements
+    ☐ limit to only saving 2
+    ☐ record with game info?
+    ☐ Remove if game is deleted?
+  ☐ Alter next Automa level based on win/loss
+  ☐ Add a flag for "winning" in case of ties?
+  ☐ Highlight "missing" fields in game view
+  ☐ Calculate player score
+  ☐ Let player know if faction choices are valid
+  ☐ Calculate Player "best score" so far, including achievements
+
+Map:
+  ☐ Create map tab
+  ☐ Draw map

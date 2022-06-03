@@ -95,7 +95,12 @@
           <b-form-checkbox v-model="combats" class="field-offset" />
         </b-form-group>
         <b-form-group label="Location" label-cols="3">
-          <b-form-radio-group id="location" :checked="location" buttons>
+          <b-form-radio-group
+            id="location"
+            v-model="location"
+            :checked="location"
+            buttons
+          >
             <b-form-radio value="normal" button-variant="info">
               Normal
             </b-form-radio>

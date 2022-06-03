@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="campaign-view">
     <b-button class="cbutton" variant="primary" @click="newGame">
       NEW GAME
     </b-button>
@@ -134,12 +134,11 @@
       id="achievement-modal"
       ref="achievement-modal"
       title="Achievements"
-      @ok="saveAchievements"
     >
       You qualified for the following achievements:
-      <span v-for="a in qualified_achievements" v-bind:key="a.key">
+      <div v-for="a in qualified_achievements" v-bind:key="a.key">
         {{ a.text }} ({{ a.points }})
-      </span>
+      </div>
     </b-modal>
   </div>
 </template>
@@ -221,15 +220,15 @@ export default {
         }
       }
 
+      // If it gets here, it's a new game.
+      this.log.push(data);
+
       var new_achievements = validAchievements(this.log, this.achieved);
       for (let a of new_achievements) {
         console.log(a);
       }
       this.new_achievement_keys = new_achievements;
       this.$refs["achievement-modal"].show();
-
-      // If it gets here, it's a new game.
-      this.log.push(data);
     },
     automaLevel(info) {
       return Difficulties[info.a_level];
@@ -300,6 +299,10 @@ export default {
 </script>
 
 <style scoped>
+.campaign-view {
+  padding-bottom: 30px;
+}
+
 .cbutton {
   margin-bottom: 1em;
   margin-left: 0.5em;
