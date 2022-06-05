@@ -134,7 +134,8 @@
       id="achievement-modal"
       ref="achievement-modal"
       title="Achievements"
-      ok-disabled="too_many_achievements"
+      :ok-disabled="too_many_achievements"
+      @ok="commitAchievements"
     >
       <div v-if="qualified_achievements.length === 0">
         You did not qualify for any new achievements.
@@ -193,6 +194,7 @@ export default {
   methods: {
     resetCampaign() {
       this.log = [];
+      this.$emit("resetCampaign", {});
     },
     newGame() {
       var max_id = Math.max(...this.log.map((g) => g.game_id));
@@ -241,9 +243,12 @@ export default {
       // If it gets here, it's a new game.
       this.log.push(data);
 
-      var new_achievements = validAchievements(this.log, this.achieved);
-      this.new_achievement_keys = new_achievements;
-      this.$refs["achievement-modal"].show();
+      console.log(data);
+      if (data.p_score > data.a_score) {
+        var new_achievements = validAchievements(this.log, this.achieved);
+        this.new_achievement_keys = new_achievements;
+        this.$refs["achievement-modal"].show();
+      }
     },
     automaLevel(info) {
       return Difficulties[info.a_level];
@@ -270,11 +275,10 @@ export default {
     },
     commitAchievements() {
       this.$emit("saveAchievements", this.selected_achievements);
+      this.selected_achievements = [];
     },
     refreshAchievements(data) {
       this.achieved = data;
-      console.log("REFRESHING ACHIEVEMENTS");
-      console.log(this.achieved);
     },
     getSaveStateConfig() {
       return {

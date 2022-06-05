@@ -15,6 +15,7 @@
           </template>
           <CampaignView
             ref="campaign"
+            @resetCampaign="resetCampaign"
             @newgame="newGame"
             @editgame="editGame"
             @saveAchievements="saveAchievements"
@@ -25,7 +26,7 @@
             <b-icon-award />
           </template>
           <AchievementView
-            ref="achievement"
+            ref="achievements"
             @refreshAchievements="refreshAchievements"
           />
         </b-tab>
@@ -98,8 +99,10 @@ export default {
       this.$refs.achievements.addAchievements(data);
     },
     refreshAchievements(data) {
-      console.log("APP GOT REFRESH ACHIEVEMENTS EVENT");
       this.$refs.campaign.refreshAchievements(data);
+    },
+    resetCampaign() {
+      this.$refs.achievements.reset();
     },
   },
 };

@@ -1,8 +1,11 @@
 Campaign:
   ☐ Save achievements
-    ☐ limit to only saving 2 (not working yet)
+    ✔ limit to only saving 2 @done(22-06-05 15:44)
     ☐ record with game info?
     ☐ Remove if game is deleted?
+    ✔ Reset achievements if campaign reset @done(22-06-05 15:47)
+    ✔ Do not show popup on loss @done(22-06-05 15:52)
+    ✔ Reset selected after committing in campaign view @done(22-06-05 15:48)
   ☐ Alter next Automa level based on win/loss
   ☐ Add a flag for "winning" in case of ties?
   ☐ Highlight "missing" fields in game view

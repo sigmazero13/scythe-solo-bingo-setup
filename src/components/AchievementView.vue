@@ -32,14 +32,19 @@ export default {
   },
   methods: {
     addAchievements(data) {
-      for (let new_a in data) {
+      for (let new_a of data) {
+        console.log("Checking " + new_a);
         if (!this.achieved.includes(new_a)) {
+          console.log("Adding it!");
           this.achieved.push(new_a);
         }
       }
     },
     achievementToggled(data) {
       this.$emit("refreshAchievements", data);
+    },
+    reset() {
+      this.achieved = [];
     },
     getSaveStateConfig() {
       return {
