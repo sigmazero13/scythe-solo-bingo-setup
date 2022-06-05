@@ -62,6 +62,18 @@ export function validAchievements(log, achievements) {
       achieved.push("nocombat");
     }
 
-    return achieved.filter((x) => !achievements.includes(x));
+    console.log("Already achieved:");
+    console.log(achievements);
+    console.log("Achievements BEFORE");
+    console.log(achieved);
+    var x = achieved.filter((x) => {
+      console.log("CHECKING FOR FILTER " + x);
+      console.log(!achievements.includes(x));
+      return !achievements.includes(x);
+    });
+    console.log("Achievements AFTER:");
+    console.log(x);
+
+    return x;
   }
 }

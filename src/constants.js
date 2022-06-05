@@ -375,7 +375,7 @@ export const Achievements = Object.freeze([
   }),
   Object.freeze({
     key: "random",
-    text: "Win a game using the randomized Triump Track",
+    text: "Win a game using the randomized Triumph Track",
     points: 3,
   }),
   Object.freeze({

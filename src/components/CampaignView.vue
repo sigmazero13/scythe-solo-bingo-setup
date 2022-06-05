@@ -134,10 +134,28 @@
       id="achievement-modal"
       ref="achievement-modal"
       title="Achievements"
+      ok-disabled="too_many_achievements"
     >
-      You qualified for the following achievements:
-      <div v-for="a in qualified_achievements" v-bind:key="a.key">
-        {{ a.text }} ({{ a.points }})
+      <div v-if="qualified_achievements.length === 0">
+        You did not qualify for any new achievements.
+      </div>
+      <div v-else>
+        You qualified for the following achievements:
+        <b-form-checkbox
+          v-for="a in qualified_achievements"
+          :key="a.key"
+          :value="a.key"
+          v-model="selected_achievements"
+          stacked
+        >
+          {{ a.text }} ({{ a.points }})
+        </b-form-checkbox>
+        <div
+          v-if="selected_achievements.length > 2"
+          class="too-many-achievements"
+        >
+          You can only select 2 achievements.
+        </div>
       </div>
     </b-modal>
   </div>
@@ -224,9 +242,6 @@ export default {
       this.log.push(data);
 
       var new_achievements = validAchievements(this.log, this.achieved);
-      for (let a of new_achievements) {
-        console.log(a);
-      }
       this.new_achievement_keys = new_achievements;
       this.$refs["achievement-modal"].show();
     },
@@ -252,6 +267,14 @@ export default {
     scoreDiff(info) {
       if (info === null || info === undefined) return 0;
       return info.p_score - info.a_score;
+    },
+    commitAchievements() {
+      this.$emit("saveAchievements", this.selected_achievements);
+    },
+    refreshAchievements(data) {
+      this.achieved = data;
+      console.log("REFRESHING ACHIEVEMENTS");
+      console.log(this.achieved);
     },
     getSaveStateConfig() {
       return {
@@ -294,6 +317,9 @@ export default {
 
       return q;
     },
+    too_many_achievements() {
+      return this.selected_achievements.length > 2;
+    },
   },
 };
 </script>
@@ -327,6 +353,10 @@ td.log-details {
 
 .log-details .detail {
   margin-bottom: 10px;
+}
+
+.too-many-achievements {
+  color: red;
 }
 
 ::v-deep .table td {

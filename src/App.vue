@@ -17,13 +17,17 @@
             ref="campaign"
             @newgame="newGame"
             @editgame="editGame"
+            @saveAchievements="saveAchievements"
           />
         </b-tab>
         <b-tab>
           <template v-slot:title>
             <b-icon-award />
           </template>
-          <AchievementView ref="achievement" />
+          <AchievementView
+            ref="achievement"
+            @refreshAchievements="refreshAchievements"
+          />
         </b-tab>
         <b-tab>
           <template v-slot:title>
@@ -89,6 +93,13 @@ export default {
     },
     updateFromRandomizer(data) {
       this.$refs.game.update(data);
+    },
+    saveAchievements(data) {
+      this.$refs.achievements.addAchievements(data);
+    },
+    refreshAchievements(data) {
+      console.log("APP GOT REFRESH ACHIEVEMENTS EVENT");
+      this.$refs.campaign.refreshAchievements(data);
     },
   },
 };
