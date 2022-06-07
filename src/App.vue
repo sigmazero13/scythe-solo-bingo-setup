@@ -38,6 +38,12 @@
         </b-tab>
         <b-tab>
           <template v-slot:title>
+            <b-icon-map />
+          </template>
+          MAP VIEW
+        </b-tab>
+        <b-tab>
+          <template v-slot:title>
             <b-icon-dice6 />
           </template>
           <RandomizerView ref="random" @update="updateFromRandomizer" />
