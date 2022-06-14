@@ -13,6 +13,7 @@ Campaign:
     ☐ Calculate player score
     ☐ Let player know if faction choices are valid
     ☐ Calculate Player "best score" so far, including achievements
+  ☐ Switch to a global application state (vuex?)
 
 Map Drawing:
   ☐ Create map tab

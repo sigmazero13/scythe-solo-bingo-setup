@@ -40,7 +40,7 @@
           <template v-slot:title>
             <b-icon-map />
           </template>
-          MAP VIEW
+          <MapView ref="map" />
         </b-tab>
         <b-tab>
           <template v-slot:title>
@@ -65,6 +65,7 @@
 import AchievementView from "./components/AchievementView.vue";
 import CampaignView from "./components/CampaignView.vue";
 import GameView from "./components/GameView.vue";
+import MapView from "./components/MapView.vue";
 import RandomizerView from "./components/RandomizerView.vue";
 
 export default {
@@ -73,6 +74,7 @@ export default {
     AchievementView,
     CampaignView,
     GameView,
+    MapView,
     RandomizerView,
   },
   data() {
