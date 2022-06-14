@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     newGame(data) {
-      this.$refs.game.newGame(data["game_id"], data["bonus"]);
+      this.$refs.game.newGame(data);
       this.$refs.random.reset();
       this.cur_tab = 2;
     },

@@ -202,6 +202,7 @@ export default {
       this.$emit("newgame", {
         game_id: max_id + 1,
         bonus: this.nextInfluenceBonus(),
+        automa_level: this.nextAutomaLevel(),
       });
     },
     editGame(game_data) {
@@ -230,11 +231,35 @@ export default {
       var newBonusIdx = Math.floor(Math.random() * options.length);
       return options[newBonusIdx];
     },
+    nextAutomaLevel() {
+      if (this.log.length === 0) {
+        return 2;
+      }
+
+      var last_game = this.log.slice(-1)[0];
+      if (last_game.p_score > last_game.a_score) {
+        if (last_game.a_level >= 7) {
+          return 7;
+        } else {
+          return last_game.a_level + 1;
+        }
+      } else {
+        if (last_game.a_level <= 1) {
+          return 1;
+        } else {
+          return last_game.a_level - 1;
+        }
+      }
+    },
     saveGame(data) {
       for (let i in this.log) {
         if (this.log[i].game_id === data.game_id) {
           for (let key in data) {
-            this.log[i][key] = data[key];
+            var value = data[key];
+            if (key.includes("_score")) {
+              value = parseInt(value);
+            }
+            this.log[i][key] = value;
           }
           return;
         }

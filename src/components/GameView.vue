@@ -25,7 +25,7 @@
             <b-form-select id="p_mat" v-model="p_mat" :options="mats" />
           </b-form-group>
           <b-form-group label="Score:" label-cols="3" label-for="p_score">
-            <b-form-input id="p_score" v-model="p_score" />
+            <b-form-input id="p_score" v-model="p_score" type="number" />
           </b-form-group>
         </b-form-group>
         <b-form-group label="Automa:" label-cols="3">
@@ -45,7 +45,7 @@
             />
           </b-form-group>
           <b-form-group label="Score:" label-cols="3" label-for="a_score">
-            <b-form-input id="a_score" v-model="a_score" />
+            <b-form-input id="a_score" v-model="a_score" type="number" />
           </b-form-group>
         </b-form-group>
         <b-form-group label="Airship:" label-cols="3">
@@ -185,13 +185,13 @@ export default {
     }
   },
   methods: {
-    newGame(game_id, bonus) {
+    newGame(data) {
       for (const key in DEFAULT_DATA) {
         this[key] = DEFAULT_DATA[key];
       }
-      this.game_id = game_id;
-      // this.bonus = Math.floor(Math.random() * 14);
-      this.bonus = bonus;
+      this.game_id = data.game_id;
+      this.bonus = data.bonus;
+      this.a_level = data.automa_level;
     },
     editGame(game_data) {
       for (const key in DEFAULT_DATA) {

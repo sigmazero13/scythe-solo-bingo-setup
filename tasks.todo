@@ -6,13 +6,14 @@ Campaign:
     ✔ Reset achievements if campaign reset @done(22-06-05 15:47)
     ✔ Do not show popup on loss @done(22-06-05 15:52)
     ✔ Reset selected after committing in campaign view @done(22-06-05 15:48)
-  ☐ Alter next Automa level based on win/loss
+  ✔ Alter next Automa level based on win/loss @done(22-06-13 18:39)
   ☐ Add a flag for "winning" in case of ties?
   ☐ Highlight "missing" fields in game view
-  ☐ Calculate player score
-  ☐ Let player know if faction choices are valid
-  ☐ Calculate Player "best score" so far, including achievements
+  ☐ Map Related, not related to drawing
+    ☐ Calculate player score
+    ☐ Let player know if faction choices are valid
+    ☐ Calculate Player "best score" so far, including achievements
 
-Map:
+Map Drawing:
   ☐ Create map tab
   ☐ Draw map
