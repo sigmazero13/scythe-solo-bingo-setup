@@ -83,8 +83,24 @@ export default {
   },
 
   allHome() {
-    return this.map.filter((c) => { 
+    return this.map.filter((c) => {
       return c.data === "HOME";
     });
+  },
+
+  allTunnels() {
+    return this.map.filter((c) => {
+      return c.tunnel;
+    });
+  },
+
+  findByFactions(factions) {
+    for (var c of this.map) {
+      if (c.data === factions) {
+        return c;
+      }
+    }
+
+    return null;
   },
 };

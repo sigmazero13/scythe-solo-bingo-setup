@@ -17,4 +17,8 @@ Campaign:
 
 Map Drawing:
   ☐ Create map tab
+    ✔ Show available games @done(22-06-22 17:52)
+    ☐ Remove games already played
+    ☐ Allow for Factory
+    ☐ Allow for Tunnels
   ☐ Draw map

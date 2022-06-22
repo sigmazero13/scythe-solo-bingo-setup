@@ -19,6 +19,7 @@
             @newgame="newGame"
             @editgame="editGame"
             @saveAchievements="saveAchievements"
+            @updatePlayed="updatePlayed"
           />
         </b-tab>
         <b-tab>
@@ -111,6 +112,10 @@ export default {
     },
     resetCampaign() {
       this.$refs.achievements.reset();
+      this.$refs.map.updatePlayed([]);
+    },
+    updatePlayed(data) {
+      this.$refs.map.updatePlayed(data);
     },
   },
 };

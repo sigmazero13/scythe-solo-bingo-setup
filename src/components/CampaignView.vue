@@ -219,6 +219,8 @@ export default {
           return;
         }
       }
+
+      this.$emit("updatePlayed", this.log);
     },
     nextInfluenceBonus() {
       var options = Array.from(Array(InfluenceBonuses.length).keys());
@@ -274,6 +276,8 @@ export default {
         this.new_achievement_keys = new_achievements;
         this.$refs["achievement-modal"].show();
       }
+
+      this.$emit("updatePlayed", this.log);
     },
     automaLevel(info) {
       return Difficulties[info.a_level];
@@ -349,6 +353,9 @@ export default {
     too_many_achievements() {
       return this.selected_achievements.length > 2;
     },
+  },
+  mounted() {
+    this.$emit("updatePlayed", this.log);
   },
 };
 </script>

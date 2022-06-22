@@ -23,20 +23,41 @@ function axialNeighbor(hex, direction) {
 
 export function availableCells(played) {
   var available = [];
+  var i;
+  var new_cell;
 
   if (played.length === 0) {
     for (var home of MapData.allHome()) {
-      console.log("CHECKING HOME:");
-      console.log(home);
-      for (var i = 0; i < 6; i += 1) {
-        var home_cell = [home.q, home.r];
-        var new_cell = MapData.cell(...axialNeighbor(home_cell, i));
+      var home_cell_qr = [home.q, home.r];
+      for (i = 0; i < 6; i += 1) {
+        new_cell = MapData.cell(...axialNeighbor(home_cell_qr, i));
         if (new_cell !== null) {
+          available.push(new_cell);
+        }
+      }
+    }
+  } else {
+    for (var matchup of played) {
+      var matchup_cell = MapData.findByFactions(matchup);
+      if (matchup_cell === null) continue;
+
+      var matchup_cell_qr = [matchup_cell.q, matchup_cell.r];
+      for (i = 0; i < 6; i += 1) {
+        new_cell = MapData.cell(...axialNeighbor(matchup_cell_qr, i));
+        if (new_cell == null || new_cell.data === "HOME") {
+          continue;
+        }
+        if (!available.includes(new_cell)) {
           available.push(new_cell);
         }
       }
     }
   }
 
-  return available;
+  return available.sort((a, b) => {
+    if (a.q < b.q) return -1;
+    if (a.q > b.q) return 1;
+    if (a.r < b.r) return -1;
+    return 1;
+  });
 }
