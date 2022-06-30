@@ -18,7 +18,9 @@ Campaign:
 Map Drawing:
   ☐ Create map tab
     ✔ Show available games @done(22-06-22 17:52)
-    ☐ Remove games already played
-    ☐ Allow for Factory
-    ☐ Allow for Tunnels
+    ✔ Remove games already played @done(22-06-30 16:46)
+    ✔ Allow for Factory @done(22-06-30 17:09)
+    ✔ Allow for Tunnels @done(22-06-30 16:54)
+    ☐ Allow user to pick faction combo from Map Tab
+    ☐ Better display map options (don't show coordinates)
   ☐ Draw map

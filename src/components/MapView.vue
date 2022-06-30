@@ -1,14 +1,20 @@
 <template>
   <div class="map-view">
     MAP
-    <div v-for="c in playableCells" v-bind:key="c.data">
-      {{ c.q }}, {{ c.r }} :
-      <span v-if="c.data === 'FACTORY'">FACTORY</span>
-      <span v-else>
-        <FactionIcon :icon="c.data[0]" :scale="0.25" />
-        vs
-        <FactionIcon :icon="c.data[1]" :scale="0.25" />
-      </span>
+    <div
+      v-for="(col, col_idx) in playableCells"
+      v-bind:key="col_idx"
+      class="column"
+    >
+      <div v-for="cell in col" v-bind:key="cell.data" class="cell">
+        {{ cell.q }}, {{ cell.r }} :
+        <span v-if="cell.data === 'FACTORY'">FACTORY</span>
+        <span v-else>
+          <FactionIcon :icon="cell.data[0]" :scale="0.25" />
+          vs
+          <FactionIcon :icon="cell.data[1]" :scale="0.25" />
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -37,10 +43,32 @@ export default {
 
       this.played = updatedPlayed;
     },
+    splitCellsByColumn(cells) {
+      var columns = [];
+      var last_q = null;
+      var this_col = [];
+
+      for (var cell of cells) {
+        if (cell.q !== last_q) {
+          if (this_col.length > 0) {
+            columns.push(this_col);
+          }
+          this_col = [];
+        }
+
+        this_col.push(cell);
+      }
+
+      if (this_col.length > 0) {
+        columns.push(this_col);
+      }
+
+      return columns;
+    },
   },
   computed: {
     playableCells() {
-      return availableCells(this.played);
+      return this.splitCellsByColumn(availableCells(this.played));
     },
   },
 };
@@ -49,5 +77,13 @@ export default {
 <style scoped>
 .map-view {
   padding-bottom: 30px;
+}
+
+div.column {
+  padding-bottom: 8px;
+}
+
+div.cell {
+  padding-bottom: 0px;
 }
 </style>
