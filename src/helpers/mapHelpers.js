@@ -37,18 +37,36 @@ export function availableCells(played) {
       }
     }
   } else {
+    var tunnels = false;
     for (var matchup of played) {
       var matchup_cell = MapData.findByFactions(matchup);
       if (matchup_cell === null) continue;
 
+      if (matchup_cell.tunnel) tunnels = true;
+
       var matchup_cell_qr = [matchup_cell.q, matchup_cell.r];
       for (i = 0; i < 6; i += 1) {
         new_cell = MapData.cell(...axialNeighbor(matchup_cell_qr, i));
-        if (new_cell == null || new_cell.data === "HOME") {
+        if (
+          new_cell === null ||
+          new_cell.data === "HOME" ||
+          played.includes(new_cell.data)
+        ) {
           continue;
         }
         if (!available.includes(new_cell)) {
           available.push(new_cell);
+        }
+      }
+
+      if (tunnels) {
+        for (new_cell of MapData.allTunnels()) {
+          if (
+            !played.includes(new_cell.data) &&
+            !available.includes(new_cell)
+          ) {
+            available.push(new_cell);
+          }
         }
       }
     }

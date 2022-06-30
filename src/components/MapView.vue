@@ -3,9 +3,12 @@
     MAP
     <div v-for="c in playableCells" v-bind:key="c.data">
       {{ c.q }}, {{ c.r }} :
-      <FactionIcon :icon="c.data[0]" :scale="0.25" />
-      vs
-      <FactionIcon :icon="c.data[1]" :scale="0.25" />
+      <span v-if="c.data === 'FACTORY'">FACTORY</span>
+      <span v-else>
+        <FactionIcon :icon="c.data[0]" :scale="0.25" />
+        vs
+        <FactionIcon :icon="c.data[1]" :scale="0.25" />
+      </span>
     </div>
   </div>
 </template>
@@ -25,7 +28,11 @@ export default {
     updatePlayed(data) {
       var updatedPlayed = [];
       for (var game of data) {
-        updatedPlayed.push(game.p_faction + game.a_faction);
+        var game_data =
+          game.location === "factory"
+            ? "FACTORY"
+            : game.p_faction + game.a_faction;
+        updatedPlayed.push(game_data);
       }
 
       this.played = updatedPlayed;

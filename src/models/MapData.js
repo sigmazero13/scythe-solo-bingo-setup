@@ -95,6 +95,10 @@ export default {
   },
 
   findByFactions(factions) {
+    if (factions === "FACTORY") {
+      return this.cell(0, 0);
+    }
+
     for (var c of this.map) {
       if (c.data === factions) {
         return c;
