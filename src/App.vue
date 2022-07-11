@@ -41,7 +41,7 @@
           <template v-slot:title>
             <b-icon-map />
           </template>
-          <MapView ref="map" />
+          <MapView ref="map" @selectFactions="selectFactionsFromMap" />
         </b-tab>
         <b-tab>
           <template v-slot:title>
@@ -69,6 +69,9 @@ import GameView from "./components/GameView.vue";
 import MapView from "./components/MapView.vue";
 import RandomizerView from "./components/RandomizerView.vue";
 
+const CAMPAIGN_TAB = 0;
+const GAME_TAB = 2;
+
 export default {
   name: "App",
   components: {
@@ -80,23 +83,27 @@ export default {
   },
   data() {
     return {
-      cur_tab: 0,
+      cur_tab: CAMPAIGN_TAB,
     };
   },
   methods: {
+    // For most of these, App is just used as a communications hub, passing the
+    // data object to the specific view that needs it.  See the specific view
+    // file for details on what the object looks like, if needed.
+
     newGame(data) {
       this.$refs.game.newGame(data);
       this.$refs.random.reset();
-      this.cur_tab = 2;
+      this.cur_tab = GAME_TAB;
     },
     editGame(data) {
       this.$refs.game.editGame(data);
       this.$refs.random.reset();
-      this.cur_tab = 2;
+      this.cur_tab = GAME_TAB;
     },
     saveGame(data) {
       this.$refs.campaign.saveGame(data);
-      this.cur_tab = 0;
+      this.cur_tab = CAMPAIGN_TAB;
     },
     updateFromGame(data) {
       this.$refs.random.updateFaction(data);
@@ -116,6 +123,16 @@ export default {
     },
     updatePlayed(data) {
       this.$refs.map.updatePlayed(data);
+    },
+    selectFactionsFromMap(data) {
+      let factions = data["factions"];
+
+      if (factions === "FACTORY") {
+        this.$refs.game.update({ field: "location", value: "factory" });
+      } else {
+        this.$refs.game.update({ field: "p_faction", value: factions[0] });
+        this.$refs.game.update({ field: "a_faction", value: factions[1] });
+      }
     },
   },
 };

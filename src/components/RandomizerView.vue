@@ -41,7 +41,8 @@ export default {
       this.$emit("update", data);
     },
     updateFaction(data) {
-      this.$refs.general.changeFaction(data);
+      // Just passing the data down to the sub-view
+      this.$refs.general.updateFaction(data);
     },
   },
 };

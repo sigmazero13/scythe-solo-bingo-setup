@@ -7,7 +7,6 @@
       class="column"
     >
       <div v-for="cell in col" v-bind:key="cell.data" class="cell">
-        {{ cell.q }}, {{ cell.r }} :
         <span v-if="cell.data === 'FACTORY'">FACTORY</span>
         <span v-else>
           <FactionIcon :icon="cell.data[0]" :scale="0.25" />

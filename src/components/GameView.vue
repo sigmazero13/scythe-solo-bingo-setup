@@ -185,13 +185,13 @@ export default {
     }
   },
   methods: {
-    newGame(data) {
+    newGame({ game_id, bonus, automa_level }) {
       for (const key in DEFAULT_DATA) {
         this[key] = DEFAULT_DATA[key];
       }
-      this.game_id = data.game_id;
-      this.bonus = data.bonus;
-      this.a_level = data.automa_level;
+      this.game_id = game_id;
+      this.bonus = bonus;
+      this.a_level = automa_level;
     },
     editGame(game_data) {
       for (const key in DEFAULT_DATA) {
@@ -207,28 +207,31 @@ export default {
       this.game_id = 0;
       // window.scrollTo(0, 0);
     },
-    update(data) {
-      switch (data["field"]) {
+    update({ field, value }) {
+      switch (field) {
         case "automa-faction":
-          this.a_faction = data["value"];
+          this.a_faction = value;
           break;
         case "player-faction":
-          this.p_faction = data["value"];
+          this.p_faction = value;
           break;
         case "player-mat":
-          this.p_mat = data["value"];
+          this.p_mat = value;
           break;
         case "triumph-track":
-          this.track = data["value"];
+          this.track = value;
           break;
         case "air-active":
-          this.airship_active = data["value"];
+          this.airship_active = value;
           break;
         case "air-passive":
-          this.airship_passive = data["value"];
+          this.airship_passive = value;
           break;
         case "resolution":
-          this.resolution = data["value"];
+          this.resolution = value;
+          break;
+        case "location":
+          this.location = value;
           break;
       }
     },

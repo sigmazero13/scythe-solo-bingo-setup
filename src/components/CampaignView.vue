@@ -206,6 +206,8 @@ export default {
       });
     },
     editGame(game_data) {
+      // See GAMEVIEW DEFAULT_DATA for a list of fields that are sent.
+      // The values will be specific to the game being edited, of course
       this.$emit("editgame", game_data);
     },
     openDeleteModal(game_id) {
@@ -253,11 +255,13 @@ export default {
         }
       }
     },
-    saveGame(data) {
+    saveGame(game_data) {
+      // See GAMEVIEW DEFAULT_DATA for a list of the keys used for game data
       for (let i in this.log) {
-        if (this.log[i].game_id === data.game_id) {
-          for (let key in data) {
-            var value = data[key];
+        if (this.log[i].game_id === game_data.game_id) {
+          // Update an existing game's data
+          for (let key in game_data) {
+            var value = game_data[key];
             if (key.includes("_score")) {
               value = parseInt(value);
             }
@@ -268,10 +272,9 @@ export default {
       }
 
       // If it gets here, it's a new game.
-      this.log.push(data);
+      this.log.push(game_data);
 
-      console.log(data);
-      if (data.p_score > data.a_score) {
+      if (game_data.p_score > game_data.a_score) {
         var new_achievements = validAchievements(this.log, this.achieved);
         this.new_achievement_keys = new_achievements;
         this.$refs["achievement-modal"].show();
@@ -306,8 +309,8 @@ export default {
       this.$emit("saveAchievements", this.selected_achievements);
       this.selected_achievements = [];
     },
-    refreshAchievements(data) {
-      this.achieved = data;
+    refreshAchievements(achievements) {
+      this.achieved = achievements;
     },
     getSaveStateConfig() {
       return {

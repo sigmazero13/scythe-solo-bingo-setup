@@ -9,7 +9,7 @@
             name="p_faction"
             selected="p_faction"
             v-model="p_faction"
-            @update="updateFaction('player', $event)"
+            @update="selectFaction('player', $event)"
           />
         </b-col>
       </b-row>
@@ -21,7 +21,7 @@
             name="a_faction"
             selected="a_faction"
             v-model="a_faction"
-            @update="updateFaction('automa', $event)"
+            @update="selectFaction('automa', $event)"
           />
         </b-col>
       </b-row>
@@ -118,17 +118,17 @@ export default {
         this.a_faction === "v"
       );
     },
-    changeFaction(data) {
-      switch (data["field"]) {
+    updateFaction({ field, value }) {
+      switch (field) {
         case "automa-faction":
-          this.a_faction = data["value"];
+          this.a_faction = value;
           break;
         case "player-faction":
-          this.p_faction = data["value"];
+          this.p_faction = value;
           break;
       }
     },
-    updateFaction(who, faction) {
+    selectFaction(who, faction) {
       this[who[0] + "_faction"] = faction;
       this.$emit("update", { field: who + "-faction", value: faction });
     },

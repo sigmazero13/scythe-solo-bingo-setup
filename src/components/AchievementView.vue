@@ -31,17 +31,16 @@ export default {
     this.$emit("refreshAchievements", this.achieved);
   },
   methods: {
-    addAchievements(data) {
-      for (let new_a of data) {
-        console.log("Checking " + new_a);
+    // "achievements" is a list of achievement keys
+    addAchievements(new_achievements) {
+      for (let new_a of new_achievements) {
         if (!this.achieved.includes(new_a)) {
-          console.log("Adding it!");
           this.achieved.push(new_a);
         }
       }
     },
-    achievementToggled(data) {
-      this.$emit("refreshAchievements", data);
+    achievementToggled(selected_achievements) {
+      this.$emit("refreshAchievements", selected_achievements);
     },
     reset() {
       this.achieved = [];

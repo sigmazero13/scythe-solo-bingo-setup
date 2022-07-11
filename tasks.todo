@@ -22,5 +22,40 @@ Map Drawing:
     ✔ Allow for Factory @done(22-06-30 17:09)
     ✔ Allow for Tunnels @done(22-06-30 16:54)
     ☐ Allow user to pick faction combo from Map Tab
-    ☐ Better display map options (don't show coordinates)
+    ✔ Better display map options (don't show coordinates) @done(22-07-06 18:19)
   ☐ Draw map
+
+Clean up/document Emits and recievers:
+  ☐ App
+    ✔ newGame (CampaignView) -> GameView.newGame @done(22-07-08 11:36)
+    ✔ editGame (CampaignView) -> GameView.editGame @done(22-07-08 11:48)
+    ✔ saveGame (GameView) -> CampaignView.saveGame @done(22-07-08 14:02)
+    ✔ updateFromGame (GameView) -> RandomizerView.updateFaction -> GeneralStuff.updateFaction @done(22-07-11 11:38)
+    ✔ updateFromRandomizer (RandomizerView) -> GameView.update @done(22-07-11 11:41)
+    ✔ saveAchievements (CampaignView) -> AchievementView.addAchievements @done(22-07-11 11:44)
+    ✔ refreshAchievements (AchievementView) -> CampaignView.refreshAchievements @done(22-07-11 11:49)
+    ☐ resetCampaign (CampaignView)
+    ☐ updatePlayed (CampaignView)
+    ☐ selectFactionsFromMap (MapView)
+  ☐ AchievementView
+    ✔ addAchievements @done(22-07-11 11:44)
+    ✔ achievementToggled @done(22-07-11 11:49)
+  ☐ CampaignView
+    ✔ saveGame @done(22-07-08 14:01)
+    ✔ refreshAchievements @done(22-07-11 11:49)
+  ☐ FactionButtonBar
+    ☐ change (mostly an emit)
+  ☐ GameView
+    ✔ newGame @done(22-07-08 11:36)
+    ✔ editGame @done(22-07-08 13:59)
+    ✔ update @done(22-07-11 11:41)
+    ☐ updateFaction
+  ☐ GeneralStuff
+    ✔ updateFaction @done(22-07-11 11:35)
+    ✔ selectFaction @done(22-07-11 11:37)
+  ☐ MapView
+    ☐ updatePlayed
+  ☐ RandomizerView
+    ☐ update
+    ✔ updateFaction @done(22-07-11 11:35)
+
