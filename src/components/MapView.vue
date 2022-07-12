@@ -6,7 +6,12 @@
       v-bind:key="col_idx"
       class="column"
     >
-      <div v-for="cell in col" v-bind:key="cell.data" class="cell">
+      <div
+        v-for="cell in col"
+        v-bind:key="cell.data"
+        class="cell"
+        @click="selectMatchup(cell)"
+      >
         <span v-if="cell.data === 'FACTORY'">FACTORY</span>
         <span v-else>
           <FactionIcon :icon="cell.data[0]" :scale="0.25" />
@@ -30,9 +35,9 @@ export default {
     return { played: [] };
   },
   methods: {
-    updatePlayed(data) {
+    updatePlayed(game_list) {
       var updatedPlayed = [];
-      for (var game of data) {
+      for (var game of game_list) {
         var game_data =
           game.location === "factory"
             ? "FACTORY"
@@ -63,6 +68,17 @@ export default {
       }
 
       return columns;
+    },
+    selectMatchup(cell) {
+      var matchup_info = { factions: "", location: "normal" };
+
+      if (cell.data === "FACTORY") {
+        matchup_info["location"] = "factory";
+      } else {
+        matchup_info["factions"] = cell.data;
+        matchup_info["location"] = cell.tunnel ? "tunnel" : "normal";
+      }
+      this.$emit("selectFactions", matchup_info);
     },
   },
   computed: {

@@ -124,15 +124,13 @@ export default {
     updatePlayed(data) {
       this.$refs.map.updatePlayed(data);
     },
-    selectFactionsFromMap(data) {
-      let factions = data["factions"];
-
-      if (factions === "FACTORY") {
-        this.$refs.game.update({ field: "location", value: "factory" });
-      } else {
-        this.$refs.game.update({ field: "p_faction", value: factions[0] });
-        this.$refs.game.update({ field: "a_faction", value: factions[1] });
+    selectFactionsFromMap({ factions, location }) {
+      if (factions !== "") {
+        this.$refs.game.update({ field: "player-faction", value: factions[0] });
+        this.$refs.game.update({ field: "automa-faction", value: factions[1] });
       }
+      this.$refs.game.update({ field: "location", value: location });
+      this.cur_tab = GAME_TAB;
     },
   },
 };

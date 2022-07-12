@@ -21,12 +21,12 @@ Map Drawing:
     ✔ Remove games already played @done(22-06-30 16:46)
     ✔ Allow for Factory @done(22-06-30 17:09)
     ✔ Allow for Tunnels @done(22-06-30 16:54)
-    ☐ Allow user to pick faction combo from Map Tab
+    ✔ Allow user to pick faction combo from Map Tab @done(22-07-12 17:20)
     ✔ Better display map options (don't show coordinates) @done(22-07-06 18:19)
   ☐ Draw map
 
 Clean up/document Emits and recievers:
-  ☐ App
+  ✔ App @done(22-07-11 14:55)
     ✔ newGame (CampaignView) -> GameView.newGame @done(22-07-08 11:36)
     ✔ editGame (CampaignView) -> GameView.editGame @done(22-07-08 11:48)
     ✔ saveGame (GameView) -> CampaignView.saveGame @done(22-07-08 14:02)
@@ -34,28 +34,28 @@ Clean up/document Emits and recievers:
     ✔ updateFromRandomizer (RandomizerView) -> GameView.update @done(22-07-11 11:41)
     ✔ saveAchievements (CampaignView) -> AchievementView.addAchievements @done(22-07-11 11:44)
     ✔ refreshAchievements (AchievementView) -> CampaignView.refreshAchievements @done(22-07-11 11:49)
-    ☐ resetCampaign (CampaignView)
-    ☐ updatePlayed (CampaignView)
-    ☐ selectFactionsFromMap (MapView)
-  ☐ AchievementView
+    ✔ resetCampaign (CampaignView) -> AchievementView.reset, MapView.updatePlayed @done(22-07-11 14:51)
+    ✔ updatePlayed (CampaignView) @done(22-07-11 14:52)
+    ✔ selectFactionsFromMap (MapView) @done(22-07-11 14:55)
+  ✔ AchievementView @done(22-07-11 14:51)
     ✔ addAchievements @done(22-07-11 11:44)
     ✔ achievementToggled @done(22-07-11 11:49)
-  ☐ CampaignView
+  ✔ CampaignView @done(22-07-11 14:52)
     ✔ saveGame @done(22-07-08 14:01)
     ✔ refreshAchievements @done(22-07-11 11:49)
-  ☐ FactionButtonBar
-    ☐ change (mostly an emit)
-  ☐ GameView
+  ✔ FactionButtonBar @done(22-07-11 14:52)
+    ✔ change (mostly an emit) @done(22-07-11 14:52)
+  ✔ GameView @done(22-07-11 14:55)
     ✔ newGame @done(22-07-08 11:36)
     ✔ editGame @done(22-07-08 13:59)
     ✔ update @done(22-07-11 11:41)
-    ☐ updateFaction
-  ☐ GeneralStuff
+    ✔ updateFaction @done(22-07-11 14:55)
+  ✔ GeneralStuff @done(22-07-11 14:52)
     ✔ updateFaction @done(22-07-11 11:35)
     ✔ selectFaction @done(22-07-11 11:37)
-  ☐ MapView
-    ☐ updatePlayed
-  ☐ RandomizerView
-    ☐ update
+  ✔ MapView @done(22-07-11 14:51)
+    ✔ updatePlayed @done(22-07-11 14:51)
+  ✔ RandomizerView @done(22-07-11 14:55)
+    ✔ update @done(22-07-11 14:55)
     ✔ updateFaction @done(22-07-11 11:35)
 

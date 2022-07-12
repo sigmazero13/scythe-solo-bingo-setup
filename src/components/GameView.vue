@@ -144,6 +144,7 @@ import {
   PlayerMats,
   Resolutions,
 } from "../constants.js";
+import { isBlank } from "../helpers/utilities.js";
 
 import FactionButtonBar from "./FactionButtonBar.vue";
 import InfluenceIcon from "./InfluenceIcon.vue";
@@ -266,11 +267,11 @@ export default {
     },
     invalid_game() {
       return (
-        this.p_faction === null ||
-        this.p_mat === null ||
-        this.a_faction === null ||
-        this.p_score === null ||
-        this.a_score === null ||
+        isBlank(this.p_faction) ||
+        isBlank(this.p_mat) ||
+        isBlank(this.a_faction) ||
+        isBlank(this.p_score) ||
+        isBlank(this.a_score) ||
         (this.airship_active === 0 && this.airship_passive !== 0) ||
         (this.airship_active !== 0 && this.airship_passive === 0)
       );
