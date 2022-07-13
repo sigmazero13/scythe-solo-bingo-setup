@@ -128,6 +128,15 @@ export default {
       if (factions !== "") {
         this.$refs.game.update({ field: "player-faction", value: factions[0] });
         this.$refs.game.update({ field: "automa-faction", value: factions[1] });
+
+        this.$refs.random.updateFaction({
+          field: "player-faction",
+          value: factions[0],
+        });
+        this.$refs.random.updateFaction({
+          field: "automa-faction",
+          value: factions[1],
+        });
       }
       this.$refs.game.update({ field: "location", value: location });
       this.cur_tab = GAME_TAB;

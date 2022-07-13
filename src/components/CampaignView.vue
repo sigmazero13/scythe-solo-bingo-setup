@@ -45,11 +45,8 @@
 
       <template #cell(scorediff)="row">
         {{ scoreDiff(row.item) }}
-        <b-icon-trophy-fill variant="success" v-if="scoreDiff(row.item) > 0" />
-        <b-icon-x-circle-fill
-          variant="danger"
-          v-else-if="scoreDiff(row.item) < 0"
-        />
+        <b-icon-trophy-fill variant="success" v-if="playerWon(row.item)" />
+        <b-icon-x-circle-fill variant="danger" v-else />
       </template>
 
       <template #cell(bonus)="row">
@@ -300,6 +297,13 @@ export default {
       } else {
         return info.resolution;
       }
+    },
+    playerWon(info) {
+      if (info === null || info === undefined) return false;
+      if (info.p_win === undefined) {
+        info.p_win = this.scoreDiff(info) > 0;
+      }
+      return info.p_win;
     },
     scoreDiff(info) {
       if (info === null || info === undefined) return 0;

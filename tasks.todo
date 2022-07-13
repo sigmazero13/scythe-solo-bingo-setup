@@ -7,7 +7,7 @@ Campaign:
     ✔ Do not show popup on loss @done(22-06-05 15:52)
     ✔ Reset selected after committing in campaign view @done(22-06-05 15:48)
   ✔ Alter next Automa level based on win/loss @done(22-06-13 18:39)
-  ☐ Add a flag for "winning" in case of ties?
+  ✔ Add a flag for "winning" in case of ties? @done(22-07-13 11:51)
   ☐ Highlight "missing" fields in game view
   ☐ Map Related, not related to drawing
     ☐ Calculate player score
@@ -22,6 +22,7 @@ Map Drawing:
     ✔ Allow for Factory @done(22-06-30 17:09)
     ✔ Allow for Tunnels @done(22-06-30 16:54)
     ✔ Allow user to pick faction combo from Map Tab @done(22-07-12 17:20)
+    ✔ Picking faction combo updates game and randomizer views @done(22-07-13 12:55)
     ✔ Better display map options (don't show coordinates) @done(22-07-06 18:19)
   ☐ Draw map
 

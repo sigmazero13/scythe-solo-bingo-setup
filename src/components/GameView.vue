@@ -27,6 +27,14 @@
           <b-form-group label="Score:" label-cols="3" label-for="p_score">
             <b-form-input id="p_score" v-model="p_score" type="number" />
           </b-form-group>
+          <b-form-group
+            v-if="tie_game"
+            label="Winner?"
+            label-cols="3"
+            label-for="p_win"
+          >
+            <b-form-checkbox id="p_win" v-model="p_win" />
+          </b-form-group>
         </b-form-group>
         <b-form-group label="Automa:" label-cols="3">
           <FactionButtonBar
@@ -157,6 +165,7 @@ const DEFAULT_DATA = Object.freeze({
   p_faction: null,
   p_mat: null,
   p_score: null,
+  p_win: false,
   a_faction: null,
   a_level: 2,
   a_score: null,
@@ -201,6 +210,9 @@ export default {
     },
     save() {
       var game = {};
+      if (!this.tie_game) {
+        this.p_win = this.winner_by_points;
+      }
       for (const key in DEFAULT_DATA) {
         game[key] = this[key];
       }
@@ -315,6 +327,18 @@ export default {
         Resolutions.map((a) => {
           return { value: a["num"], text: "(" + a["num"] + ") " + a["name"] };
         })
+      );
+    },
+    winner_by_points() {
+      return (
+        !(isBlank(this.p_score) || isBlank(this.a_score)) &&
+        this.p_score > this.a_score
+      );
+    },
+    tie_game() {
+      return (
+        !(isBlank(this.p_score) || isBlank(this.a_score)) &&
+        this.p_score === this.a_score
       );
     },
   },
