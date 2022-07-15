@@ -18,7 +18,6 @@ Campaign:
 Map Drawing:
   ☐ Create map tab
     ✔ Show available games @done(22-06-22 17:52)
-    ☐ Fix bug with showing available games
     ✔ Remove games already played @done(22-06-30 16:46)
     ✔ Allow for Factory @done(22-06-30 17:09)
     ✔ Allow for Tunnels @done(22-06-30 16:54)
