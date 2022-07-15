@@ -10,7 +10,7 @@ Campaign:
   ✔ Add a flag for "winning" in case of ties? @done(22-07-13 11:51)
   ☐ Highlight "missing" fields in game view
   ☐ Map Related, not related to drawing
-    ☐ Calculate player score
+    ✔ Calculate best player score so far @done(22-07-14 21:18)
     ☐ Let player know if faction choices are valid
     ☐ Calculate Player "best score" so far, including achievements
   ☐ Switch to a global application state (vuex?)
@@ -18,6 +18,7 @@ Campaign:
 Map Drawing:
   ☐ Create map tab
     ✔ Show available games @done(22-06-22 17:52)
+    ☐ Fix bug with showing available games
     ✔ Remove games already played @done(22-06-30 16:46)
     ✔ Allow for Factory @done(22-06-30 17:09)
     ✔ Allow for Tunnels @done(22-06-30 16:54)

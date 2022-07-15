@@ -79,3 +79,56 @@ export function availableCells(played) {
     return 1;
   });
 }
+
+function foldScore(cell_scores, q, r, dir) {
+  var this_cell = MapData.cell(q, r);
+
+  if (this_cell === null || this_cell.data === "HOME") {
+    return { blocked: true };
+  } else if (!(this_cell.data in cell_scores)) {
+    return { score: 0, length: 0 };
+  } else if (cell_scores[this_cell.data] < 0) {
+    return { blocked: true };
+  }
+
+  var new_cell_qr = axialNeighbor([q, r], dir);
+  var new_data = foldScore(cell_scores, new_cell_qr[0], new_cell_qr[1], dir);
+
+  if (new_data["blocked"]) {
+    return { blocked: true };
+  }
+
+  return {
+    score: cell_scores[this_cell.data] + new_data["score"],
+    length: new_data["length"] + 1,
+  };
+}
+
+function scoreForCell(cell_scores, q, r) {
+  var best_score = 0;
+  for (var dir = 0; dir < 6; dir++) {
+    var score_info = foldScore(cell_scores, q, r, dir);
+    if (score_info["blocked"]) {
+      continue;
+    }
+    if (score_info["score"] > best_score) {
+      best_score = score_info["score"];
+    }
+  }
+
+  return best_score;
+}
+
+export function bestScore(cell_scores) {
+  var best_score = 0;
+
+  for (var factions in cell_scores) {
+    var cell = MapData.findByFactions(factions);
+    var score = scoreForCell(cell_scores, cell.q, cell.r);
+    if (score > best_score) {
+      best_score = score;
+    }
+  }
+
+  return best_score;
+}

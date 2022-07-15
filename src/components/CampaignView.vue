@@ -9,6 +9,8 @@
     <br />
     <span id="automa-score" v-if="this.log.length > 0">
       <b>Current Automa Score: {{ automa_score }}</b>
+      <br />
+      <b>Best Player Score: {{ best_player_score }}</b>
     </span>
     <b-table
       tbody-class="logrow"
@@ -164,6 +166,7 @@ import FactionIcon from "./FactionIcon.vue";
 import InfluenceIcon from "./InfluenceIcon.vue";
 import { validAchievements } from "../helpers/achievementHelper";
 import { Achievements, Difficulties, InfluenceBonuses } from "../constants.js";
+import { bestScore } from "../helpers/mapHelpers.js";
 
 import saveState from "vue-save-state";
 
@@ -335,6 +338,25 @@ export default {
 
         return diff > 0 ? sum + diff : sum;
       }, 0);
+    },
+    best_player_score() {
+      var cell_scores = {};
+
+      for (var game of this.log) {
+        var factions = game.p_faction + game.a_faction;
+        if (game.location === "factory") {
+          factions = "FACTORY";
+        }
+
+        if (game.p_win) {
+          var score = this.scoreDiff(game);
+          cell_scores[factions] = score;
+        } else {
+          cell_scores[factions] = -1;
+        }
+      }
+
+      return bestScore(cell_scores);
     },
     log_items() {
       return this.log.map((g) => {

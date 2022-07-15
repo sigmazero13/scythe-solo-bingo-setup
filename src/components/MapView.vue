@@ -24,7 +24,6 @@
 </template>
 
 <script>
-// import MapData from "../models/MapData.js";
 import FactionIcon from "../components/FactionIcon.vue";
 import { availableCells } from "../helpers/mapHelpers.js";
 
