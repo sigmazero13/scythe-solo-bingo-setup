@@ -339,6 +339,15 @@ export default {
         return diff > 0 ? sum + diff : sum;
       }, 0);
     },
+    achievement_score() {
+      return Achievements.reduce((sum, achievement) => {
+        var score = this.achieved.includes(achievement.key)
+          ? achievement.points
+          : 0;
+
+        return sum + score;
+      }, 0);
+    },
     best_player_score() {
       var cell_scores = {};
 
@@ -356,7 +365,7 @@ export default {
         }
       }
 
-      return bestScore(cell_scores);
+      return bestScore(cell_scores) + this.achievement_score;
     },
     log_items() {
       return this.log.map((g) => {
