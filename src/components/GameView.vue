@@ -121,6 +121,11 @@
           </b-form-radio-group>
         </b-form-group>
       </b-form>
+      <div v-if="invalid_matchup">
+        <b-alert variant="danger" show>
+          NOTE: The selected matchup is invalid!
+        </b-alert>
+      </div>
       <div>
         <b-button @click="save" :disabled="invalid_game" variant="success">
           SAVE
@@ -176,6 +181,7 @@ const DEFAULT_DATA = Object.freeze({
   bonus: 0,
   combats: false,
   location: "normal",
+  availableMatchups: [],
 });
 
 export default {
@@ -252,6 +258,9 @@ export default {
       this[who[0] + "_faction"] = faction;
       this.$emit("update", { field: who + "-faction", value: faction });
     },
+    updateAvailableMatchups(matchups) {
+      this.availableMatchups = matchups;
+    },
     infBonusClass(bonus_idx) {
       var bonus_class = "bonus-choose";
       if (bonus_idx == this.bonus) {
@@ -287,6 +296,21 @@ export default {
         (this.airship_active === 0 && this.airship_passive !== 0) ||
         (this.airship_active !== 0 && this.airship_passive === 0)
       );
+    },
+    invalid_matchup() {
+      if (isBlank(this.p_faction) || isBlank(this.a_faction)) {
+        return false;
+      }
+
+      var combo = this.p_faction + this.a_faction;
+      if (this.availableMatchups.includes(combo)) {
+        return false;
+      } else {
+        return !(
+          this.location === "factory" &&
+          this.availableMatchups.includes("FACTORY")
+        );
+      }
     },
     tracks() {
       return ["Standard", "War", "Peace", "Random"].map((k) => {

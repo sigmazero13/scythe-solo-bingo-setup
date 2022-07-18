@@ -41,7 +41,11 @@
           <template v-slot:title>
             <b-icon-map />
           </template>
-          <MapView ref="map" @selectFactions="selectFactionsFromMap" />
+          <MapView
+            ref="map"
+            @selectFactions="selectFactionsFromMap"
+            @updateAvailableMatchups="availableMatchupsFromMap"
+          />
         </b-tab>
         <b-tab>
           <template v-slot:title>
@@ -140,6 +144,9 @@ export default {
       }
       this.$refs.game.update({ field: "location", value: location });
       this.cur_tab = GAME_TAB;
+    },
+    availableMatchupsFromMap(data) {
+      this.$refs.game.updateAvailableMatchups(data);
     },
   },
 };

@@ -45,6 +45,7 @@ export default {
       }
 
       this.played = updatedPlayed;
+      this.$emit("availableMatchups", availableCells(this.played));
     },
     splitCellsByColumn(cells) {
       var columns = [];
@@ -84,6 +85,12 @@ export default {
     playableCells() {
       return this.splitCellsByColumn(availableCells(this.played));
     },
+  },
+  mounted() {
+    this.$emit(
+      "updateAvailableMatchups",
+      availableCells(this.played).map((m) => m.data)
+    );
   },
 };
 </script>

@@ -11,14 +11,14 @@ Campaign:
   ☐ Highlight "missing" fields in game view
   ☐ Map Related, not related to drawing
     ✔ Calculate best player score so far @done(22-07-14 21:18)
-    ☐ Let player know if faction choices are valid
+    ✔ Let player know if faction choices are valid @done(22-07-18 17:43)
     ✔ Calculate Player "best score" so far, including achievements @done(22-07-15 14:51)
     ☐ Let player know final score when campaign ends
     ☐ Let player know if a choice will end the campaign upon victory
   ☐ Switch to a global application state (vuex?)
 
 Map Drawing:
-  ☐ Create map tab
+  ✔ Create map tab @done(22-07-18 16:52)
     ✔ Show available games @done(22-06-22 17:52)
     ✔ Remove games already played @done(22-06-30 16:46)
     ✔ Allow for Factory @done(22-06-30 17:09)
