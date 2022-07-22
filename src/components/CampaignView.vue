@@ -95,7 +95,7 @@
               {{ row.item.tokens }}
             </b-col>
             <b-col cols="4" class="detail">
-              <span @click="editGame(row.item)">
+              <span @click="editGame(row.item.game_id)">
                 <b-icon-pencil />
                 EDIT
               </span>
@@ -165,10 +165,11 @@
 import FactionIcon from "./FactionIcon.vue";
 import InfluenceIcon from "./InfluenceIcon.vue";
 import { validAchievements } from "../helpers/achievementHelper";
-import { Achievements, Difficulties, InfluenceBonuses } from "../constants.js";
-import { bestScore } from "../helpers/mapHelpers.js";
+import { Achievements, Difficulties } from "../constants.js";
+import { scoreDiff } from "../helpers/utilities.js";
 
 import saveState from "vue-save-state";
+import { mapGetters } from "vuex";
 
 export default {
   name: "CampaignView",
@@ -184,8 +185,6 @@ export default {
         { key: "bonus", label: "Bonus" },
         { key: "show_details", label: "" },
       ],
-      log: [],
-      achieved: [],
       game_id_to_delete: -1,
       new_achievement_keys: [],
       selected_achievements: [],
@@ -193,94 +192,29 @@ export default {
   },
   methods: {
     resetCampaign() {
-      this.log = [];
-      this.$emit("resetCampaign", {});
+      this.$store.commit("resetCampaign");
     },
     newGame() {
-      var max_id = Math.max(...this.log.map((g) => g.game_id));
-      if (max_id === -Infinity) max_id = 0;
-      this.$emit("newgame", {
-        game_id: max_id + 1,
-        bonus: this.nextInfluenceBonus(),
-        automa_level: this.nextAutomaLevel(),
-      });
+      this.$emit("newgame"); //, {
     },
-    editGame(game_data) {
-      // See GAMEVIEW DEFAULT_DATA for a list of fields that are sent.
-      // The values will be specific to the game being edited, of course
-      this.$emit("editgame", game_data);
+    editGame(game_id) {
+      this.$emit("editgame", game_id);
     },
     openDeleteModal(game_id) {
       this.game_id_to_delete = game_id;
       this.$refs["confirm-delete-modal"].show();
     },
     deleteGame() {
-      for (let i in this.log) {
-        if (this.log[i].game_id === this.game_id_to_delete) {
-          this.log.splice(i, 1);
-          return;
-        }
-      }
-
-      this.$emit("updatePlayed", this.log);
-    },
-    nextInfluenceBonus() {
-      var options = Array.from(Array(InfluenceBonuses.length).keys());
-      for (let game of this.log.slice(-8)) {
-        var idx = options.indexOf(game.bonus);
-        if (idx !== -1) {
-          options.splice(idx, 1);
-        }
-      }
-      var newBonusIdx = Math.floor(Math.random() * options.length);
-      return options[newBonusIdx];
-    },
-    nextAutomaLevel() {
-      if (this.log.length === 0) {
-        return 2;
-      }
-
-      var last_game = this.log.slice(-1)[0];
-      if (last_game.p_score > last_game.a_score) {
-        if (last_game.a_level >= 7) {
-          return 7;
-        } else {
-          return last_game.a_level + 1;
-        }
-      } else {
-        if (last_game.a_level <= 1) {
-          return 1;
-        } else {
-          return last_game.a_level - 1;
-        }
-      }
+      this.$store.commit("deleteGame", this.game_id_to_delete);
     },
     saveGame(game_data) {
-      // See GAMEVIEW DEFAULT_DATA for a list of the keys used for game data
-      for (let i in this.log) {
-        if (this.log[i].game_id === game_data.game_id) {
-          // Update an existing game's data
-          for (let key in game_data) {
-            var value = game_data[key];
-            if (key.includes("_score")) {
-              value = parseInt(value);
-            }
-            this.log[i][key] = value;
-          }
-          return;
-        }
-      }
-
-      // If it gets here, it's a new game.
-      this.log.push(game_data);
+      this.$store.commit("saveGame", game_data);
 
       if (game_data.p_score > game_data.a_score) {
         var new_achievements = validAchievements(this.log, this.achieved);
         this.new_achievement_keys = new_achievements;
         this.$refs["achievement-modal"].show();
       }
-
-      this.$emit("updatePlayed", this.log);
     },
     automaLevel(info) {
       return Difficulties[info.a_level];
@@ -304,20 +238,16 @@ export default {
     playerWon(info) {
       if (info === null || info === undefined) return false;
       if (info.p_win === undefined) {
-        info.p_win = this.scoreDiff(info) > 0;
+        info.p_win = scoreDiff(info) > 0;
       }
       return info.p_win;
     },
-    scoreDiff(info) {
-      if (info === null || info === undefined) return 0;
-      return info.p_score - info.a_score;
-    },
     commitAchievements() {
-      this.$emit("saveAchievements", this.selected_achievements);
+      this.$store.commit("addAchievements", this.selected_achievements);
       this.selected_achievements = [];
     },
-    refreshAchievements(achievements) {
-      this.achieved = achievements;
+    scoreDiff(game) {
+      return scoreDiff(game);
     },
     getSaveStateConfig() {
       return {
@@ -332,41 +262,13 @@ export default {
     },
   },
   computed: {
-    automa_score() {
-      return this.log.reduce((sum, game) => {
-        var diff = game.a_score - game.p_score;
-
-        return diff > 0 ? sum + diff : sum;
-      }, 0);
-    },
-    achievement_score() {
-      return Achievements.reduce((sum, achievement) => {
-        var score = this.achieved.includes(achievement.key)
-          ? achievement.points
-          : 0;
-
-        return sum + score;
-      }, 0);
-    },
-    best_player_score() {
-      var cell_scores = {};
-
-      for (var game of this.log) {
-        var factions = game.p_faction + game.a_faction;
-        if (game.location === "factory") {
-          factions = "FACTORY";
-        }
-
-        if (game.p_win) {
-          var score = this.scoreDiff(game);
-          cell_scores[factions] = score;
-        } else {
-          cell_scores[factions] = -1;
-        }
-      }
-
-      return bestScore(cell_scores) + this.achievement_score;
-    },
+    ...mapGetters([
+      "log",
+      "achieved",
+      "automa_score",
+      "achievement_score",
+      "best_player_score",
+    ]),
     log_items() {
       return this.log.map((g) => {
         return {
@@ -391,9 +293,6 @@ export default {
     too_many_achievements() {
       return this.selected_achievements.length > 2;
     },
-  },
-  mounted() {
-    this.$emit("updatePlayed", this.log);
   },
 };
 </script>

@@ -27,26 +27,15 @@
 import FactionIcon from "../components/FactionIcon.vue";
 import { availableCells } from "../helpers/mapHelpers.js";
 
+import { mapGetters } from "vuex";
+
 export default {
   name: "MapView",
   components: { FactionIcon },
   data() {
-    return { played: [] };
+    return {};
   },
   methods: {
-    updatePlayed(game_list) {
-      var updatedPlayed = [];
-      for (var game of game_list) {
-        var game_data =
-          game.location === "factory"
-            ? "FACTORY"
-            : game.p_faction + game.a_faction;
-        updatedPlayed.push(game_data);
-      }
-
-      this.played = updatedPlayed;
-      this.$emit("availableMatchups", availableCells(this.played));
-    },
     splitCellsByColumn(cells) {
       var columns = [];
       var last_q = null;
@@ -82,15 +71,10 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(["played"]),
     playableCells() {
       return this.splitCellsByColumn(availableCells(this.played));
     },
-  },
-  mounted() {
-    this.$emit(
-      "updateAvailableMatchups",
-      availableCells(this.played).map((m) => m.data)
-    );
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="header">
-      <h1>Scythe Bingo Reloaded</h1>
+      <h1>Scythe Bingo Reloaded:</h1>
     </div>
     <b-container class="app-container">
       <b-tabs
@@ -15,21 +15,15 @@
           </template>
           <CampaignView
             ref="campaign"
-            @resetCampaign="resetCampaign"
             @newgame="newGame"
             @editgame="editGame"
-            @saveAchievements="saveAchievements"
-            @updatePlayed="updatePlayed"
           />
         </b-tab>
         <b-tab>
           <template v-slot:title>
             <b-icon-award />
           </template>
-          <AchievementView
-            ref="achievements"
-            @refreshAchievements="refreshAchievements"
-          />
+          <AchievementView ref="achievements" />
         </b-tab>
         <b-tab>
           <template v-slot:title>
@@ -41,11 +35,7 @@
           <template v-slot:title>
             <b-icon-map />
           </template>
-          <MapView
-            ref="map"
-            @selectFactions="selectFactionsFromMap"
-            @updateAvailableMatchups="availableMatchupsFromMap"
-          />
+          <MapView ref="map" @selectFactions="selectFactionsFromMap" />
         </b-tab>
         <b-tab>
           <template v-slot:title>
@@ -115,19 +105,6 @@ export default {
     updateFromRandomizer(data) {
       this.$refs.game.update(data);
     },
-    saveAchievements(data) {
-      this.$refs.achievements.addAchievements(data);
-    },
-    refreshAchievements(data) {
-      this.$refs.campaign.refreshAchievements(data);
-    },
-    resetCampaign() {
-      this.$refs.achievements.reset();
-      this.$refs.map.updatePlayed([]);
-    },
-    updatePlayed(data) {
-      this.$refs.map.updatePlayed(data);
-    },
     selectFactionsFromMap({ factions, location }) {
       if (factions !== "") {
         this.$refs.game.update({ field: "player-faction", value: factions[0] });
@@ -144,9 +121,6 @@ export default {
       }
       this.$refs.game.update({ field: "location", value: location });
       this.cur_tab = GAME_TAB;
-    },
-    availableMatchupsFromMap(data) {
-      this.$refs.game.updateAvailableMatchups(data);
     },
   },
 };

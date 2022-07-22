@@ -163,6 +163,7 @@ import FactionButtonBar from "./FactionButtonBar.vue";
 import InfluenceIcon from "./InfluenceIcon.vue";
 
 import saveState from "vue-save-state";
+import { mapGetters } from "vuex";
 
 const DEFAULT_DATA = Object.freeze({
   game_id: 0,
@@ -181,7 +182,6 @@ const DEFAULT_DATA = Object.freeze({
   bonus: 0,
   combats: false,
   location: "normal",
-  availableMatchups: [],
 });
 
 export default {
@@ -201,18 +201,23 @@ export default {
     }
   },
   methods: {
-    newGame({ game_id, bonus, automa_level }) {
+    newGame() {
       for (const key in DEFAULT_DATA) {
         this[key] = DEFAULT_DATA[key];
       }
-      this.game_id = game_id;
-      this.bonus = bonus;
-      this.a_level = automa_level;
+
+      this.edit = false;
+      this.game_id = this.max_game_id + 1;
+      this.bonus = this.next_influence_bonus;
+      this.a_level = this.next_automa_level;
     },
-    editGame(game_data) {
+    editGame(game_id) {
+      var game_data = this.game_by_id(game_id);
       for (const key in DEFAULT_DATA) {
         this[key] = game_data[key];
       }
+
+      this.edit = true;
     },
     save() {
       var game = {};
@@ -258,9 +263,6 @@ export default {
       this[who[0] + "_faction"] = faction;
       this.$emit("update", { field: who + "-faction", value: faction });
     },
-    updateAvailableMatchups(matchups) {
-      this.availableMatchups = matchups;
-    },
     infBonusClass(bonus_idx) {
       var bonus_class = "bonus-choose";
       if (bonus_idx == this.bonus) {
@@ -280,6 +282,13 @@ export default {
     },
   },
   computed: {
+    ...mapGetters([
+      "availableMatchups",
+      "max_game_id",
+      "next_influence_bonus",
+      "next_automa_level",
+      "game_by_id",
+    ]),
     all_bonuses() {
       return InfluenceBonuses;
     },
@@ -298,7 +307,7 @@ export default {
       );
     },
     invalid_matchup() {
-      if (isBlank(this.p_faction) || isBlank(this.a_faction)) {
+      if (this.edit || isBlank(this.p_faction) || isBlank(this.a_faction)) {
         return false;
       }
 

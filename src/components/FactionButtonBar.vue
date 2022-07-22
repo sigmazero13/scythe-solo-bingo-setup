@@ -49,6 +49,7 @@ export default {
   },
   methods: {
     change(event) {
+      this.$store.commit("increment");
       this.$emit("update", event);
     },
   },

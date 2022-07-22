@@ -9,8 +9,8 @@
       text-field="text"
       class="achievement-option"
       stacked
-      @change="achievementToggled"
     >
+      <!-- @change="achievementToggled" -->
       {{ option.text }} ({{ option.points }})
     </b-form-checkbox>
   </div>
@@ -19,41 +19,29 @@
 <script>
 import { Achievements } from "../constants";
 
-import saveState from "vue-save-state";
+// import saveState from "vue-save-state";
 
 export default {
   name: "AchievementView",
-  mixins: [saveState],
+  // mixins: [saveState],
   data() {
-    return { achieved: [] };
+    // return { achieved: [] };
+    return {};
   },
   mounted() {
     this.$emit("refreshAchievements", this.achieved);
   },
-  methods: {
-    // "achievements" is a list of achievement keys
-    addAchievements(new_achievements) {
-      for (let new_a of new_achievements) {
-        if (!this.achieved.includes(new_a)) {
-          this.achieved.push(new_a);
-        }
-      }
-    },
-    achievementToggled(selected_achievements) {
-      this.$emit("refreshAchievements", selected_achievements);
-    },
-    reset() {
-      this.achieved = [];
-    },
-    getSaveStateConfig() {
-      return {
-        cacheKey: "AchievementView",
-      };
-    },
-  },
   computed: {
     all_achievements() {
       return Achievements;
+    },
+    achieved: {
+      get() {
+        return this.$store.state.achieved;
+      },
+      set(new_achieved) {
+        return this.$store.commit("updateAchievements", new_achieved);
+      },
     },
   },
 };
