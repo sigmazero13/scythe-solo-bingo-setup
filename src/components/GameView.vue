@@ -175,7 +175,9 @@ export default {
   name: "GameView",
   components: { FactionButtonBar, InfluenceIcon },
   data() {
-    return {};
+    return {
+      edit: false,
+    };
   },
   mounted() {
     if (this.p_faction !== null) {
@@ -188,11 +190,8 @@ export default {
   },
   methods: {
     newGame() {
-      for (const key in DEFAULT_DATA) {
-        this[key] = DEFAULT_DATA[key];
-      }
+      this.$store.commit("newGame");
 
-      this.edit = false;
       this.game_id = this.max_game_id + 1;
       this.bonus = this.next_influence_bonus;
       this.a_level = this.next_automa_level;
@@ -202,19 +201,12 @@ export default {
       for (const key in DEFAULT_DATA) {
         this[key] = game_data[key];
       }
-
-      this.edit = true;
     },
     save() {
-      var game = {};
       if (!this.tie_game) {
         this.p_win = this.winner_by_points;
       }
-      for (const key in DEFAULT_DATA) {
-        game[key] = this[key];
-      }
-      this.$emit("savegame", game);
-      this.game_id = 0;
+      this.$emit("savegame");
       // window.scrollTo(0, 0);
     },
     update({ field, value }) {
@@ -269,6 +261,7 @@ export default {
       "next_influence_bonus",
       "next_automa_level",
       "game_by_id",
+      "is_edit",
     ]),
     ...mapFields(Object.keys(DEFAULT_DATA).map((k) => k)),
 
@@ -290,7 +283,7 @@ export default {
       );
     },
     invalid_matchup() {
-      if (this.edit || isBlank(this.p_faction) || isBlank(this.a_faction)) {
+      if (this.is_edit || isBlank(this.p_faction) || isBlank(this.a_faction)) {
         return false;
       }
 

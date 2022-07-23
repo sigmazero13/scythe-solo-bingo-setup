@@ -85,8 +85,8 @@ export default {
     // data object to the specific view that needs it.  See the specific view
     // file for details on what the object looks like, if needed.
 
-    newGame(data) {
-      this.$refs.game.newGame(data);
+    newGame() {
+      this.$refs.game.newGame();
       this.$refs.random.reset();
       this.cur_tab = GAME_TAB;
     },
@@ -95,8 +95,8 @@ export default {
       this.$refs.random.reset();
       this.cur_tab = GAME_TAB;
     },
-    saveGame(data) {
-      this.$refs.campaign.saveGame(data);
+    saveGame() {
+      this.$refs.campaign.saveGame();
       this.cur_tab = CAMPAIGN_TAB;
     },
     updateFromGame(data) {

@@ -19,6 +19,7 @@ Campaign:
     ✔ log @done(22-07-21 20:27)
     ✔ achieved @done(22-07-21 21:26)
     ✔ cur_game @done(22-07-23 16:55)
+    ✔ cur_game save using vuex @done(22-07-23 17:20)
     ✔ AchievementView : "achieved" @done(22-07-21 22:17)
     ✔ CampaignView: "log"; @done(22-07-21 22:17)
     ✔ GameView: game data? @done(22-07-23 16:55)

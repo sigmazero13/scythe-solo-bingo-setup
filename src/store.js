@@ -112,6 +112,15 @@ export default new Vuex.Store({
     getGameField(state) {
       return getField(state.cur_game);
     },
+    is_edit(state) {
+      for (let game of state.log) {
+        if (game.game_id === state.cur_game.game_id) {
+          return true;
+        }
+      }
+
+      return false;
+    },
   },
 
   mutations: {
@@ -131,7 +140,8 @@ export default new Vuex.Store({
         }
       }
     },
-    saveGame(state, game_data) {
+    saveGame(state) {
+      const game_data = state.cur_game;
       for (const [index, game] of state.log.entries()) {
         if (game.game_id === game_data.game_id) {
           // Update an existing game's data

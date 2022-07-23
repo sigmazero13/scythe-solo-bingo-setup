@@ -168,13 +168,11 @@ import { validAchievements } from "../helpers/achievementHelper";
 import { Achievements, Difficulties } from "../constants.js";
 import { scoreDiff } from "../helpers/utilities.js";
 
-import saveState from "vue-save-state";
 import { mapGetters } from "vuex";
 
 export default {
   name: "CampaignView",
   components: { FactionIcon, InfluenceIcon },
-  mixins: [saveState],
   data() {
     return {
       fields: [
@@ -207,8 +205,9 @@ export default {
     deleteGame() {
       this.$store.commit("deleteGame", this.game_id_to_delete);
     },
-    saveGame(game_data) {
-      this.$store.commit("saveGame", game_data);
+    saveGame() {
+      const game_data = this.$store.state.cur_game;
+      this.$store.commit("saveGame");
 
       if (game_data.p_score > game_data.a_score) {
         var new_achievements = validAchievements(this.log, this.achieved);
@@ -248,17 +247,6 @@ export default {
     },
     scoreDiff(game) {
       return scoreDiff(game);
-    },
-    getSaveStateConfig() {
-      return {
-        cacheKey: "CampaignView",
-        ignoreProperties: [
-          "fields",
-          "game_id_to_delete",
-          "new_achievement_keys",
-          "selected_achievements",
-        ],
-      };
     },
   },
   computed: {
