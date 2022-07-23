@@ -19,8 +19,11 @@
 <script>
 import { AirshipActives, AirshipPassives, Resolutions } from "../constants.js";
 
+import saveState from "vue-save-state";
+
 export default {
   name: "WindGambit",
+  mixins: [saveState],
   data() {
     return {
       ship_status: 0,
@@ -78,6 +81,10 @@ export default {
       } else {
         return card["name"];
       }
+    },
+
+    getSaveStateConfig() {
+      return { cacheKey: "WindGambit" };
     },
   },
 

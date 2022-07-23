@@ -158,38 +158,24 @@ import {
   Resolutions,
 } from "../constants.js";
 import { isBlank } from "../helpers/utilities.js";
+import { DEFAULT_DATA } from "../models/GameData.js";
 
 import FactionButtonBar from "./FactionButtonBar.vue";
 import InfluenceIcon from "./InfluenceIcon.vue";
 
-import saveState from "vue-save-state";
 import { mapGetters } from "vuex";
+import { createHelpers } from "vuex-map-fields";
 
-const DEFAULT_DATA = Object.freeze({
-  game_id: 0,
-  track: "Standard",
-  p_faction: null,
-  p_mat: null,
-  p_score: null,
-  p_win: false,
-  a_faction: null,
-  a_level: 2,
-  a_score: null,
-  airship_active: 0,
-  airship_passive: 0,
-  resolution: 0,
-  tokens: 0,
-  bonus: 0,
-  combats: false,
-  location: "normal",
+const { mapFields } = createHelpers({
+  getterType: "getGameField",
+  mutationType: "updateGameField",
 });
 
 export default {
   name: "GameView",
   components: { FactionButtonBar, InfluenceIcon },
-  mixins: [saveState],
   data() {
-    return { ...DEFAULT_DATA };
+    return {};
   },
   mounted() {
     if (this.p_faction !== null) {
@@ -275,11 +261,6 @@ export default {
       this.bonus = new_bonus;
       this.$bvModal.hide("bonus-modal");
     },
-    getSaveStateConfig() {
-      return {
-        cacheKey: "GameView",
-      };
-    },
   },
   computed: {
     ...mapGetters([
@@ -289,6 +270,8 @@ export default {
       "next_automa_level",
       "game_by_id",
     ]),
+    ...mapFields(Object.keys(DEFAULT_DATA).map((k) => k)),
+
     all_bonuses() {
       return InfluenceBonuses;
     },

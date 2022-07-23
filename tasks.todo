@@ -15,13 +15,13 @@ Campaign:
     ✔ Calculate Player "best score" so far, including achievements @done(22-07-15 14:51)
     ☐ Let player know final score when campaign ends
     ☐ Let player know if a choice will end the campaign upon victory
-  ☐ Switch to a global application state (vuex?)
+  ✔ Switch to a global application state (vuex?) @done(22-07-23 16:55)
     ✔ log @done(22-07-21 20:27)
     ✔ achieved @done(22-07-21 21:26)
-    ☐ cur_game
+    ✔ cur_game @done(22-07-23 16:55)
     ✔ AchievementView : "achieved" @done(22-07-21 22:17)
     ✔ CampaignView: "log"; @done(22-07-21 22:17)
-    ☐ GameView: game data?
+    ✔ GameView: game data? @done(22-07-23 16:55)
     ✔ GeneralView: player_board, structure_bonus, fv_offset, p_faction, a_faction @done(22-07-21 22:17)
     ✔ MapView: played, available? @done(22-07-21 22:17)
 

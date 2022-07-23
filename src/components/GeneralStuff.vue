@@ -60,9 +60,12 @@ import { Factions, PlayerMats, StructureBonuses } from "../constants.js";
 
 import FactionButtonBar from "./FactionButtonBar.vue";
 
+import saveState from "vue-save-state";
+
 export default {
   name: "GeneralStuff",
   components: { FactionButtonBar },
+  mixins: [saveState],
   data() {
     return {
       player_board: { name: "Not yet selected...", num: "..." },
@@ -131,6 +134,9 @@ export default {
     selectFaction(who, faction) {
       this[who[0] + "_faction"] = faction;
       this.$emit("update", { field: who + "-faction", value: faction });
+    },
+    getSaveStateConfig() {
+      return { cacheKey: "GeneralStuff" };
     },
   },
   computed: {

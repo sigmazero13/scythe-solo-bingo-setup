@@ -4,6 +4,9 @@ import Vuex from "vuex";
 import { availableCells, bestScore } from "./helpers/mapHelpers.js";
 import { scoreDiff } from "./helpers/utilities.js";
 import { Achievements, InfluenceBonuses } from "./constants.js";
+import { DEFAULT_DATA } from "./models/GameData.js";
+
+import { getField, updateField } from "vuex-map-fields";
 
 Vue.use(Vuex);
 
@@ -11,7 +14,7 @@ export default new Vuex.Store({
   state: {
     log: [],
     achieved: [],
-    cur_game: {},
+    cur_game: { ...DEFAULT_DATA },
   },
   getters: {
     log: (state) => {
@@ -106,7 +109,11 @@ export default new Vuex.Store({
         return last_game.a_level <= 1 ? 1 : last_game.a_level - 1;
       }
     },
+    getGameField(state) {
+      return getField(state.cur_game);
+    },
   },
+
   mutations: {
     resetCampaign(state) {
       state.log = [];
@@ -159,9 +166,22 @@ export default new Vuex.Store({
 
       localStorage.setItem("achieved", JSON.stringify(state.achieved));
     },
+    updateGameField(state, field) {
+      updateField(state.cur_game, field);
+      localStorage.setItem("cur_game", JSON.stringify(state.cur_game));
+    },
+    newGame(state) {
+      state.cur_game = { ...DEFAULT_DATA };
+      localStorage.setItem("cur_game", JSON.stringify(state.cur_game));
+    },
     init(state) {
       state.log = JSON.parse(localStorage.getItem("log") || "[]");
       state.achieved = JSON.parse(localStorage.getItem("achieved") || "[]");
+      if (localStorage.getItem("cur_game")) {
+        state.cur_game = JSON.parse(localStorage.getItem("cur_game"));
+      } else {
+        state.cur_game = { ...DEFAULT_DATA };
+      }
     },
   },
 });

@@ -38,11 +38,14 @@
 import { TriumphVariants, Triumphs } from "../constants.js";
 import TriumphTile from "./TriumphTile.vue";
 
+import saveState from "vue-save-state";
+
 export default {
   name: "TriumphTrack",
   components: {
     TriumphTile,
   },
+  mixins: [saveState],
   data() {
     return this.new_data();
   },
@@ -132,6 +135,10 @@ export default {
       } else {
         return this.buildTrackOptions(track_type);
       }
+    },
+
+    getSaveStateConfig() {
+      return { cacheKey: "TriumphTrack" };
     },
   },
   computed: {
