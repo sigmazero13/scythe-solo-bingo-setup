@@ -80,39 +80,48 @@ export function availableCells(played) {
   });
 }
 
-function foldScore(cell_scores, q, r, dir) {
+function foldScore(cell_scores, q, r, dir, length) {
+  // Don't check past 5 spots
+  if (length >= 5) {
+    return 0;
+  }
+
   var this_cell = MapData.cell(q, r);
 
   if (this_cell === null || this_cell.data === "HOME") {
-    return { blocked: true };
-  } else if (!(this_cell.data in cell_scores)) {
-    return { score: 0, length: 0 };
+    return -1;
   } else if (cell_scores[this_cell.data] < 0) {
-    return { blocked: true };
+    return -1;
   }
+
+  var this_score =
+    this_cell.data in cell_scores ? cell_scores[this_cell.data] : 0;
 
   var new_cell_qr = axialNeighbor([q, r], dir);
-  var new_data = foldScore(cell_scores, new_cell_qr[0], new_cell_qr[1], dir);
+  var new_sum = foldScore(
+    cell_scores,
+    new_cell_qr[0],
+    new_cell_qr[1],
+    dir,
+    length + 1
+  );
 
-  if (new_data["blocked"]) {
-    return { blocked: true };
+  if (new_sum < 0) {
+    return -1;
   }
 
-  return {
-    score: cell_scores[this_cell.data] + new_data["score"],
-    length: new_data["length"] + 1,
-  };
+  return this_score + new_sum;
 }
 
-function scoreForCell(cell_scores, q, r) {
+export function scoreForCell(cell_scores, q, r) {
   var best_score = 0;
   for (var dir = 0; dir < 6; dir++) {
-    var score_info = foldScore(cell_scores, q, r, dir);
-    if (score_info["blocked"]) {
+    var score = foldScore(cell_scores, q, r, dir, 0);
+    if (score < 0) {
       continue;
     }
-    if (score_info["score"] > best_score) {
-      best_score = score_info["score"];
+    if (score > best_score) {
+      best_score = score;
     }
   }
 
@@ -131,4 +140,40 @@ export function bestScore(cell_scores) {
   }
 
   return best_score;
+}
+
+function potentialBingo(cell_scores, q, r, dir, length) {
+  if (length >= 5) {
+    return true;
+  }
+
+  var this_cell = MapData.cell(q, r);
+
+  if (this_cell === null || this_cell.data === "HOME") {
+    return false;
+  } else if (cell_scores[this_cell.data] < 0) {
+    return false;
+  } else if (!(this_cell.data in cell_scores) && length > 0) {
+    return false;
+  }
+
+  var new_cell_qr = axialNeighbor([q, r], dir);
+  return potentialBingo(
+    cell_scores,
+    new_cell_qr[0],
+    new_cell_qr[1],
+    dir,
+    length + 1
+  );
+}
+
+export function matchupWillEnd(cell_scores, factions) {
+  let cell = MapData.findByFactions(factions);
+  for (var dir = 0; dir < 6; dir++) {
+    if (potentialBingo(cell_scores, cell.q, cell.r, dir, 0)) {
+      return true;
+    }
+  }
+
+  return false;
 }

@@ -126,6 +126,11 @@
           NOTE: The selected matchup is invalid!
         </b-alert>
       </div>
+      <div v-else-if="game_will_end_campaign">
+        <b-alert variant="warning" show>
+          NOTE: If you win, this will end the campaign!
+        </b-alert>
+      </div>
       <div>
         <b-button @click="save" :disabled="invalid_game" variant="success">
           SAVE
@@ -261,6 +266,7 @@ export default {
       "next_influence_bonus",
       "next_automa_level",
       "game_by_id",
+      "matchup_will_end_campaign",
       "is_edit",
     ]),
     ...mapFields(Object.keys(DEFAULT_DATA).map((k) => k)),
@@ -296,6 +302,24 @@ export default {
           this.availableMatchups.includes("FACTORY")
         );
       }
+    },
+    game_will_end_campaign() {
+      if (!(this.p_faction && this.a_faction)) {
+        return false;
+      }
+
+      var combo = this.p_faction + this.a_faction;
+      if (
+        this.availableMatchups.includes(combo) ||
+        this.location === "factory"
+      ) {
+        if (this.location === "factory") {
+          combo = "FACTORY";
+        }
+        return this.matchup_will_end_campaign(combo);
+      }
+
+      return false;
     },
     tracks() {
       return ["Standard", "War", "Peace", "Random"].map((k) => {

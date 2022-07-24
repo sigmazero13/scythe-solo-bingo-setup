@@ -1,7 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { availableCells, bestScore } from "./helpers/mapHelpers.js";
+import {
+  availableCells,
+  bestScore,
+  scoreForCell,
+  matchupWillEnd,
+} from "./helpers/mapHelpers.js";
+import MapData from "./models/MapData.js";
 import { scoreDiff } from "./helpers/utilities.js";
 import { Achievements, InfluenceBonuses } from "./constants.js";
 import { DEFAULT_DATA } from "./models/GameData.js";
@@ -63,7 +69,7 @@ export default new Vuex.Store({
         return sum + score;
       }, 0);
     },
-    best_player_score: (state, getters) => {
+    cell_scores: (state) => {
       var cell_scores = {};
 
       for (var game of state.log) {
@@ -80,7 +86,24 @@ export default new Vuex.Store({
         }
       }
 
-      return bestScore(cell_scores) + getters.achievement_score;
+      return cell_scores;
+    },
+    best_player_score_for: (state, getters) => (factions) => {
+      let cell = MapData.findByFactions(factions);
+      if (cell === null) {
+        return 0;
+      }
+
+      return (
+        scoreForCell(getters.cell_scores, cell.q, cell.r) +
+        getters.achievement_score
+      );
+    },
+    best_player_score: (state, getters) => {
+      return bestScore(getters.cell_scores) + getters.achievement_score;
+    },
+    matchup_will_end_campaign: (state, getters) => (factions) => {
+      return matchupWillEnd(getters.cell_scores, factions);
     },
     max_game_id: (state) => {
       var max_id = Math.max(...state.log.map((g) => g.game_id));
@@ -154,6 +177,7 @@ export default new Vuex.Store({
           }
 
           localStorage.setItem("log", JSON.stringify(state.log));
+          this.commit("newGame");
           return;
         }
       }
@@ -161,6 +185,7 @@ export default new Vuex.Store({
       // If it gets here, it's a new game
       state.log.push(game_data);
       localStorage.setItem("log", JSON.stringify(state.log));
+      this.commit("newGame");
     },
     addAchievements(state, new_achievements) {
       for (let new_a of new_achievements) {

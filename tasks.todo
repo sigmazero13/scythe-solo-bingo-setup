@@ -14,7 +14,7 @@ Campaign:
     ✔ Let player know if faction choices are valid @done(22-07-18 17:43)
     ✔ Calculate Player "best score" so far, including achievements @done(22-07-15 14:51)
     ☐ Let player know final score when campaign ends
-    ☐ Let player know if a choice will end the campaign upon victory
+    ✔ Let player know if a choice will end the campaign upon victory @done(22-07-23 20:18)
   ✔ Switch to a global application state (vuex?) @done(22-07-23 16:55)
     ✔ log @done(22-07-21 20:27)
     ✔ achieved @done(22-07-21 21:26)
