@@ -6,14 +6,14 @@
         <b-col cols="7">{{ track }}</b-col>
       </b-row>
       <b-row
-        v-for="(row, row_index) in formattedTrack"
+        v-for="(row, row_index) in formatted_track"
         v-bind:key="`track-row-${row_index}`"
       >
         <b-col
           v-for="(item, index) in row"
           v-bind:key="`track-col-${row_index}-${index}`"
           class="track-col"
-          v-bind:class="trackClass(item['influence'])"
+          v-bind:class="track_class(item['influence'])"
         >
           <TriumphTile :goal="item['text']" :count="item['count']" />
         </b-col>
@@ -25,7 +25,7 @@
           v-for="(tunnel, tunnel_index) in tunnels"
           v-bind:key="`tunnel-col-${tunnel_index}`"
           class="tunnel-col"
-          v-bind:class="trackClass(tunnel['influence'])"
+          v-bind:class="track_class(tunnel['influence'])"
         >
           {{ tunnel.text }}
         </b-col>
@@ -38,26 +38,38 @@
 import { TriumphVariants, Triumphs } from "../constants.js";
 import TriumphTile from "./TriumphTile.vue";
 
+import saveState from "vue-save-state";
+
 export default {
   name: "TriumphTrack",
   components: {
     TriumphTile,
   },
+  mixins: [saveState],
   data() {
-    return {
-      track: "Not yet selected...",
-      track_items: Array(10).fill({ text: "", count: "0" }),
-      tunnels: [
-        { text: "N" },
-        { text: "NE" },
-        { text: "SE" },
-        { text: "S" },
-        { text: "SW" },
-        { text: "N" },
-      ],
-    };
+    return this.new_data();
   },
   methods: {
+    new_data() {
+      return {
+        track: "Not yet selected...",
+        track_items: Array(10).fill({ text: "", count: "0" }),
+        tunnels: [
+          { text: "N" },
+          { text: "NE" },
+          { text: "SE" },
+          { text: "S" },
+          { text: "SW" },
+          { text: "N" },
+        ],
+      };
+    },
+    reset() {
+      var clean = this.new_data();
+      this.track = clean.track;
+      this.track_items = clean.track_items;
+      this.tunnels = clean.tunnels;
+    },
     makeSelection() {
       var choice = Math.floor(Math.random() * TriumphVariants.length);
       this.track = TriumphVariants[choice];
@@ -124,17 +136,20 @@ export default {
         return this.buildTrackOptions(track_type);
       }
     },
-  },
 
+    getSaveStateConfig() {
+      return { cacheKey: "TriumphTrack" };
+    },
+  },
   computed: {
-    formattedTrack() {
+    formatted_track() {
       return this.track_items.reduce((rows, value, i) => {
         if (i % 5 === 0) rows.push([]);
         rows[rows.length - 1].push(value);
         return rows;
       }, []);
     },
-    trackClass() {
+    track_class() {
       return (influence) => {
         return influence ? "influence" : "";
       };

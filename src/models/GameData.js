@@ -1,13 +1,18 @@
-export default class GameData {
-  id = 0;
-  difficulty = 2;
-  playermat = 1;
-  triumph = 1;
-  airshipPassive = 1;
-  airshipActive = 9;
-  resolution = 1;
-  tokens = 0;
-  playerScore = 0;
-  automaScore = 0;
-  influenceBonus = 0;
-}
+export const DEFAULT_DATA = Object.freeze({
+  game_id: 0,
+  track: "Standard",
+  p_faction: null,
+  p_mat: null,
+  p_score: null,
+  p_win: false,
+  a_faction: null,
+  a_level: 2,
+  a_score: null,
+  airship_active: 0,
+  airship_passive: 0,
+  resolution: 0,
+  tokens: 0,
+  bonus: 0,
+  combats: false,
+  location: "normal",
+});

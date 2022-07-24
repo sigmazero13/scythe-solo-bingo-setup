@@ -1,18 +1,18 @@
 <template>
   <div
-    v-if="icon_valid"
+    v-if="validIcon"
     :title="icon.name"
-    class="triumph-icon"
-    :style="offset_style"
+    class="faction-icon"
+    :style="offsetStyle"
   />
-  <div v-else class="triumph-icon" />
+  <div v-else class="faction-icon" />
 </template>
 
 <script>
-import { TriumphIcons } from "../constants.js";
+import { Factions } from "../constants.js";
 
 export default {
-  name: "TriumphIcon",
+  name: "FactionIcon",
   props: {
     icon: {
       type: String,
@@ -28,7 +28,7 @@ export default {
     var size;
     var pngName;
     size = 90;
-    pngName = "triumph-90x90";
+    pngName = "factions-96x96";
     return {
       icons: iconList,
       size: size,
@@ -36,14 +36,14 @@ export default {
     };
   },
   computed: {
-    icon_valid: function () {
+    validIcon: function () {
       return this.icon !== "";
     },
-    offset_style: function () {
+    offsetStyle: function () {
       var w = this.size * this.scale;
       var h = this.size * this.scale;
       var s = this.size * this.scale;
-      var offset = TriumphIcons[this.icon].offset * this.size * this.scale;
+      var offset = Factions[this.icon].offset * this.size * this.scale;
       return {
         width: w + "px",
         height: h + "px",
@@ -52,8 +52,7 @@ export default {
         display: "inline-block",
       };
     },
-
-    icon_type: function () {
+    iconType: function () {
       return this.type + "icon";
     },
   },
@@ -61,7 +60,7 @@ export default {
 </script>
 
 <style scoped>
-div.triumph-icon {
-  background-image: url("~@/assets/triumph-90x90.png");
+div.faction-icon {
+  background-image: url("~@/assets/factions-96x96.png");
 }
 </style>

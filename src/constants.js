@@ -9,7 +9,7 @@ export const Factions = Object.freeze({
   r: Object.freeze({ name: "Rusviet", offset: 2, exclude: "1" }),
   s: Object.freeze({ name: "Saxony", offset: 0 }),
   t: Object.freeze({ name: "Togawa", offset: 5 }),
-  v: Object.freeze({ name: "Vesna", offset: 8 }),
+  v: Object.freeze({ name: "Vesna", offset: 7 }),
 });
 
 export const PlayerMats = Object.freeze([
@@ -198,55 +198,189 @@ export const Difficulties = Object.freeze({
 export const InfluenceBonuses = Object.freeze([
   Object.freeze({
     offset: 0,
+    width: 46,
+    height: 46,
+    short: "Workers move once @ start",
     bonus: "Your workers can each move once before the game starts",
   }),
   Object.freeze({
-    offset: 1,
+    offset: 46,
+    width: 53,
+    height: 34,
+    short: "+1 Objective",
     bonus:
       "Draw +1 objective card (you may only complete the usual number; Saxony may complete all)",
   }),
-  Object.freeze({ offset: 2, bonus: "Draw 2 infrastructure mods; keep 1" }),
-  Object.freeze({ offset: 3, bonus: "Draw 4 infrastructure mods; keep 2" }),
   Object.freeze({
-    offset: 5,
+    offset: 99,
+    width: 44,
+    height: 44,
+    short: "Draw 2 inf. mods (keep 1)",
+    bonus: "Draw 2 infrastructure mods; keep 1",
+  }),
+  Object.freeze({
+    offset: 143,
+    width: 47,
+    height: 44,
+    short: "Draw 4 inf. mods (keep 2)",
+    bonus: "Draw 4 infrastructure mods; keep 2",
+  }),
+  Object.freeze({
+    offset: 190,
+    width: 42,
+    height: 44,
+    short: "Draw 2 mech mods (keep 1)",
     bonus: "Draw 2 mech mods; keep 1 (use if desired)",
   }),
   Object.freeze({
-    offset: 6,
+    offset: 232,
+    width: 41,
+    height: 43,
+    short: "Draw 4 mech mods (keep 2)",
     bonus: "Draw 4 mech mods; keep 2 (use 0, 1, or 2 if desired)",
   }),
-  Object.freeze({ offset: 7, bonus: "Choose your player mat (not randomly)" }),
   Object.freeze({
-    offset: 8,
+    offset: 273,
+    width: 150,
+    height: 63,
+    short: "Choose player mat",
+    bonus: "Choose your player mat (not randomly)",
+  }),
+  Object.freeze({
+    offset: 423,
+    width: 62,
+    height: 66,
+    short: "Extra turn before Automa",
     bonus: "Take an extra turn before Automa's first",
   }),
   Object.freeze({
-    offset: 9,
+    offset: 485,
+    width: 67,
+    height: 44,
+    short: "Alliance token (not Automa)",
     bonus:
       "Take the Alliance token of your choice (cannot be Automa's faction)",
   }),
   Object.freeze({
-    offset: 10,
+    offset: 552,
+    width: 32,
+    height: 44,
+    short: "Gain Tesla",
     bonus:
       "Use Tesla in addition to your own hero; Tesla acts like a second hero and 5th mech",
   }),
   Object.freeze({
-    offset: 11,
+    offset: 584,
+    width: 63,
+    height: 22,
+    short: "+1 Popularity, +1 Power",
     bonus: "Increase your popularity and power by 1 each",
   }),
   Object.freeze({
-    offset: 12,
+    offset: 647,
+    width: 102,
+    height: 50,
+    short: "+2 resources (@ 1 worker)",
     bonus:
       "Place 2 resources of your choice with 1 worker at the start of the game",
   }),
   Object.freeze({
-    offset: 13,
+    offset: 749,
+    width: 152,
+    height: 70,
+    short: "Peek at Automa's cards",
     bonus:
       "Peek at Automa's starting combat cards (or the first one they draw if 0 at start)",
   }),
   Object.freeze({
-    offset: 14,
+    offset: 901,
+    width: 56,
+    height: 44,
+    short: "Choose all options",
     bonus:
       "Don't use the die during setup - just choose all the options for this game",
+  }),
+]);
+
+export const Achievements = Object.freeze([
+  Object.freeze({
+    key: "3wins",
+    text: "Win 3 consecutive games",
+    points: 4,
+  }),
+  Object.freeze({
+    key: "automa+",
+    text: "Win a game at Automa+ difficulty",
+    points: 3,
+  }),
+  Object.freeze({
+    key: "automaszyna",
+    text: "Win a game at Automaszyna difficulty",
+    points: 4,
+  }),
+  Object.freeze({
+    key: "asexp",
+    text: "Win using an expansion faction (Albion, Fenris, Togawa, Vesna)",
+    points: 2,
+  }),
+  Object.freeze({
+    key: "vsexp",
+    text: "Defeat an expansion faction (Albion, Fenris, Togawa, Vesna",
+    points: 2,
+  }),
+  Object.freeze({
+    key: "tunnel",
+    text: "Win a game on one of the 'tunnel' spaces on the Bingo Board",
+    points: 3,
+  }),
+  Object.freeze({
+    key: "factory",
+    text: "Win a game on the Factory space",
+    points: 2,
+  }),
+  Object.freeze({
+    key: "airships",
+    text: "Win a game with air ships",
+    points: 3,
+  }),
+  Object.freeze({
+    key: "resolution",
+    text: "Win a game with a Resolution Tile in play",
+    points: 2,
+  }),
+  Object.freeze({
+    key: "25+",
+    text: "Win a game by more than 25 points",
+    points: 4,
+  }),
+  Object.freeze({
+    key: "3inf3",
+    text: "Claim all 3 influence tokens during a game for the third time",
+    points: 4,
+  }),
+  Object.freeze({
+    key: "nobonus",
+    text: "Win a game without having the advantage of an Influence Bonus",
+    points: 3,
+  }),
+  Object.freeze({
+    key: "peace",
+    text: "Win a game using the Peace Triumph Track",
+    points: 3,
+  }),
+  Object.freeze({
+    key: "war",
+    text: "Win a game using the War Triumph Track",
+    points: 3,
+  }),
+  Object.freeze({
+    key: "random",
+    text: "Win a game using the randomized Triumph Track",
+    points: 3,
+  }),
+  Object.freeze({
+    key: "nocombat",
+    text: "Win a game in which no combats took place",
+    points: 4,
   }),
 ]);

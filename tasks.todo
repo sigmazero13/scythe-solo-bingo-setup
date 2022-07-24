@@ -1,0 +1,73 @@
+Campaign:
+  ☐ Save achievements
+    ✔ limit to only saving 2 @done(22-06-05 15:44)
+    ☐ record with game info?
+    ☐ Remove if game is deleted?
+    ✔ Reset achievements if campaign reset @done(22-06-05 15:47)
+    ✔ Do not show popup on loss @done(22-06-05 15:52)
+    ✔ Reset selected after committing in campaign view @done(22-06-05 15:48)
+  ✔ Alter next Automa level based on win/loss @done(22-06-13 18:39)
+  ✔ Add a flag for "winning" in case of ties? @done(22-07-13 11:51)
+  ☐ Highlight "missing" fields in game view
+  ☐ Map Related, not related to drawing
+    ✔ Calculate best player score so far @done(22-07-14 21:18)
+    ✔ Let player know if faction choices are valid @done(22-07-18 17:43)
+    ✔ Calculate Player "best score" so far, including achievements @done(22-07-15 14:51)
+    ☐ Let player know final score when campaign ends
+    ✔ Let player know if a choice will end the campaign upon victory @done(22-07-23 20:18)
+  ✔ Switch to a global application state (vuex?) @done(22-07-23 16:55)
+    ✔ log @done(22-07-21 20:27)
+    ✔ achieved @done(22-07-21 21:26)
+    ✔ cur_game @done(22-07-23 16:55)
+    ✔ cur_game save using vuex @done(22-07-23 17:20)
+    ✔ AchievementView : "achieved" @done(22-07-21 22:17)
+    ✔ CampaignView: "log"; @done(22-07-21 22:17)
+    ✔ GameView: game data? @done(22-07-23 16:55)
+    ✔ GeneralView: player_board, structure_bonus, fv_offset, p_faction, a_faction @done(22-07-21 22:17)
+    ✔ MapView: played, available? @done(22-07-21 22:17)
+
+Map Drawing:
+  ✔ Create map tab @done(22-07-18 16:52)
+    ✔ Show available games @done(22-06-22 17:52)
+    ✔ Remove games already played @done(22-06-30 16:46)
+    ✔ Allow for Factory @done(22-06-30 17:09)
+    ✔ Allow for Tunnels @done(22-06-30 16:54)
+    ✔ Allow user to pick faction combo from Map Tab @done(22-07-12 17:20)
+    ✔ Picking faction combo updates game and randomizer views @done(22-07-13 12:55)
+    ✔ Better display map options (don't show coordinates) @done(22-07-06 18:19)
+  ☐ Draw map
+
+Clean up/document Emits and recievers:
+  ✔ App @done(22-07-11 14:55)
+    ✔ newGame (CampaignView) -> GameView.newGame @done(22-07-08 11:36)
+    ✔ editGame (CampaignView) -> GameView.editGame @done(22-07-08 11:48)
+    ✔ saveGame (GameView) -> CampaignView.saveGame @done(22-07-08 14:02)
+    ✔ updateFromGame (GameView) -> RandomizerView.updateFaction -> GeneralStuff.updateFaction @done(22-07-11 11:38)
+    ✔ updateFromRandomizer (RandomizerView) -> GameView.update @done(22-07-11 11:41)
+    ✔ saveAchievements (CampaignView) -> AchievementView.addAchievements @done(22-07-11 11:44)
+    ✔ refreshAchievements (AchievementView) -> CampaignView.refreshAchievements @done(22-07-11 11:49)
+    ✔ resetCampaign (CampaignView) -> AchievementView.reset, MapView.updatePlayed @done(22-07-11 14:51)
+    ✔ updatePlayed (CampaignView) @done(22-07-11 14:52)
+    ✔ selectFactionsFromMap (MapView) @done(22-07-11 14:55)
+  ✔ AchievementView @done(22-07-11 14:51)
+    ✔ addAchievements @done(22-07-11 11:44)
+    ✔ achievementToggled @done(22-07-11 11:49)
+  ✔ CampaignView @done(22-07-11 14:52)
+    ✔ saveGame @done(22-07-08 14:01)
+    ✔ refreshAchievements @done(22-07-11 11:49)
+  ✔ FactionButtonBar @done(22-07-11 14:52)
+    ✔ change (mostly an emit) @done(22-07-11 14:52)
+  ✔ GameView @done(22-07-11 14:55)
+    ✔ newGame @done(22-07-08 11:36)
+    ✔ editGame @done(22-07-08 13:59)
+    ✔ update @done(22-07-11 11:41)
+    ✔ updateFaction @done(22-07-11 14:55)
+  ✔ GeneralStuff @done(22-07-11 14:52)
+    ✔ updateFaction @done(22-07-11 11:35)
+    ✔ selectFaction @done(22-07-11 11:37)
+  ✔ MapView @done(22-07-11 14:51)
+    ✔ updatePlayed @done(22-07-11 14:51)
+  ✔ RandomizerView @done(22-07-11 14:55)
+    ✔ update @done(22-07-11 14:55)
+    ✔ updateFaction @done(22-07-11 11:35)
+

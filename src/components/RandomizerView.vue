@@ -1,11 +1,11 @@
 <template>
   <div class="random-view">
     <b-button @click="selectOptions()" variant="primary" class="randobutton">
-      Randomize Selections
+      Randomize Game Options
     </b-button>
     <TriumphTrack ref="vtrack" @update="update" />
     <br />
-    <WindGambit ref="windgambit" />
+    <WindGambit ref="windgambit" @update="update" />
     <GeneralStuff ref="general" @update="update" />
   </div>
 </template>
@@ -28,13 +28,21 @@ export default {
     return {};
   },
   methods: {
+    reset() {
+      this.$refs.vtrack.reset();
+      this.$refs.windgambit.reset();
+      this.$refs.general.reset();
+    },
     selectOptions() {
       this.$refs.vtrack.makeSelection();
       this.$refs.windgambit.makeSelection();
     },
     update(data) {
-      console.log("RandomizerView received update event: " + data["field"]);
       this.$emit("update", data);
+    },
+    updateFaction(data) {
+      // Just passing the data down to the sub-view
+      this.$refs.general.updateFaction(data);
     },
   },
 };
