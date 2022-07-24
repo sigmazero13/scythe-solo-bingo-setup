@@ -83,22 +83,27 @@ export function availableCells(played) {
 function foldScore(cell_scores, q, r, dir, length) {
   // Don't check past 5 spots
   if (length >= 5) {
-    return 0;
+    return { score: 0, played: 0 };
   }
 
   var this_cell = MapData.cell(q, r);
 
   if (this_cell === null || this_cell.data === "HOME") {
-    return -1;
+    return { blocked: true };
   } else if (cell_scores[this_cell.data] < 0) {
-    return -1;
+    return { blocked: true };
   }
 
-  var this_score =
-    this_cell.data in cell_scores ? cell_scores[this_cell.data] : 0;
+  var this_score = 0;
+  var played = 0;
+
+  if (this_cell.data in cell_scores) {
+    this_score = cell_scores[this_cell.data];
+    played = 1;
+  }
 
   var new_cell_qr = axialNeighbor([q, r], dir);
-  var new_sum = foldScore(
+  var new_score = foldScore(
     cell_scores,
     new_cell_qr[0],
     new_cell_qr[1],
@@ -106,34 +111,37 @@ function foldScore(cell_scores, q, r, dir, length) {
     length + 1
   );
 
-  if (new_sum < 0) {
-    return -1;
+  if (new_score.blocked) {
+    return { blocked: true };
   }
 
-  return this_score + new_sum;
+  return {
+    score: this_score + new_score.score,
+    played: played + new_score.played,
+  };
 }
 
-export function scoreForCell(cell_scores, q, r) {
-  var best_score = 0;
+export function scoreForCell(cell_scores, q, r, only_bingo) {
+  var best_score = -1;
   for (var dir = 0; dir < 6; dir++) {
-    var score = foldScore(cell_scores, q, r, dir, 0);
-    if (score < 0) {
+    var new_score = foldScore(cell_scores, q, r, dir, 0);
+    if (new_score.blocked || (new_score.played < 5 && only_bingo)) {
       continue;
     }
-    if (score > best_score) {
-      best_score = score;
+    if (new_score.score > best_score) {
+      best_score = new_score.score;
     }
   }
 
   return best_score;
 }
 
-export function bestScore(cell_scores) {
-  var best_score = 0;
+export function bestScore(cell_scores, only_bingo) {
+  var best_score = -1;
 
   for (var factions in cell_scores) {
     var cell = MapData.findByFactions(factions);
-    var score = scoreForCell(cell_scores, cell.q, cell.r);
+    var score = scoreForCell(cell_scores, cell.q, cell.r, only_bingo);
     if (score > best_score) {
       best_score = score;
     }

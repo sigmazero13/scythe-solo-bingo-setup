@@ -102,6 +102,10 @@ export default new Vuex.Store({
     best_player_score: (state, getters) => {
       return bestScore(getters.cell_scores) + getters.achievement_score;
     },
+    best_bingo_score: (state, getters) => {
+      var best_score = bestScore(getters.cell_scores, true);
+      return best_score >= 0 ? best_score + getters.achievement_score : -1;
+    },
     matchup_will_end_campaign: (state, getters) => (factions) => {
       return matchupWillEnd(getters.cell_scores, factions);
     },

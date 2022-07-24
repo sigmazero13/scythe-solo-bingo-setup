@@ -333,7 +333,10 @@ export default {
     },
     mats() {
       return PlayerMats.map((mat) => {
-        return { value: mat["num"], text: mat["name"] };
+        return {
+          value: mat["num"],
+          text: mat["name"] + " (" + mat["num"] + ")",
+        };
       });
     },
     automa_levels() {
@@ -363,10 +366,14 @@ export default {
       );
     },
     winner_by_points() {
-      return (
-        !(isBlank(this.p_score) || isBlank(this.a_score)) &&
-        this.p_score > this.a_score
-      );
+      let p_blank = isBlank(this.p_score);
+      let a_blank = isBlank(this.a_score);
+      let better = parseInt(this.p_score) > parseInt(this.a_score);
+      // return (
+      //   !(isBlank(this.p_score) || isBlank(this.a_score)) &&
+      //   this.p_score > this.a_score
+      // );
+      return !(p_blank || a_blank) && better;
     },
     tie_game() {
       return (

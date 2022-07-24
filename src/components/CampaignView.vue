@@ -7,10 +7,19 @@
       RESET CAMPAIGN
     </b-button>
     <br />
-    <span id="automa-score" v-if="this.log.length > 0">
-      <b>Current Automa Score: {{ automa_score }}</b>
-      <br />
-      <b>Best Player Score: {{ best_player_score }}</b>
+    <span id="scores" v-if="this.log.length > 0">
+      <b-alert v-if="best_bingo_score >= 0" :variant="bingo_variant" show>
+        <b>The campaign is over!</b>
+        <br />
+        <b>Automa Score: {{ automa_score }}</b>
+        <br />
+        <b>Player Score: {{ best_bingo_score }}</b>
+      </b-alert>
+      <span v-else>
+        <b>Current Automa Score: {{ automa_score }}</b>
+        <br />
+        <b>Best Player Score: {{ best_player_score }}</b>
+      </span>
     </span>
     <b-table
       tbody-class="logrow"
@@ -256,6 +265,7 @@ export default {
       "automa_score",
       "achievement_score",
       "best_player_score",
+      "best_bingo_score",
     ]),
     log_items() {
       return this.log.map((g) => {
@@ -280,6 +290,9 @@ export default {
     },
     too_many_achievements() {
       return this.selected_achievements.length > 2;
+    },
+    bingo_variant() {
+      return this.best_bingo_score > this.automa_score ? "success" : "danger";
     },
   },
 };
