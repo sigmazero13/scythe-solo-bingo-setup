@@ -1,4 +1,5 @@
 import Vue from "vue";
+import VueKonva from "vue-konva";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -8,6 +9,7 @@ import store from "./store.js";
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
+Vue.use(VueKonva);
 
 import App from "./App.vue";
 
