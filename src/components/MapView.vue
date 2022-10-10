@@ -1,21 +1,12 @@
 <template>
   <div class="map-view">
-    <div class="map-canvas" ref="mapdiv">
+    <div>{{info}}</div>
+    <div class="map-canvas" id="mapdiv" ref="mapdiv">
       <v-stage ref="stage" :config="configKonva">
         <v-layer ref="layer">
-          <v-group v-for="hex in nonhome" :key="hex.id">
+          <v-group v-for="hex in nonhome" :key="hex.id" @click="handleClick" @tap="handleClick">
             <v-regular-polygon
-              :config="{
-                id: hex.f1 + hex.f2,
-                x: hex.x,
-                y: hex.y,
-                radius: hex.r,
-                sides: 6,
-                rotation: 30,
-                fill: hex.hexColor,
-                stroke: hex.borderColor,
-                strokeWidth: hex.borderWidth,
-              }"
+              :config="hexConfig(hex)"
             ></v-regular-polygon>
             <v-circle
               v-if="hex.type !== 'f'"
@@ -40,12 +31,12 @@
               }"
             ></v-circle>
             <v-text
-              v-if="hex.played"
+              v-if="hexPlayed(hex)"
               :config="{
                 align: 'center',
                 x: hex.x - hex.r / 4,
                 y: hex.y + hex.r / 4,
-                text: hex.score,
+                text: hexScore(hex),
                 fontSize: hex.r / 2,
                 fill: '#ffffff',
                 fontStyle: 'bold',
@@ -55,6 +46,7 @@
           <v-circle
             v-for="hex in home"
             :key="hex.id"
+            @click="handleClick"
             :config="{
               x: hex.x,
               y: hex.y,
@@ -89,30 +81,13 @@ export default {
         width: this.divwidth,
         height: this.divwidth,
       },
+      info: 'TEST',
     };
   },
   methods: {
-    splitCellsByColumn(cells) {
-      var columns = [];
-      var last_q = null;
-      var this_col = [];
-
-      for (var cell of cells) {
-        if (cell.q !== last_q) {
-          if (this_col.length > 0) {
-            columns.push(this_col);
-          }
-          this_col = [];
-        }
-
-        this_col.push(cell);
-      }
-
-      if (this_col.length > 0) {
-        columns.push(this_col);
-      }
-
-      return columns;
+    handleClick(e) {
+      console.log(e.target);
+      this.info = e.target.id();
     },
     selectMatchup(cell) {
       var matchup_info = { factions: "", location: "normal" };
@@ -134,7 +109,7 @@ export default {
         case "f":
           return "#ff9933";
         case "n":
-          return "#000077";
+          return "#0000aa";
         case "p":
           return "#ffffff";
         case "r":
@@ -149,9 +124,52 @@ export default {
           return "444444";
       }
     },
+    available(hex) {
+      for (var cell of availableCells(this.played)) {
+        if (cell.data === hex.data) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+    hexConfig(hex) {
+      var config = {
+        id: hex.f1 + hex.f2,
+        x: hex.x,
+        y: hex.y,
+        radius: hex.r,
+        sides: 6,
+        rotation: 30,
+        fill: hex.hexColor,
+        stroke: hex.borderColor,
+        strokeWidth: hex.borderWidth,
+        listening: true,
+      };
+
+      var game = this.game_by_matchup(hex.data);
+      if (game) {
+        config["fill"] = game.p_win ? "#007700" : "#770000";
+      } else if (this.available(hex)) {
+        config["fill"] = "#007799";
+      }
+
+      return config;
+    },
+    hexPlayed(hex) {
+      return this.game_by_matchup(hex.data) !== null;
+    },
+    hexScore(hex) {
+      var game = this.game_by_matchup(hex.data);
+      if (game) {
+        return game.p_score - game.a_score;
+      }
+
+      return 0;
+    }
   },
   computed: {
-    ...mapGetters(["played"]),
+    ...mapGetters(["game_by_matchup", "played"]),
     playableCells() {
       return this.splitCellsByColumn(availableCells(this.played));
     },
@@ -163,7 +181,9 @@ export default {
       return this.list.filter((hex) => hex.type !== "h");
     },
     divwidth() {
-      return this.$refs.mapdiv.clientWidth;
+      // console.log(this.$refs.mapdiv.clientWidth)
+      // return this.$refs.mapdiv.clientWidth;
+      return window.innerWidth - 30;
     },
   },
   mounted() {
@@ -178,20 +198,18 @@ export default {
         var borderColor = "#000000";
         var borderWidth = r / 10;
         var hexColor = "#deb887";
-        var score = Math.floor(Math.random() * 90);
-        var played = score % 3 === 0;
-        if (!played) {
-          score = 0;
-          won = false;
-        } else {
-          var won = score % 2 === 0;
-          if (!won) {
-            score = -score;
-            hexColor = "#aa0000";
-          } else {
-            hexColor = "#00dd00";
-          }
-        }
+        // if (!played) {
+        //   score = 0;
+        //   won = false;
+        // } else {
+        //   var won = score % 2 === 0;
+        //   if (!won) {
+        //     score = -score;
+        //     hexColor = "#aa0000";
+        //   } else {
+        //     hexColor = "#00dd00";
+        //   }
+        // }
         if (cell.data === "FACTORY") {
           type = "f";
           borderColor = "#990099";
@@ -206,6 +224,7 @@ export default {
         }
         return {
           id: cell.q + "-" + cell.r + "-" + cell.data,
+          data: cell.data,
           x: r * ((3.0 / 2) * (cell.q + 5)) + r,
           y: r * ((Math.sqrt(3) / 2) * cell.q + Math.sqrt(3) * (cell.r + 5)),
           r: r,
@@ -215,9 +234,9 @@ export default {
           hexColor: hexColor,
           borderColor: borderColor,
           borderWidth: borderWidth,
-          score: score,
-          played: played,
-          won: won,
+          score: 0,
+          played: false,
+          won: false,
           z: type === "n" ? 0 : 1,
         };
       })

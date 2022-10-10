@@ -35,6 +35,21 @@ export default new Vuex.Store({
 
       return null;
     },
+    game_by_matchup: (state) => (matchup) => {
+      for (var game of state.log) {
+        if (matchup === "FACTORY") {
+          if (game.location === "factory") {
+            return game;
+          }
+        } else {
+          if (game.p_faction === matchup[0] && game.a_faction === matchup[1]) {
+            return game;
+          }
+        }
+      }
+
+      return null;
+    },
     played: (state) => {
       var updatedPlayed = [];
       for (var game of state.log) {
