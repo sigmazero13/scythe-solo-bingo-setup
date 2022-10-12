@@ -1,6 +1,5 @@
 <template>
   <div class="map-view">
-    <div>{{info}}</div>
     <div class="map-canvas" id="mapdiv" ref="mapdiv">
       <v-stage ref="stage" :config="configKonva">
         <v-layer ref="layer">
@@ -58,11 +57,36 @@
         </v-layer>
       </v-stage>
     </div>
+    <b-modal
+      id="matchup-modal"
+      ref="matchup-modal"
+      title="Title"
+      :ok-disabled="can_play"
+      @ok="chooseMatchup"
+    >
+      <div class="choose-modal">
+        <div>
+          <FactionIcon :icon="p_faction" /> vs
+          <FactionIcon :icon="a_faction" />
+        </div>
+        <div v-if="p_score != null" class="score-row">
+          <span class="p-score">
+            <b-icon-trophy-fill variant="success" v-if="p_won" />
+            {{p_score}}
+          </span>
+          <span class="hyphen">-</span>
+          <span class="a-score">
+            {{a_score}}
+            <b-icon-x-circle-fill variant="danger" v-if="!p_won" />
+          </span>
+        </div>
+      </div>
+    </b-modal>
   </div>
 </template>
 
 <script>
-// import FactionIcon from "../components/FactionIcon.vue";
+import FactionIcon from "../components/FactionIcon.vue";
 import MapData from "../models/MapData.js";
 
 import { availableCells } from "../helpers/mapHelpers.js";
@@ -71,7 +95,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "MapView",
-  // components: { FactionIcon },
+  components: { FactionIcon },  
   data() {
     return {
       list: [],
@@ -81,13 +105,31 @@ export default {
         width: this.divwidth,
         height: this.divwidth,
       },
+      p_faction: "a",
+      a_faction: "f",
+      p_won: false,
+      p_score: null,
+      a_score: null,
       info: 'TEST',
     };
   },
   methods: {
     handleClick(e) {
-      console.log(e.target);
-      this.info = e.target.id();
+      var factions = e.target.id().substr(0,2);
+      this.p_faction = factions[0];
+      this.a_faction = factions[1];
+     
+      var game = this.game_by_matchup(factions);
+      if (game != null) {
+        this.p_score = game.p_score;
+        this.a_score = game.a_score;
+        this.p_won = game.p_win;
+      } else {
+        this.p_score = null;
+        this.a_score = null;
+      }
+
+      this.$refs["matchup-modal"].show();
     },
     selectMatchup(cell) {
       var matchup_info = { factions: "", location: "normal" };
@@ -166,14 +208,16 @@ export default {
       }
 
       return 0;
-    }
+    },
+    chooseMatchup() {
+
+    },
   },
   computed: {
     ...mapGetters(["game_by_matchup", "played"]),
     playableCells() {
       return this.splitCellsByColumn(availableCells(this.played));
     },
-
     home() {
       return this.list.filter((hex) => hex.type === "h");
     },
@@ -184,6 +228,9 @@ export default {
       // console.log(this.$refs.mapdiv.clientWidth)
       // return this.$refs.mapdiv.clientWidth;
       return window.innerWidth - 30;
+    },
+    can_play() {
+      return true;
     },
   },
   mounted() {
@@ -254,5 +301,29 @@ div.map-canvas {
   /* width: 95%; */
   margin: auto;
   background-color: #dddddd;
+}
+
+div.choose-modal {
+  text-align: center;
+  font-size: 2em;
+}
+
+div.score-row {
+  display: flex;
+}
+
+span.p-score {
+  text-align: right;
+  width: 45%;
+}
+
+span.a-score {
+  text-align: left;
+  width: 45%
+}
+
+span.hyphen {
+  text-align: center;
+  width: 10%;
 }
 </style>

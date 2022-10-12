@@ -35,7 +35,16 @@ Map Drawing:
     ✔ Allow user to pick faction combo from Map Tab @done(22-07-12 17:20)
     ✔ Picking faction combo updates game and randomizer views @done(22-07-13 12:55)
     ✔ Better display map options (don't show coordinates) @done(22-07-06 18:19)
-  ☐ Draw map
+  ✔ Draw map @done(22-10-11 18:06)
+  ☐ Display selection
+    ☐ Unplayed Game
+      ☐ Normal
+      ☐ Factory
+      ☐ Not Available
+    ☐ Completed Game
+      ☐ Normal
+      ☐ Factory
+  
 
 Clean up/document Emits and recievers:
   ✔ App @done(22-07-11 14:55)
