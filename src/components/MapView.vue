@@ -32,6 +32,7 @@
             <v-text
               v-if="hexPlayed(hex)"
               :config="{
+                id: hex.f1 + hex.f2 + '-score',
                 align: 'center',
                 x: hex.x - hex.r / 4,
                 y: hex.y + hex.r / 4,
@@ -60,12 +61,18 @@
     <b-modal
       id="matchup-modal"
       ref="matchup-modal"
-      title="Title"
-      :ok-disabled="can_play"
-      @ok="chooseMatchup"
+      :title="title"
+      ok-title="Play"
+      :ok-disabled="!playable"
+      @ok="selectMatchup"
+      :ok-variant="ok_button_variant"
+      cancel-variant="danger"
     >
       <div class="choose-modal">
-        <div>
+        <div v-if="cell_special !== ''">
+          {{ cell_special }}
+        </div>
+        <div v-if="show_factions">
           <FactionIcon :icon="p_faction" /> vs
           <FactionIcon :icon="a_faction" />
         </div>
@@ -107,38 +114,57 @@ export default {
       },
       p_faction: "a",
       a_faction: "f",
+      cell_special: "",
+      title: "TITLE",
+      playable: false,
       p_won: false,
       p_score: null,
       a_score: null,
-      info: 'TEST',
     };
   },
   methods: {
     handleClick(e) {
       var factions = e.target.id().substr(0,2);
-      this.p_faction = factions[0];
-      this.a_faction = factions[1];
+      var hex_type = e.target.attrs["type"];
+      
+      if (hex_type === "f") {
+        this.p_faction = "a";
+        this.a_faction = "a";
+        this.cell_special = "FACTORY";
+      } else {
+        this.p_faction = factions[0];
+        this.a_faction = factions[1];
+        this.cell_special = hex_type === "t" ? "TUNNEL" : "";
+      }
      
       var game = this.game_by_matchup(factions);
       if (game != null) {
         this.p_score = game.p_score;
         this.a_score = game.a_score;
         this.p_won = game.p_win;
+        this.title = game.p_win ? "Victory!" : "Defeat!";
       } else {
         this.p_score = null;
         this.a_score = null;
+        this.playable = e.target.attrs["playable"];
+        this.title = this.playable ? "Unplayed Matchup" : "Invalid Matchup";
       }
 
       this.$refs["matchup-modal"].show();
     },
-    selectMatchup(cell) {
-      var matchup_info = { factions: "", location: "normal" };
+    selectMatchup() {
+      var matchup_info = { 
+        p_faction: this.p_faction,
+        a_faction: this.a_faction,
+        location: "normal",
+      };
 
-      if (cell.data === "FACTORY") {
+      if (this.cell_special === "FACTORY") {
         matchup_info["location"] = "factory";
-      } else {
-        matchup_info["factions"] = cell.data;
-        matchup_info["location"] = cell.tunnel ? "tunnel" : "normal";
+        matchup_info["p_faction"] = "";
+        matchup_info["a_faction"] = "";
+      } else if (this.cell_special === "TUNNEL") {
+        matchup_info["location"] = "tunnel";
       }
       this.$emit("selectFactions", matchup_info);
     },
@@ -166,7 +192,7 @@ export default {
           return "444444";
       }
     },
-    available(hex) {
+    available_hex(hex) {
       for (var cell of availableCells(this.played)) {
         if (cell.data === hex.data) {
           return true;
@@ -178,6 +204,7 @@ export default {
     hexConfig(hex) {
       var config = {
         id: hex.f1 + hex.f2,
+        type: hex.type,
         x: hex.x,
         y: hex.y,
         radius: hex.r,
@@ -187,13 +214,15 @@ export default {
         stroke: hex.borderColor,
         strokeWidth: hex.borderWidth,
         listening: true,
+        playable: false,
       };
 
       var game = this.game_by_matchup(hex.data);
       if (game) {
         config["fill"] = game.p_win ? "#007700" : "#770000";
-      } else if (this.available(hex)) {
+      } else if (this.available_hex(hex)) {
         config["fill"] = "#007799";
+        config["playable"] = true;
       }
 
       return config;
@@ -208,9 +237,6 @@ export default {
       }
 
       return 0;
-    },
-    chooseMatchup() {
-
     },
   },
   computed: {
@@ -227,17 +253,28 @@ export default {
     divwidth() {
       // console.log(this.$refs.mapdiv.clientWidth)
       // return this.$refs.mapdiv.clientWidth;
-      return window.innerWidth - 30;
+      var width = window.innerWidth - 30;
+      return Math.min(width, 720);
     },
-    can_play() {
-      return true;
+    available_matchup() {
+      var matchup = this.p_faction + this.a_faction;
+      if (this.cell_special === "FACTORY") {
+        matchup = "xx";
+      }
+      return this.available_hex({data: matchup});
+    },
+    show_factions() {
+      return this.p_faction != this.a_faction;
+    },
+    ok_button_variant() {
+      return this.playable ? "primary" : "secondary";
     },
   },
   mounted() {
     this.configKonva["width"] = this.divwidth;
     this.configKonva["height"] = this.divwidth;
     
-    var r = (this.divwidth - 20) / 16.5;
+    var r = (this.divwidth - 20) / 16.6;
     this.list = MapData.map
       .map((cell) => {
         var type = "n";
@@ -245,18 +282,6 @@ export default {
         var borderColor = "#000000";
         var borderWidth = r / 10;
         var hexColor = "#deb887";
-        // if (!played) {
-        //   score = 0;
-        //   won = false;
-        // } else {
-        //   var won = score % 2 === 0;
-        //   if (!won) {
-        //     score = -score;
-        //     hexColor = "#aa0000";
-        //   } else {
-        //     hexColor = "#00dd00";
-        //   }
-        // }
         if (cell.data === "FACTORY") {
           type = "f";
           borderColor = "#990099";

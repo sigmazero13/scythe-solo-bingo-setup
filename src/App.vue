@@ -105,18 +105,20 @@ export default {
     updateFromRandomizer(data) {
       this.$refs.game.update(data);
     },
-    selectFactionsFromMap({ factions, location }) {
-      if (factions !== "") {
-        this.$refs.game.update({ field: "player-faction", value: factions[0] });
-        this.$refs.game.update({ field: "automa-faction", value: factions[1] });
+    selectFactionsFromMap({ p_faction, a_faction, location }) {
+      this.$refs.game.newGame();
+      
+      if (p_faction !== "") {
+        this.$refs.game.update({ field: "player-faction", value: p_faction });
+        this.$refs.game.update({ field: "automa-faction", value: a_faction });
 
         this.$refs.random.updateFaction({
           field: "player-faction",
-          value: factions[0],
+          value: p_faction,
         });
         this.$refs.random.updateFaction({
           field: "automa-faction",
-          value: factions[1],
+          value: a_faction,
         });
       }
       this.$refs.game.update({ field: "location", value: location });
