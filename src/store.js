@@ -42,7 +42,11 @@ export default new Vuex.Store({
             return game;
           }
         } else {
-          if (game.p_faction === matchup[0] && game.a_faction === matchup[1]) {
+          if (
+            game.p_faction === matchup[0] &&
+            game.a_faction === matchup[1] &&
+            game.location !== "factory"
+          ) {
             return game;
           }
         }

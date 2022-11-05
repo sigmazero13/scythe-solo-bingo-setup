@@ -37,13 +37,14 @@ Map Drawing:
     ✔ Better display map options (don't show coordinates) @done(22-07-06 18:19)
   ✔ Draw map @done(22-10-11 18:06)
   ☐ Display selection
-    ☐ Unplayed Game
-      ☐ Normal
-      ☐ Factory
-      ☐ Not Available
-    ☐ Completed Game
-      ☐ Normal
-      ☐ Factory
+    ✔ Unplayed Game @done(22-11-04 23:18)
+      ✔ Normal @done(22-11-04 23:18)
+      ✔ Factory @done(22-11-04 23:18)
+      ✔ Not Available @done(22-11-04 23:18)
+      ☐ Potential Campaign Ender
+    ✔ Completed Game @done(22-11-04 23:19)
+      ✔ Normal @done(22-11-04 23:18)
+      ✔ Factory @done(22-11-04 23:18)
   
 
 Clean up/document Emits and recievers:

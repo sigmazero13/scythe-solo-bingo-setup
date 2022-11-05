@@ -3,12 +3,15 @@
     <div class="map-canvas" id="mapdiv" ref="mapdiv">
       <v-stage ref="stage" :config="configKonva">
         <v-layer ref="layer">
-          <v-group v-for="hex in nonhome" :key="hex.id" @click="handleClick" @tap="handleClick">
-            <v-regular-polygon
-              :config="hexConfig(hex)"
-            ></v-regular-polygon>
+          <v-group
+            v-for="hex in nonhome"
+            :key="hex.id"
+            @click="handleClick"
+            @tap="handleClick"
+          >
+            <v-regular-polygon :config="hexConfig(hex)"></v-regular-polygon>
             <v-circle
-              v-if="hex.type !== 'f'"
+              v-if="hex.f1 !== 'x'"
               :config="{
                 id: hex.f1 + hex.f2 + '-' + hex.f1,
                 x: hex.x - hex.r / 3,
@@ -19,7 +22,7 @@
               }"
             ></v-circle>
             <v-circle
-              v-if="hex.type !== 'f'"
+              v-if="hex.f2 !== 'x'"
               :config="{
                 id: hex.f1 + hex.f2 + '-' + hex.f2,
                 x: hex.x + hex.r / 3,
@@ -79,11 +82,11 @@
         <div v-if="p_score != null" class="score-row">
           <span class="p-score">
             <b-icon-trophy-fill variant="success" v-if="p_won" />
-            {{p_score}}
+            {{ p_score }}
           </span>
           <span class="hyphen">-</span>
           <span class="a-score">
-            {{a_score}}
+            {{ a_score }}
             <b-icon-x-circle-fill variant="danger" v-if="!p_won" />
           </span>
         </div>
@@ -102,7 +105,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "MapView",
-  components: { FactionIcon },  
+  components: { FactionIcon },
   data() {
     return {
       list: [],
@@ -124,25 +127,30 @@ export default {
   },
   methods: {
     handleClick(e) {
-      var factions = e.target.id().substr(0,2);
+      var factions = e.target.id().substr(0, 2);
       var hex_type = e.target.attrs["type"];
-      
+
       if (hex_type === "f") {
         this.p_faction = "a";
         this.a_faction = "a";
         this.cell_special = "FACTORY";
+        factions = "FACTORY";
       } else {
         this.p_faction = factions[0];
         this.a_faction = factions[1];
         this.cell_special = hex_type === "t" ? "TUNNEL" : "";
       }
-     
+
       var game = this.game_by_matchup(factions);
       if (game != null) {
         this.p_score = game.p_score;
         this.a_score = game.a_score;
         this.p_won = game.p_win;
         this.title = game.p_win ? "Victory!" : "Defeat!";
+        if (hex_type === "f") {
+          this.p_faction = game.p_faction;
+          this.a_faction = game.a_faction;
+        }
       } else {
         this.p_score = null;
         this.a_score = null;
@@ -153,7 +161,7 @@ export default {
       this.$refs["matchup-modal"].show();
     },
     selectMatchup() {
-      var matchup_info = { 
+      var matchup_info = {
         p_faction: this.p_faction,
         a_faction: this.a_faction,
         location: "normal",
@@ -219,9 +227,11 @@ export default {
 
       var game = this.game_by_matchup(hex.data);
       if (game) {
-        config["fill"] = game.p_win ? "#007700" : "#770000";
+        config["fill"] = game.p_win ? "#00aa00" : "#aa0000";
       } else if (this.available_hex(hex)) {
-        config["fill"] = "#007799";
+        config["fill"] = this.matchup_will_end_campaign(hex.data)
+          ? "#00aaee"
+          : "#deb887";
         config["playable"] = true;
       }
 
@@ -240,7 +250,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["game_by_matchup", "played"]),
+    ...mapGetters(["game_by_matchup", "matchup_will_end_campaign", "played"]),
     playableCells() {
       return this.splitCellsByColumn(availableCells(this.played));
     },
@@ -261,7 +271,7 @@ export default {
       if (this.cell_special === "FACTORY") {
         matchup = "xx";
       }
-      return this.available_hex({data: matchup});
+      return this.available_hex({ data: matchup });
     },
     show_factions() {
       return this.p_faction != this.a_faction;
@@ -273,7 +283,7 @@ export default {
   mounted() {
     this.configKonva["width"] = this.divwidth;
     this.configKonva["height"] = this.divwidth;
-    
+
     var r = (this.divwidth - 20) / 16.6;
     this.list = MapData.map
       .map((cell) => {
@@ -281,11 +291,15 @@ export default {
         var f = cell.data === "FACTORY" ? "xx" : cell.data;
         var borderColor = "#000000";
         var borderWidth = r / 10;
-        var hexColor = "#deb887";
+        var hexColor = "#aaaaaa";
         if (cell.data === "FACTORY") {
           type = "f";
           borderColor = "#990099";
           borderWidth = r / 6;
+          var game = this.game_by_matchup("FACTORY");
+          if (game) {
+            f = game.p_faction + game.a_faction;
+          }
         } else if (cell.data === "HOME") {
           type = "h";
           hexColor = "#888888";
@@ -344,7 +358,7 @@ span.p-score {
 
 span.a-score {
   text-align: left;
-  width: 45%
+  width: 45%;
 }
 
 span.hyphen {
