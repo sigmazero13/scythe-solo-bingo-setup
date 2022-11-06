@@ -132,6 +132,18 @@ export default new Vuex.Store({
       var max_id = Math.max(...state.log.map((g) => g.game_id));
       return max_id === -Infinity ? 0 : max_id;
     },
+    current_influence_bonus: (state) => {
+      if (state.log.length === 0) {
+        return null;
+      }
+
+      var game = state.log[state.log.length - 1];
+      if (game.tokens === 3) {
+        return game.bonus;
+      }
+
+      return null;
+    },
     next_influence_bonus: (state) => {
       var options = Array.from(Array(InfluenceBonuses.length).keys());
       for (let game of state.log.slice(-8)) {

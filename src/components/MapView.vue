@@ -90,6 +90,9 @@
             <b-icon-x-circle-fill variant="danger" v-if="!p_won" />
           </span>
         </div>
+        <div v-if="info_text" class="info-text">
+          {{ info_text }}
+        </div>
       </div>
     </b-modal>
   </div>
@@ -119,6 +122,7 @@ export default {
       a_faction: "f",
       cell_special: "",
       title: "TITLE",
+      info_text: "",
       playable: false,
       p_won: false,
       p_score: null,
@@ -146,7 +150,7 @@ export default {
         this.p_score = game.p_score;
         this.a_score = game.a_score;
         this.p_won = game.p_win;
-        this.title = game.p_win ? "Victory!" : "Defeat!";
+        this.title = "Game #" + game.game_id;
         if (hex_type === "f") {
           this.p_faction = game.p_faction;
           this.a_faction = game.a_faction;
@@ -155,7 +159,12 @@ export default {
         this.p_score = null;
         this.a_score = null;
         this.playable = e.target.attrs["playable"];
-        this.title = this.playable ? "Unplayed Matchup" : "Invalid Matchup";
+        this.title = this.playable ? "Available Matchup" : "Future Matchup";
+        if (e.target.attrs["ender"]) {
+          this.info_text = "Winning this matchup will end the campaign!";
+        } else {
+          this.info_text = "";
+        }
       }
 
       this.$refs["matchup-modal"].show();
@@ -223,15 +232,19 @@ export default {
         strokeWidth: hex.borderWidth,
         listening: true,
         playable: false,
+        ender: false,
       };
 
       var game = this.game_by_matchup(hex.data);
       if (game) {
         config["fill"] = game.p_win ? "#00aa00" : "#aa0000";
       } else if (this.available_hex(hex)) {
-        config["fill"] = this.matchup_will_end_campaign(hex.data)
-          ? "#00aaee"
-          : "#deb887";
+        if (this.matchup_will_end_campaign(hex.data)) {
+          config["fill"] = "#00aaee";
+          config["ender"] = true;
+        } else {
+          config["fill"] = "#deb887";
+        }
         config["playable"] = true;
       }
 
@@ -349,6 +362,11 @@ div.choose-modal {
 
 div.score-row {
   display: flex;
+}
+
+div.info-text {
+  font-size: 0.7em;
+  color: #dd5522;
 }
 
 span.p-score {

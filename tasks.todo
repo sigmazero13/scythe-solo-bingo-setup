@@ -25,6 +25,15 @@ Campaign:
     ✔ GameView: game data? @done(22-07-23 16:55)
     ✔ GeneralView: player_board, structure_bonus, fv_offset, p_faction, a_faction @done(22-07-21 22:17)
     ✔ MapView: played, available? @done(22-07-21 22:17)
+  ☐ Achievement Bugs
+    ☐ Not prompting for qualified achievements?
+    ☐ Prompting for incorrect achievements
+  ✔ If previous game had 3 influence, remind player of current bonus @done(22-11-05 23:54)
+  ☐ Show current achievement to achieve on randomizer screen
+  ✔ Better label for "Combat Fought" and "Location" @done(22-11-05 23:54)
+
+Configuration/Setup:
+  ☐ Choose whether you own Modular Board structural bonus tiles
 
 Map Drawing:
   ✔ Create map tab @done(22-07-18 16:52)
@@ -36,15 +45,21 @@ Map Drawing:
     ✔ Picking faction combo updates game and randomizer views @done(22-07-13 12:55)
     ✔ Better display map options (don't show coordinates) @done(22-07-06 18:19)
   ✔ Draw map @done(22-10-11 18:06)
-  ☐ Display selection
+  ✔ Display selection @done(22-11-05 23:00)
     ✔ Unplayed Game @done(22-11-04 23:18)
       ✔ Normal @done(22-11-04 23:18)
       ✔ Factory @done(22-11-04 23:18)
       ✔ Not Available @done(22-11-04 23:18)
-      ☐ Potential Campaign Ender
+      ✔ Potential Campaign Ender @done(22-11-05 23:00)
     ✔ Completed Game @done(22-11-04 23:19)
       ✔ Normal @done(22-11-04 23:18)
       ✔ Factory @done(22-11-04 23:18)
+  ✔ Better modal window labels @done(22-11-05 23:17)
+    ✔ Unplayed games @done(22-11-05 23:17)
+    ✔ Played games (use Game Id) @done(22-11-05 23:17)
+    ✔ "Invalid" game @done(22-11-05 23:17)
+    ✔ Campaign-ender game @done(22-11-05 23:17)
+  
   
 
 Clean up/document Emits and recievers:
