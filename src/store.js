@@ -27,6 +27,9 @@ export default new Vuex.Store({
     log: (state) => {
       return state.log;
     },
+    settings: (state) => {
+      return state.settings;
+    },
     game_by_id: (state) => (game_id) => {
       for (var game of state.log) {
         if (game.game_id === game_id) {
@@ -242,6 +245,10 @@ export default new Vuex.Store({
       updateField(state.cur_game, field);
       localStorage.setItem("cur_game", JSON.stringify(state.cur_game));
     },
+    updateSetting(state, field) {
+      updateField(state.settings, field);
+      localStorage.setItem("settings", JSON.stringify(state.settings));
+    },
     newGame(state) {
       state.cur_game = { ...DEFAULT_DATA };
       localStorage.setItem("cur_game", JSON.stringify(state.cur_game));
@@ -253,6 +260,12 @@ export default new Vuex.Store({
         state.cur_game = JSON.parse(localStorage.getItem("cur_game"));
       } else {
         state.cur_game = { ...DEFAULT_DATA };
+      }
+
+      if (localStorage.getItem("settings")) {
+        state.settings = JSON.parse(localStorage.getItem("settings"));
+      } else {
+        state.settings = { modular: true };
       }
     },
   },

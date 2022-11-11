@@ -44,8 +44,8 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col class="gen-header" cols="6" @click="configStructure">
-          <b>Structure Bonus:</b>
+        <b-col class="gen-header" cols="6">
+          <b-icon-gear @click="configStructure" /><b>Structure Bonus:</b>
         </b-col>
         <b-col class="gen-col" cols="6">{{ structure_bonus["name"] }}</b-col>
       </b-row>
@@ -115,7 +115,10 @@ export default {
       }
     },
     pickBonus() {
-      var bonus = Math.floor(Math.random() * StructureBonuses.length);
+      var max = this.$store.state.settings["modular"]
+        ? StructureBonuses.length
+        : 6;
+      var bonus = Math.floor(Math.random() * max);
       return StructureBonuses[bonus];
     },
     showOffset() {

@@ -9,20 +9,26 @@ export function validAchievements(log, current_achievements) {
 
   if (last_3_games.length === 3) {
     var wins = 0;
-    var inf3 = 0;
-
     for (let game of last_3_games) {
       if (game.p_score > game.a_score) {
         wins += 1;
-      }
-      if (game.tokens === 3) {
-        inf3 += 1;
       }
     }
     if (wins === 3) {
       newly_achieved.push("3wins");
     }
-    if (inf3 === 3) {
+  }
+
+  if (!current_achievements.includes("3inf3")) {
+    var inf3 = 0;
+
+    for (let game of log) {
+      if (game.tokens === 3) {
+        inf3 += 1;
+      }
+    }
+
+    if (inf3 >= 3) {
       newly_achieved.push("3inf3");
     }
   }
@@ -62,9 +68,9 @@ export function validAchievements(log, current_achievements) {
     if (!last_game.combats) {
       newly_achieved.push("nocombat");
     }
-
-    return newly_achieved.filter((x) => {
-      return !current_achievements.includes(x);
-    });
   }
+
+  return newly_achieved.filter((x) => {
+    return !current_achievements.includes(x);
+  });
 }

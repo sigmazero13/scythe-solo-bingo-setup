@@ -150,23 +150,23 @@ export function bestScore(cell_scores, only_bingo) {
   return best_score;
 }
 
-function potentialBingo(cell_scores, q, r, dir, length) {
+function winLength(cell_scores, q, r, dir, length) {
   if (length >= 5) {
-    return true;
+    return length;
   }
 
   var this_cell = MapData.cell(q, r);
 
   if (this_cell === null || this_cell.data === "HOME") {
-    return false;
+    return length - 1;
   } else if (cell_scores[this_cell.data] < 0) {
-    return false;
+    return length - 1;
   } else if (!(this_cell.data in cell_scores) && length > 0) {
-    return false;
+    return length - 1;
   }
 
   var new_cell_qr = axialNeighbor([q, r], dir);
-  return potentialBingo(
+  return winLength(
     cell_scores,
     new_cell_qr[0],
     new_cell_qr[1],
@@ -177,8 +177,10 @@ function potentialBingo(cell_scores, q, r, dir, length) {
 
 export function matchupWillEnd(cell_scores, factions) {
   let cell = MapData.findByFactions(factions);
-  for (var dir = 0; dir < 6; dir++) {
-    if (potentialBingo(cell_scores, cell.q, cell.r, dir, 0)) {
+  for (var dir = 0; dir < 3; dir++) {
+    var dir_a = winLength(cell_scores, cell.q, cell.r, dir, 0);
+    var dir_b = winLength(cell_scores, cell.q, cell.r, dir + 3, 0);
+    if (dir_a + dir_b >= 4) {
       return true;
     }
   }

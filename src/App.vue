@@ -109,6 +109,7 @@ export default {
     },
     selectFactionsFromMap({ p_faction, a_faction, location }) {
       this.$refs.game.newGame();
+      this.$refs.random.reset();
 
       if (p_faction !== "") {
         this.$refs.game.update({ field: "player-faction", value: p_faction });

@@ -6,14 +6,15 @@ Campaign:
     ✔ Reset achievements if campaign reset @done(22-06-05 15:47)
     ✔ Do not show popup on loss @done(22-06-05 15:52)
     ✔ Reset selected after committing in campaign view @done(22-06-05 15:48)
+    ☐ Account for edited game, not "last game", when editing a game
   ✔ Alter next Automa level based on win/loss @done(22-06-13 18:39)
   ✔ Add a flag for "winning" in case of ties? @done(22-07-13 11:51)
   ☐ Highlight "missing" fields in game view
-  ☐ Map Related, not related to drawing
+  ✔ Map Related, not related to drawing @done(22-11-10 23:47)
     ✔ Calculate best player score so far @done(22-07-14 21:18)
     ✔ Let player know if faction choices are valid @done(22-07-18 17:43)
     ✔ Calculate Player "best score" so far, including achievements @done(22-07-15 14:51)
-    ☐ Let player know final score when campaign ends
+    ✔ Let player know final score when campaign ends @done(22-11-10 23:47)
     ✔ Let player know if a choice will end the campaign upon victory @done(22-07-23 20:18)
   ✔ Switch to a global application state (vuex?) @done(22-07-23 16:55)
     ✔ log @done(22-07-21 20:27)
@@ -25,11 +26,11 @@ Campaign:
     ✔ GameView: game data? @done(22-07-23 16:55)
     ✔ GeneralView: player_board, structure_bonus, fv_offset, p_faction, a_faction @done(22-07-21 22:17)
     ✔ MapView: played, available? @done(22-07-21 22:17)
-  ☐ Achievement Bugs
-    ☐ Not prompting for qualified achievements?
-    ☐ Prompting for incorrect achievements
+  ✔ Achievement Bugs @done(22-11-10 22:43)
+    ✔ Not prompting for qualified achievements? @done(22-11-10 22:19)
+    ✔ Prompting for incorrect achievements @done(22-11-10 22:43)
   ✔ If previous game had 3 influence, remind player of current bonus @done(22-11-05 23:54)
-  ☐ Show current achievement to achieve on randomizer screen
+  ✔ Show influence bonus to achieve for current game on randomizer screen @done(22-11-10 23:43)
   ✔ Better label for "Combat Fought" and "Location" @done(22-11-05 23:54)
 
 Achievements:
@@ -57,10 +58,11 @@ Bug Fixes:
   ✔ Automa to Automa + transition isn't working (does blank) @done(22-11-10 19:06)
   ✔ Clicking on faction circle disables PLAY button on map @done(22-11-10 19:21)
   ✔ Tabs maintain scroll on different tabs @done(22-11-10 19:05)
-  ☐ Campaign Ender doesn't show up if cell is in the middle of a line
+  ✔ Campaign Ender doesn't show up if cell is in the middle of a line @done(22-11-10 23:09)
+  ✔ Choosing from map doesn't reset randomizer screen @done(22-11-10 23:47)
 
 Configuration/Setup:
-  ☐ Choose whether you own Modular Board structural bonus tiles
+  ✔ Choose whether you own Modular Board structural bonus tiles @done(22-11-10 22:16)
 
 Map Drawing:
   ✔ Create map tab @done(22-07-18 16:52)

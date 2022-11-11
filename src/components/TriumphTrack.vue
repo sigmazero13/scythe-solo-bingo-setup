@@ -30,20 +30,37 @@
           {{ tunnel.text }}
         </b-col>
       </b-row>
+      <br v-if="game_id > 0" />
+      <b-row align-v="center" v-if="game_id > 0">
+        <b-col cols="2">Bonus: </b-col>
+        <b-col>
+          <InfluenceIcon :width="25" :icon_num="this.bonus" />
+          {{ inf_bonus }}
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
 
 <script>
-import { TriumphVariants, Triumphs } from "../constants.js";
+import { InfluenceBonuses, TriumphVariants, Triumphs } from "../constants.js";
 import TriumphTile from "./TriumphTile.vue";
+import InfluenceIcon from "./InfluenceIcon.vue";
 
 import saveState from "vue-save-state";
+
+import { createHelpers } from "vuex-map-fields";
+
+const { mapFields } = createHelpers({
+  getterType: "getGameField",
+  mutationType: "updateGameField",
+});
 
 export default {
   name: "TriumphTrack",
   components: {
     TriumphTile,
+    InfluenceIcon,
   },
   mixins: [saveState],
   data() {
@@ -142,6 +159,10 @@ export default {
     },
   },
   computed: {
+    ...mapFields(["game_id", "bonus"]),
+    inf_bonus() {
+      return InfluenceBonuses[this.bonus]["short"];
+    },
     formatted_track() {
       return this.track_items.reduce((rows, value, i) => {
         if (i % 5 === 0) rows.push([]);

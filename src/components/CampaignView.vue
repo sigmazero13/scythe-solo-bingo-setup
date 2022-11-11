@@ -215,14 +215,14 @@ export default {
       this.$store.commit("deleteGame", this.game_id_to_delete);
     },
     saveGame() {
-      const game_data = this.$store.state.cur_game;
+      // const game_data = this.$store.state.cur_game;
       this.$store.commit("saveGame");
 
-      if (game_data.p_score > game_data.a_score) {
-        var new_achievements = validAchievements(this.log, this.achieved);
-        this.new_achievement_keys = new_achievements;
-        this.$refs["achievement-modal"].show();
-      }
+      // if (game_data.p_score > game_data.a_score) {
+      var new_achievements = validAchievements(this.log, this.achieved);
+      this.new_achievement_keys = new_achievements;
+      this.$refs["achievement-modal"].show();
+      // }
     },
     automaLevel(info) {
       return Difficulties[info.a_level];
