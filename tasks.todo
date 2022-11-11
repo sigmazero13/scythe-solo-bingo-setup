@@ -32,6 +32,8 @@ Campaign:
   ✔ If previous game had 3 influence, remind player of current bonus @done(22-11-05 23:54)
   ✔ Show influence bonus to achieve for current game on randomizer screen @done(22-11-10 23:43)
   ✔ Better label for "Combat Fought" and "Location" @done(22-11-05 23:54)
+  ☐ "Grey out" influence bonus in Campaign View if they were not "unlocked"
+  ☐ Look at maybe allowing zooming (and panning) of the map
 
 Achievements:
   ✔ 3 Consecutive wins @done(22-11-08 18:43)
