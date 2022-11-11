@@ -19,6 +19,7 @@
                 radius: hex.r / 4,
                 stroke: '#000000',
                 fill: factionColor(hex.f1),
+                playable: available_hex(hex),
               }"
             ></v-circle>
             <v-circle
@@ -30,6 +31,7 @@
                 radius: hex.r / 4,
                 stroke: '#000000',
                 fill: factionColor(hex.f2),
+                playable: available_hex(hex),
               }"
             ></v-circle>
             <v-text

@@ -6,7 +6,15 @@
     <TriumphTrack ref="vtrack" @update="update" />
     <br />
     <WindGambit ref="windgambit" @update="update" />
-    <GeneralStuff ref="general" @update="update" />
+    <GeneralStuff ref="general" @update="update" @config="config" />
+    <b-modal
+      id="structure-modal"
+      ref="structure-modal"
+      title="Modular Board Bonuses?"
+      ok-only="true"
+    >
+      THIS IS WHERE IT WILL GO.
+    </b-modal>
   </div>
 </template>
 
@@ -28,6 +36,11 @@ export default {
     return {};
   },
   methods: {
+    config(data) {
+      if (data == "structure") {
+        this.$refs["structure-modal"].show();
+      }
+    },
     reset() {
       this.$refs.vtrack.reset();
       this.$refs.windgambit.reset();

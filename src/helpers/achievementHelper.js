@@ -28,11 +28,12 @@ export function validAchievements(log, current_achievements) {
   }
 
   if (last_game.p_score > last_game.a_score) {
-    if (last_game.a_level === 4) {
+    var last_level = parseInt(last_game.a_level);
+    if (last_level === 4) {
       newly_achieved.push("automa+");
     }
-    if (last_game.a_level === 5) {
-      newly_achieved.push("automszyna");
+    if (last_level === 5) {
+      newly_achieved.push("automaszyna");
     }
     if (EXP_FACTIONS.includes(last_game.p_faction)) {
       newly_achieved.push("asexp");

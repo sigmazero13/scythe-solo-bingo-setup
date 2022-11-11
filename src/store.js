@@ -20,6 +20,7 @@ export default new Vuex.Store({
   state: {
     log: [],
     achieved: [],
+    settings: { modular: true },
     cur_game: { ...DEFAULT_DATA },
   },
   getters: {
@@ -161,10 +162,11 @@ export default new Vuex.Store({
       }
 
       var last_game = state.log.slice(-1)[0];
+      var last_level = parseInt(last_game.a_level);
       if (last_game.p_win) {
-        return last_game.a_level >= 7 ? 7 : last_game.a_level + 1;
+        return last_level >= 7 ? 7 : last_level + 1;
       } else {
-        return last_game.a_level <= 1 ? 1 : last_game.a_level - 1;
+        return last_level <= 1 ? 1 : last_level - 1;
       }
     },
     getGameField(state) {
@@ -205,7 +207,7 @@ export default new Vuex.Store({
           // Update an existing game's data
           for (let key in game_data) {
             var value = game_data[key];
-            if (key.includes("_score")) {
+            if (key.includes("_score") || key.includes("a_level")) {
               value = parseInt(value);
             }
             state.log[index][key] = value;

@@ -202,7 +202,7 @@ export default {
       this.$store.commit("resetCampaign");
     },
     newGame() {
-      this.$emit("newgame"); //, {
+      this.$emit("newgame");
     },
     editGame(game_id) {
       this.$emit("editgame", game_id);

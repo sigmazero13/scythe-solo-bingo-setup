@@ -44,7 +44,9 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col class="gen-header" cols="6"><b>Structure Bonus:</b></b-col>
+        <b-col class="gen-header" cols="6" @click="configStructure">
+          <b>Structure Bonus:</b>
+        </b-col>
         <b-col class="gen-col" cols="6">{{ structure_bonus["name"] }}</b-col>
       </b-row>
       <b-row>
@@ -82,6 +84,9 @@ export default {
       this.fv_offset = "...";
       this.p_faction = null;
       this.a_faction = null;
+    },
+    configStructure() {
+      this.$emit("config", "structure");
     },
     makeSelection() {
       this.player_board = this.pickBoard(this.p_faction);

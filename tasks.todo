@@ -32,6 +32,33 @@ Campaign:
   ☐ Show current achievement to achieve on randomizer screen
   ✔ Better label for "Combat Fought" and "Location" @done(22-11-05 23:54)
 
+Achievements:
+  ✔ 3 Consecutive wins @done(22-11-08 18:43)
+  ✔ Automa + @done(22-11-10 18:56)
+    ✔ Seems to make no achievements show up? @done(22-11-10 18:56)
+  ✔ Automaszyna @done(22-11-10 18:56)
+    ✔ Doesn't show up on list @done(22-11-10 18:56)
+  ✔ Win as expansion @done(22-11-08 18:39)
+  ✔ Win vs expnasion @done(22-11-08 18:41)
+  ✔ Win in tunnel @done(22-11-08 18:43)
+  ✔ Win in factory @done(22-11-10 19:08)
+  ✔ Win with airships @done(22-11-08 18:39)
+  ✔ Win with Resolution @done(22-11-08 18:39)
+  ✔ Win by 25+ points @done(22-11-08 18:39)
+  ✔ 3 Influence for the 3rd time @done(22-11-08 18:45)
+  ✔ Win with no influence bonus @done(22-11-10 19:13)
+    ✔ Bug - still showed up even when I DID have bonus... @done(22-11-10 19:13)
+  ✔ Win with peace @done(22-11-08 18:42)
+  ✔ Win with war @done(22-11-08 18:39)
+  ✔ Win with random @done(22-11-08 18:45)
+  ✔ Win with no combat @done(22-11-08 18:39)
+
+Bug Fixes:
+  ✔ Automa to Automa + transition isn't working (does blank) @done(22-11-10 19:06)
+  ✔ Clicking on faction circle disables PLAY button on map @done(22-11-10 19:21)
+  ✔ Tabs maintain scroll on different tabs @done(22-11-10 19:05)
+  ☐ Campaign Ender doesn't show up if cell is in the middle of a line
+
 Configuration/Setup:
   ☐ Choose whether you own Modular Board structural bonus tiles
 
