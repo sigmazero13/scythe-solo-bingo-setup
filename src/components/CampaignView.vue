@@ -8,17 +8,25 @@
     </b-button>
     <br />
     <span id="scores" v-if="this.log.length > 0">
-      <b-alert v-if="best_bingo_score >= 0" :variant="bingo_variant" show>
+      <b-alert v-if="best_total_score >= 0" :variant="bingo_variant" show>
         <b>The campaign is over!</b>
+        <br />
+        Bingo Score: {{ bingo_score }}
+        <br />
+        Achievement Score: {{ achievement_score }}
+        <br />
+        Influence Score: {{ influence_score }}
+        <br />
+        <b>Total Player Score: {{ best_total_score }}</b>
         <br />
         <b>Automa Score: {{ automa_score }}</b>
         <br />
-        <b>Player Score: {{ best_bingo_score }}</b>
+        <b>Final Campaign Score: {{ final_score }}</b>
       </b-alert>
       <span v-else>
-        <b>Current Automa Score: {{ automa_score }}</b>
-        <br />
         <b>Best Player Score: {{ best_player_score }}</b>
+        <br />
+        <b>Current Automa Score: {{ automa_score }}</b>
       </span>
     </span>
     <b-table
@@ -61,7 +69,11 @@
       </template>
 
       <template #cell(bonus)="row">
-        <InfluenceIcon :icon_num="row.item.bonus" :width="30" />
+        <InfluenceIcon
+          :icon_num="row.item.bonus"
+          :width="30"
+          :gray="grayBonus(row.item)"
+        />
       </template>
 
       <template #row-details="row">
@@ -257,6 +269,10 @@ export default {
     scoreDiff(game) {
       return scoreDiff(game);
     },
+    grayBonus(info) {
+      if (info === null || info === undefined) return false;
+      return parseInt(info.tokens) < 3;
+    },
   },
   computed: {
     ...mapGetters([
@@ -265,7 +281,9 @@ export default {
       "automa_score",
       "achievement_score",
       "best_player_score",
-      "best_bingo_score",
+      "best_total_score",
+      "bingo_score",
+      "influence_score",
     ]),
     log_items() {
       return this.log.map((g) => {
@@ -292,7 +310,10 @@ export default {
       return this.selected_achievements.length > 2;
     },
     bingo_variant() {
-      return this.best_bingo_score > this.automa_score ? "success" : "danger";
+      return this.best_total_score > this.automa_score ? "success" : "danger";
+    },
+    final_score() {
+      return this.best_total_score - this.automa_score;
     },
   },
 };

@@ -21,6 +21,10 @@ export default {
       type: Number,
       default: 50,
     },
+    gray: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     var iconList;
@@ -45,12 +49,16 @@ export default {
       var h = Math.floor(info.height * scale);
       var s = this.size * scale;
       var offset = info.offset * scale;
+      var graypct = this.gray ? 100 : 0;
+      var opacity = this.gray ? 0.3 : 1;
       return {
         width: w + "px",
         height: h + "px",
         backgroundSize: "auto " + s + "px",
         backgroundPosition: "-" + offset + "px 0",
         display: "inline-block",
+        filter: "grayscale(" + graypct + "%)",
+        opacity: opacity,
       };
     },
     iconType: function () {

@@ -28,8 +28,8 @@
         </b-tab>
         <b-tab>
           <template v-slot:title>
-            <b-icon-gear-wide-connected />
-          </template>
+            <b-icon-clipboard-data />
+           </template>
           <GameView ref="game" @savegame="saveGame" @update="updateFromGame" />
         </b-tab>
         <b-tab>
