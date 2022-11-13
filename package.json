@@ -1,6 +1,6 @@
 {
   "name": "scythe-solo-setup",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -14,16 +14,19 @@
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.21.1",
     "express": "^4.17.3",
+    "konva": "8.3.5",
     "serve-static": "^1.14.2",
     "vue": "^2.6.11",
     "vue-save-state": "^1.2.0",
     "vuex": "^3.6.2",
-    "vuex-map-fields": "^1.4.1"
+    "vuex-map-fields": "^1.4.1",
+    "vue-konva": "^2.1.7"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/cli-service": "^5.0.8",
+    "@vue/compiler-sfc": "^3.0.0-0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",

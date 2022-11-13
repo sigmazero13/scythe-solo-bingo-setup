@@ -6,7 +6,17 @@
     <TriumphTrack ref="vtrack" @update="update" />
     <br />
     <WindGambit ref="windgambit" @update="update" />
-    <GeneralStuff ref="general" @update="update" />
+    <GeneralStuff ref="general" @update="update" @config="config" />
+    <b-modal
+      id="structure-modal"
+      ref="structure-modal"
+      title="Modular Board Bonuses?"
+      ok-only
+    >
+      <b-form-checkbox v-model="modboard_structure">
+        Include Modular Board Bonus Tiles
+      </b-form-checkbox>
+    </b-modal>
   </div>
 </template>
 
@@ -28,6 +38,11 @@ export default {
     return {};
   },
   methods: {
+    config(data) {
+      if (data == "structure") {
+        this.$refs["structure-modal"].show();
+      }
+    },
     reset() {
       this.$refs.vtrack.reset();
       this.$refs.windgambit.reset();
@@ -43,6 +58,19 @@ export default {
     updateFaction(data) {
       // Just passing the data down to the sub-view
       this.$refs.general.updateFaction(data);
+    },
+  },
+  computed: {
+    modboard_structure: {
+      get() {
+        return this.$store.state.settings["modular"];
+      },
+      set(new_value) {
+        return this.$store.commit("updateSetting", {
+          path: "modular",
+          value: new_value,
+        });
+      },
     },
   },
 };

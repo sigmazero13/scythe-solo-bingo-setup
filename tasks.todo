@@ -6,14 +6,15 @@ Campaign:
     ✔ Reset achievements if campaign reset @done(22-06-05 15:47)
     ✔ Do not show popup on loss @done(22-06-05 15:52)
     ✔ Reset selected after committing in campaign view @done(22-06-05 15:48)
+    ☐ Account for edited game, not "last game", when editing a game
   ✔ Alter next Automa level based on win/loss @done(22-06-13 18:39)
   ✔ Add a flag for "winning" in case of ties? @done(22-07-13 11:51)
   ☐ Highlight "missing" fields in game view
-  ☐ Map Related, not related to drawing
+  ✔ Map Related, not related to drawing @done(22-11-10 23:47)
     ✔ Calculate best player score so far @done(22-07-14 21:18)
     ✔ Let player know if faction choices are valid @done(22-07-18 17:43)
     ✔ Calculate Player "best score" so far, including achievements @done(22-07-15 14:51)
-    ☐ Let player know final score when campaign ends
+    ✔ Let player know final score when campaign ends @done(22-11-10 23:47)
     ✔ Let player know if a choice will end the campaign upon victory @done(22-07-23 20:18)
   ✔ Switch to a global application state (vuex?) @done(22-07-23 16:55)
     ✔ log @done(22-07-21 20:27)
@@ -25,6 +26,49 @@ Campaign:
     ✔ GameView: game data? @done(22-07-23 16:55)
     ✔ GeneralView: player_board, structure_bonus, fv_offset, p_faction, a_faction @done(22-07-21 22:17)
     ✔ MapView: played, available? @done(22-07-21 22:17)
+  ✔ Achievement Bugs @done(22-11-10 22:43)
+    ✔ Not prompting for qualified achievements? @done(22-11-10 22:19)
+    ✔ Prompting for incorrect achievements @done(22-11-10 22:43)
+  ✔ If previous game had 3 influence, remind player of current bonus @done(22-11-05 23:54)
+  ✔ Show influence bonus to achieve for current game on randomizer screen @done(22-11-10 23:43)
+  ✔ Better label for "Combat Fought" and "Location" @done(22-11-05 23:54)
+  ☐ "Grey out" influence bonus in Campaign View if they were not "unlocked"
+  ☐ Look at maybe allowing zooming (and panning) of the map
+  ☐ Add influence to total campaign score
+  ☐ Show breakdown of score on final box
+  ☐ Show "final campaign" score (IE, player score - AI score)
+  ☐ Add a setting to disable Automaszyna+ and Ultimaszyna difficulties
+
+Achievements:
+  ✔ 3 Consecutive wins @done(22-11-08 18:43)
+  ✔ Automa + @done(22-11-10 18:56)
+    ✔ Seems to make no achievements show up? @done(22-11-10 18:56)
+  ✔ Automaszyna @done(22-11-10 18:56)
+    ✔ Doesn't show up on list @done(22-11-10 18:56)
+  ✔ Win as expansion @done(22-11-08 18:39)
+  ✔ Win vs expnasion @done(22-11-08 18:41)
+  ✔ Win in tunnel @done(22-11-08 18:43)
+  ✔ Win in factory @done(22-11-10 19:08)
+  ✔ Win with airships @done(22-11-08 18:39)
+  ✔ Win with Resolution @done(22-11-08 18:39)
+  ✔ Win by 25+ points @done(22-11-08 18:39)
+  ✔ 3 Influence for the 3rd time @done(22-11-08 18:45)
+  ✔ Win with no influence bonus @done(22-11-10 19:13)
+    ✔ Bug - still showed up even when I DID have bonus... @done(22-11-10 19:13)
+  ✔ Win with peace @done(22-11-08 18:42)
+  ✔ Win with war @done(22-11-08 18:39)
+  ✔ Win with random @done(22-11-08 18:45)
+  ✔ Win with no combat @done(22-11-08 18:39)
+
+Bug Fixes:
+  ✔ Automa to Automa + transition isn't working (does blank) @done(22-11-10 19:06)
+  ✔ Clicking on faction circle disables PLAY button on map @done(22-11-10 19:21)
+  ✔ Tabs maintain scroll on different tabs @done(22-11-10 19:05)
+  ✔ Campaign Ender doesn't show up if cell is in the middle of a line @done(22-11-10 23:09)
+  ✔ Choosing from map doesn't reset randomizer screen @done(22-11-10 23:47)
+
+Configuration/Setup:
+  ✔ Choose whether you own Modular Board structural bonus tiles @done(22-11-10 22:16)
 
 Map Drawing:
   ✔ Create map tab @done(22-07-18 16:52)
@@ -35,7 +79,23 @@ Map Drawing:
     ✔ Allow user to pick faction combo from Map Tab @done(22-07-12 17:20)
     ✔ Picking faction combo updates game and randomizer views @done(22-07-13 12:55)
     ✔ Better display map options (don't show coordinates) @done(22-07-06 18:19)
-  ☐ Draw map
+  ✔ Draw map @done(22-10-11 18:06)
+  ✔ Display selection @done(22-11-05 23:00)
+    ✔ Unplayed Game @done(22-11-04 23:18)
+      ✔ Normal @done(22-11-04 23:18)
+      ✔ Factory @done(22-11-04 23:18)
+      ✔ Not Available @done(22-11-04 23:18)
+      ✔ Potential Campaign Ender @done(22-11-05 23:00)
+    ✔ Completed Game @done(22-11-04 23:19)
+      ✔ Normal @done(22-11-04 23:18)
+      ✔ Factory @done(22-11-04 23:18)
+  ✔ Better modal window labels @done(22-11-05 23:17)
+    ✔ Unplayed games @done(22-11-05 23:17)
+    ✔ Played games (use Game Id) @done(22-11-05 23:17)
+    ✔ "Invalid" game @done(22-11-05 23:17)
+    ✔ Campaign-ender game @done(22-11-05 23:17)
+  
+  
 
 Clean up/document Emits and recievers:
   ✔ App @done(22-07-11 14:55)

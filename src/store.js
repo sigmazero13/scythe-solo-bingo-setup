@@ -20,16 +20,39 @@ export default new Vuex.Store({
   state: {
     log: [],
     achieved: [],
+    settings: { modular: true },
     cur_game: { ...DEFAULT_DATA },
   },
   getters: {
     log: (state) => {
       return state.log;
     },
+    settings: (state) => {
+      return state.settings;
+    },
     game_by_id: (state) => (game_id) => {
       for (var game of state.log) {
         if (game.game_id === game_id) {
           return game;
+        }
+      }
+
+      return null;
+    },
+    game_by_matchup: (state) => (matchup) => {
+      for (var game of state.log) {
+        if (matchup === "FACTORY") {
+          if (game.location === "factory") {
+            return game;
+          }
+        } else {
+          if (
+            game.p_faction === matchup[0] &&
+            game.a_faction === matchup[1] &&
+            game.location !== "factory"
+          ) {
+            return game;
+          }
         }
       }
 
@@ -113,6 +136,18 @@ export default new Vuex.Store({
       var max_id = Math.max(...state.log.map((g) => g.game_id));
       return max_id === -Infinity ? 0 : max_id;
     },
+    current_influence_bonus: (state) => {
+      if (state.log.length === 0) {
+        return null;
+      }
+
+      var game = state.log[state.log.length - 1];
+      if (game.tokens === 3) {
+        return game.bonus;
+      }
+
+      return null;
+    },
     next_influence_bonus: (state) => {
       var options = Array.from(Array(InfluenceBonuses.length).keys());
       for (let game of state.log.slice(-8)) {
@@ -130,10 +165,11 @@ export default new Vuex.Store({
       }
 
       var last_game = state.log.slice(-1)[0];
+      var last_level = parseInt(last_game.a_level);
       if (last_game.p_win) {
-        return last_game.a_level >= 7 ? 7 : last_game.a_level + 1;
+        return last_level >= 7 ? 7 : last_level + 1;
       } else {
-        return last_game.a_level <= 1 ? 1 : last_game.a_level - 1;
+        return last_level <= 1 ? 1 : last_level - 1;
       }
     },
     getGameField(state) {
@@ -174,7 +210,7 @@ export default new Vuex.Store({
           // Update an existing game's data
           for (let key in game_data) {
             var value = game_data[key];
-            if (key.includes("_score")) {
+            if (key.includes("_score") || key.includes("a_level")) {
               value = parseInt(value);
             }
             state.log[index][key] = value;
@@ -209,6 +245,10 @@ export default new Vuex.Store({
       updateField(state.cur_game, field);
       localStorage.setItem("cur_game", JSON.stringify(state.cur_game));
     },
+    updateSetting(state, field) {
+      updateField(state.settings, field);
+      localStorage.setItem("settings", JSON.stringify(state.settings));
+    },
     newGame(state) {
       state.cur_game = { ...DEFAULT_DATA };
       localStorage.setItem("cur_game", JSON.stringify(state.cur_game));
@@ -220,6 +260,12 @@ export default new Vuex.Store({
         state.cur_game = JSON.parse(localStorage.getItem("cur_game"));
       } else {
         state.cur_game = { ...DEFAULT_DATA };
+      }
+
+      if (localStorage.getItem("settings")) {
+        state.settings = JSON.parse(localStorage.getItem("settings"));
+      } else {
+        state.settings = { modular: true };
       }
     },
   },

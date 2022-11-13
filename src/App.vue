@@ -1,13 +1,14 @@
 <template>
   <div id="app">
     <div class="header">
-      <h1>Scythe Bingo Reloaded:</h1>
+      <h1>Scythe Bingo Reloaded</h1>
     </div>
     <b-container class="app-container">
       <b-tabs
         content-class="mt-3"
         nav-wrapper-class="sticky-top tab-custom bg-light"
         v-model="cur_tab"
+        @input="scrollToTop"
       >
         <b-tab active>
           <template v-slot:title>
@@ -97,6 +98,7 @@ export default {
     },
     saveGame() {
       this.$refs.campaign.saveGame();
+      // this.scrollToTop();
       this.cur_tab = CAMPAIGN_TAB;
     },
     updateFromGame(data) {
@@ -105,22 +107,28 @@ export default {
     updateFromRandomizer(data) {
       this.$refs.game.update(data);
     },
-    selectFactionsFromMap({ factions, location }) {
-      if (factions !== "") {
-        this.$refs.game.update({ field: "player-faction", value: factions[0] });
-        this.$refs.game.update({ field: "automa-faction", value: factions[1] });
+    selectFactionsFromMap({ p_faction, a_faction, location }) {
+      this.$refs.game.newGame();
+      this.$refs.random.reset();
+
+      if (p_faction !== "") {
+        this.$refs.game.update({ field: "player-faction", value: p_faction });
+        this.$refs.game.update({ field: "automa-faction", value: a_faction });
 
         this.$refs.random.updateFaction({
           field: "player-faction",
-          value: factions[0],
+          value: p_faction,
         });
         this.$refs.random.updateFaction({
           field: "automa-faction",
-          value: factions[1],
+          value: a_faction,
         });
       }
       this.$refs.game.update({ field: "location", value: location });
       this.cur_tab = GAME_TAB;
+    },
+    scrollToTop() {
+      window.scrollTo(0, 0);
     },
   },
 };
@@ -152,6 +160,8 @@ h1 {
 
 .app-container {
   margin-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .header {

@@ -5,6 +5,13 @@
     </div>
     <div v-else>
       <h1>Game Info</h1>
+      <div v-if="earned_bonus" class="earned-bonus">
+        <b>You can use the following bonus:</b><br />
+        <InfluenceIcon :width="25" :icon_num="this.current_influence_bonus" />
+        <div class="bonus-text">
+          {{ prev_bonus.short }}
+        </div>
+      </div>
       <b-form>
         <b-form-group label="Game ID:" label-cols="3">
           <b-form-input id="game-id" v-model="game_id" readonly />
@@ -99,10 +106,7 @@
             icon-full="circle-fill"
           />
         </b-form-group>
-        <b-form-group label="Combat Fought During Game?" label-cols="8">
-          <b-form-checkbox v-model="combats" class="field-offset" />
-        </b-form-group>
-        <b-form-group label="Location" label-cols="3">
+        <b-form-group label="Map Location" label-cols="4">
           <b-form-radio-group
             id="location"
             v-model="location"
@@ -119,6 +123,9 @@
               Factory
             </b-form-radio>
           </b-form-radio-group>
+        </b-form-group>
+        <b-form-group label="Combat fought during this game?" label-cols="9">
+          <b-form-checkbox v-model="combats" class="field-offset" />
         </b-form-group>
       </b-form>
       <div v-if="invalid_matchup">
@@ -262,6 +269,7 @@ export default {
   computed: {
     ...mapGetters([
       "availableMatchups",
+      "current_influence_bonus",
       "max_game_id",
       "next_influence_bonus",
       "next_automa_level",
@@ -273,6 +281,12 @@ export default {
 
     all_bonuses() {
       return InfluenceBonuses;
+    },
+    earned_bonus() {
+      return this.current_influence_bonus && this.game_id > this.max_game_id;
+    },
+    prev_bonus() {
+      return InfluenceBonuses[this.current_influence_bonus];
     },
     inf_bonus() {
       return InfluenceBonuses[this.bonus]["short"];
@@ -393,6 +407,10 @@ export default {
 .bonus-text {
   padding-left: 10px;
   display: inline-block;
+}
+
+.earned-bonus {
+  margin-bottom: 10px;
 }
 
 #bonus-modal {
