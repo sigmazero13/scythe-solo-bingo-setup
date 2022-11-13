@@ -34,6 +34,9 @@ Campaign:
   ✔ Better label for "Combat Fought" and "Location" @done(22-11-05 23:54)
   ☐ "Grey out" influence bonus in Campaign View if they were not "unlocked"
   ☐ Look at maybe allowing zooming (and panning) of the map
+  ☐ Add influence to total campaign score
+  ☐ Show breakdown of score on final box
+  ☐ Show "final campaign" score (IE, player score - AI score)
 
 Achievements:
   ✔ 3 Consecutive wins @done(22-11-08 18:43)
