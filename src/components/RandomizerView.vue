@@ -27,7 +27,7 @@ import GeneralStuff from "./GeneralStuff.vue";
 import { BButton } from "bootstrap-vue";
 
 export default {
-  name: "App",
+  name: "RandomizerView",
   components: {
     TriumphTrack,
     WindGambit,

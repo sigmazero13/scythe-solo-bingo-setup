@@ -178,8 +178,9 @@ export default new Vuex.Store({
 
       var last_game = state.log.slice(-1)[0];
       var last_level = parseInt(last_game.a_level);
+      var max_level = state.settings["hardest_diff"] ? 7 : 5;
       if (last_game.p_win) {
-        return last_level >= 7 ? 7 : last_level + 1;
+        return last_level >= max_level ? max_level : last_level + 1;
       } else {
         return last_level <= 1 ? 1 : last_level - 1;
       }

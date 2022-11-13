@@ -354,9 +354,15 @@ export default {
       });
     },
     automa_levels() {
-      return Object.entries(Difficulties).map(([k, v]) => {
-        return { value: k, text: v };
-      });
+      return Object.entries(Difficulties)
+        .filter((diff) => {
+          return (
+            this.$store.state.settings["hardest_diff"] || parseInt(diff[0]) <= 5
+          );
+        })
+        .map(([k, v]) => {
+          return { value: k, text: v };
+        });
     },
     airship_actives() {
       return [{ value: 0, text: "None" }].concat(
