@@ -10,7 +10,6 @@
       class="achievement-option"
       stacked
     >
-      <!-- @change="achievementToggled" -->
       {{ option.text }} ({{ option.points }})
     </b-form-checkbox>
   </div>
@@ -19,13 +18,9 @@
 <script>
 import { Achievements } from "../constants";
 
-// import saveState from "vue-save-state";
-
 export default {
   name: "AchievementView",
-  // mixins: [saveState],
   data() {
-    // return { achieved: [] };
     return {};
   },
   mounted() {
