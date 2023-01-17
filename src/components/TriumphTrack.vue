@@ -77,7 +77,7 @@ export default {
           { text: "SE" },
           { text: "S" },
           { text: "SW" },
-          { text: "N" },
+          { text: "NW" },
         ],
       };
     },
