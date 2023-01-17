@@ -52,7 +52,7 @@
             @update="updateFaction('automa', $event)"
           />
           <br />
-          <b-form-group label="Diff.:" label-cols="3" label-for="a_level">
+          <b-form-group label="Diffic.:" label-cols="3" label-for="a_level">
             <b-form-select
               id="a_level"
               v-model="a_level"
