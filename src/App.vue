@@ -28,7 +28,7 @@
         </b-tab>
         <b-tab>
           <template v-slot:title>
-            <b-icon-gear-wide-connected />
+            <b-icon-clipboard-data />
           </template>
           <GameView ref="game" @savegame="saveGame" @update="updateFromGame" />
         </b-tab>
@@ -43,6 +43,12 @@
             <b-icon-dice6 />
           </template>
           <RandomizerView ref="random" @update="updateFromRandomizer" />
+        </b-tab>
+        <b-tab>
+          <template v-slot:title>
+            <b-icon-gear />
+          </template>
+          <SettingsView ref="settings" />
         </b-tab>
       </b-tabs>
     </b-container>
@@ -63,6 +69,7 @@ import CampaignView from "./components/CampaignView.vue";
 import GameView from "./components/GameView.vue";
 import MapView from "./components/MapView.vue";
 import RandomizerView from "./components/RandomizerView.vue";
+import SettingsView from "./components/SettingsView.vue";
 
 const CAMPAIGN_TAB = 0;
 const GAME_TAB = 2;
@@ -75,6 +82,7 @@ export default {
     GameView,
     MapView,
     RandomizerView,
+    SettingsView,
   },
   data() {
     return {

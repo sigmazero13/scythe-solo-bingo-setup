@@ -20,7 +20,7 @@ export default new Vuex.Store({
   state: {
     log: [],
     achieved: [],
-    settings: { modular: true },
+    settings: { modular: true, hardest_diff: true },
     cur_game: { ...DEFAULT_DATA },
   },
   getters: {
@@ -111,6 +111,9 @@ export default new Vuex.Store({
 
       return cell_scores;
     },
+    influence_score: (state) => {
+      return state.log.reduce((sum, game) => sum + game.tokens, 0);
+    },
     best_player_score_for: (state, getters) => (factions) => {
       let cell = MapData.findByFactions(factions);
       if (cell === null) {
@@ -123,11 +126,20 @@ export default new Vuex.Store({
       );
     },
     best_player_score: (state, getters) => {
-      return bestScore(getters.cell_scores) + getters.achievement_score;
+      return (
+        bestScore(getters.cell_scores) +
+        getters.achievement_score +
+        getters.influence_score
+      );
     },
-    best_bingo_score: (state, getters) => {
+    best_total_score: (state, getters) => {
       var best_score = bestScore(getters.cell_scores, true);
-      return best_score >= 0 ? best_score + getters.achievement_score : -1;
+      return best_score >= 0
+        ? best_score + getters.achievement_score + getters.influence_score
+        : -1;
+    },
+    bingo_score: (state, getters) => {
+      return bestScore(getters.cell_scores, true);
     },
     matchup_will_end_campaign: (state, getters) => (factions) => {
       return matchupWillEnd(getters.cell_scores, factions);
@@ -166,8 +178,9 @@ export default new Vuex.Store({
 
       var last_game = state.log.slice(-1)[0];
       var last_level = parseInt(last_game.a_level);
+      var max_level = state.settings["hardest_diff"] ? 7 : 5;
       if (last_game.p_win) {
-        return last_level >= 7 ? 7 : last_level + 1;
+        return last_level >= max_level ? max_level : last_level + 1;
       } else {
         return last_level <= 1 ? 1 : last_level - 1;
       }
@@ -265,7 +278,7 @@ export default new Vuex.Store({
       if (localStorage.getItem("settings")) {
         state.settings = JSON.parse(localStorage.getItem("settings"));
       } else {
-        state.settings = { modular: true };
+        state.settings = { modular: true, hardest_diff: true };
       }
     },
   },

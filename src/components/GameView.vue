@@ -52,7 +52,7 @@
             @update="updateFaction('automa', $event)"
           />
           <br />
-          <b-form-group label="Diff.:" label-cols="3" label-for="a_level">
+          <b-form-group label="Diffic.:" label-cols="3" label-for="a_level">
             <b-form-select
               id="a_level"
               v-model="a_level"
@@ -354,9 +354,15 @@ export default {
       });
     },
     automa_levels() {
-      return Object.entries(Difficulties).map(([k, v]) => {
-        return { value: k, text: v };
-      });
+      return Object.entries(Difficulties)
+        .filter((diff) => {
+          return (
+            this.$store.state.settings["hardest_diff"] || parseInt(diff[0]) <= 5
+          );
+        })
+        .map(([k, v]) => {
+          return { value: k, text: v };
+        });
     },
     airship_actives() {
       return [{ value: 0, text: "None" }].concat(
