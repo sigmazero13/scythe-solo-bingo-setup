@@ -138,6 +138,9 @@ export default new Vuex.Store({
         ? best_score + getters.achievement_score + getters.influence_score
         : -1;
     },
+    best_partial_bingo_score: (state, getters) => {
+      return bestScore(getters.cell_scores, false);
+    },
     bingo_score: (state, getters) => {
       return bestScore(getters.cell_scores, true);
     },

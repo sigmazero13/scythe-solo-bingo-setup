@@ -39,6 +39,7 @@ Campaign:
   ✔ Show "final campaign" score (IE, player score - AI score) @done(22-11-12 23:28)
   ✔ Add a setting to disable Automaszyna+ and Ultimaszyna difficulties @done(22-11-13 00:10)
   ☐ Add structure bonus icons (instead of just text)
+  ✔ Show score breakdown for "best score" (not just on win) @done(23-03-04 10:26)
 
 Achievements:
   ✔ 3 Consecutive wins @done(22-11-08 18:43)
@@ -95,6 +96,10 @@ Map Drawing:
     ✔ Played games (use Game Id) @done(22-11-05 23:17)
     ✔ "Invalid" game @done(22-11-05 23:17)
     ✔ Campaign-ender game @done(22-11-05 23:17)
+  ☐ Improved scoring
+    ☐ Don't show "blue" cells for finished campaign
+    ☐ Show the cells involved in a win
+    ☐ Show the cells involved in "best score"
   
   
 
