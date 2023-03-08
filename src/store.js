@@ -144,6 +144,9 @@ export default new Vuex.Store({
     bingo_score: (state, getters) => {
       return bestScore(getters.cell_scores, true);
     },
+    campaign_finished: (state, getters) => {
+      return getters.best_total_score >= 0;
+    },
     matchup_will_end_campaign: (state, getters) => (factions) => {
       return matchupWillEnd(getters.cell_scores, factions);
     },

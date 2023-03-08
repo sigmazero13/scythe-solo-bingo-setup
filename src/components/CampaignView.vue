@@ -8,7 +8,7 @@
     </b-button>
     <br />
     <span id="scores" v-if="this.log.length > 0">
-      <b-alert v-if="best_total_score >= 0" :variant="bingo_variant" show>
+      <b-alert v-if="campaign_finished" :variant="bingo_variant" show>
         <b>The campaign is over!</b>
         <br />
         Bingo Score: {{ bingo_score }}
@@ -302,6 +302,7 @@ export default {
       "best_total_score",
       "best_partial_bingo_score",
       "bingo_score",
+      "campaign_finished",
       "influence_score",
     ]),
     log_items() {
