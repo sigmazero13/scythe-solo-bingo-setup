@@ -123,6 +123,7 @@ function foldScore(cell_scores, q, r, dir, length) {
 
 export function scoreForCell(cell_scores, q, r, only_bingo) {
   var best_score = -1;
+  var best_dir = -1;
   for (var dir = 0; dir < 6; dir++) {
     var new_score = foldScore(cell_scores, q, r, dir, 0);
     if (new_score.blocked || (new_score.played < 5 && only_bingo)) {
@@ -130,24 +131,52 @@ export function scoreForCell(cell_scores, q, r, only_bingo) {
     }
     if (new_score.score > best_score) {
       best_score = new_score.score;
+      best_dir = dir;
     }
   }
 
-  return best_score;
+  return { score: best_score, dir: best_dir };
 }
 
-export function bestScore(cell_scores, only_bingo) {
+function bestScoreCellDir(cell_scores, only_bingo) {
   var best_score = -1;
+  var best_cell = null;
+  var best_dir = -1;
 
   for (var factions in cell_scores) {
     var cell = MapData.findByFactions(factions);
-    var score = scoreForCell(cell_scores, cell.q, cell.r, only_bingo);
-    if (score > best_score) {
-      best_score = score;
+    var score_data = scoreForCell(cell_scores, cell.q, cell.r, only_bingo);
+    if (score_data.score > best_score) {
+      best_score = score_data.score;
+      best_cell = cell;
+      best_dir = score_data.dir;
     }
   }
 
-  return best_score;
+  return { score: best_score, cell: best_cell, dir: best_dir };
+}
+
+export function bestCells(cell_scores, only_bingo) {
+  var best_data = bestScoreCellDir(cell_scores, only_bingo);
+  var cells = [];
+
+  var cell = best_data.cell;
+  while (cell != null && cells.length < 5) {
+    console.log(cell);
+    console.log(best_data.dir);
+    if (!(cell.data in cell_scores) || cell_scores[cell.data] < 0) {
+      break;
+    }
+    cells.push([cell.q, cell.r]);
+    var new_cell_qr = axialNeighbor([cell.q, cell.r], best_data.dir);
+    cell = MapData.cell(new_cell_qr[0], new_cell_qr[1]);
+  }
+
+  return cells;
+}
+
+export function bestScore(cell_scores, only_bingo) {
+  return bestScoreCellDir(cell_scores, only_bingo).score;
 }
 
 function winLength(cell_scores, q, r, dir, length) {

@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import {
   availableCells,
+  bestCells,
   bestScore,
   scoreForCell,
   matchupWillEnd,
@@ -121,7 +122,7 @@ export default new Vuex.Store({
       }
 
       return (
-        scoreForCell(getters.cell_scores, cell.q, cell.r) +
+        scoreForCell(getters.cell_scores, cell.q, cell.r).score +
         getters.achievement_score
       );
     },
@@ -131,6 +132,9 @@ export default new Vuex.Store({
         getters.achievement_score +
         getters.influence_score
       );
+    },
+    best_player_cells: (state, getters) => {
+      return bestCells(getters.cell_scores, false);
     },
     best_total_score: (state, getters) => {
       var best_score = bestScore(getters.cell_scores, true);
