@@ -96,10 +96,10 @@ Map Drawing:
     ✔ Played games (use Game Id) @done(22-11-05 23:17)
     ✔ "Invalid" game @done(22-11-05 23:17)
     ✔ Campaign-ender game @done(22-11-05 23:17)
-  ☐ Improved scoring
-    ☐ Don't show "blue" cells for finished campaign
-    ☐ Show the cells involved in a win
-    ☐ Show the cells involved in "best score"
+  ✔ Improved scoring @done(23-03-08 23:44)
+    ✔ Don't show "blue" cells for finished campaign @done(23-03-08 23:44)
+    ✔ Show the cells involved in a win @done(23-03-08 23:44)
+    ✔ Show the cells involved in "best score" @done(23-03-08 23:44)
   
   
 

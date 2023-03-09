@@ -134,7 +134,7 @@ export default new Vuex.Store({
       );
     },
     best_player_cells: (state, getters) => {
-      return bestCells(getters.cell_scores, false);
+      return bestCells(getters.cell_scores, getters.campaign_finished);
     },
     best_total_score: (state, getters) => {
       var best_score = bestScore(getters.cell_scores, true);

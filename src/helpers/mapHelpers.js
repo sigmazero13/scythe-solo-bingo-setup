@@ -162,8 +162,6 @@ export function bestCells(cell_scores, only_bingo) {
 
   var cell = best_data.cell;
   while (cell != null && cells.length < 5) {
-    console.log(cell);
-    console.log(best_data.dir);
     if (!(cell.data in cell_scores) || cell_scores[cell.data] < 0) {
       break;
     }
