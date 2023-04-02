@@ -298,6 +298,9 @@ export default {
         isBlank(this.a_faction) ||
         isBlank(this.p_score) ||
         isBlank(this.a_score) ||
+        this.p_faction === this.a_faction ||
+        (this.location === "factory" &&
+          !(this.p_faction === "v" || this.a_faction === "f")) ||
         (this.airship_active === 0 && this.airship_passive !== 0) ||
         (this.airship_active !== 0 && this.airship_passive === 0)
       );
