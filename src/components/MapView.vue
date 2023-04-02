@@ -20,6 +20,7 @@
                 stroke: '#000000',
                 fill: factionColor(hex.f1),
                 playable: available_hex(hex),
+                type: hexConfig(hex).type,
               }"
             ></v-circle>
             <v-circle
@@ -32,6 +33,7 @@
                 stroke: '#000000',
                 fill: factionColor(hex.f2),
                 playable: available_hex(hex),
+                type: hexConfig(hex).type,
               }"
             ></v-circle>
             <v-text
@@ -45,6 +47,7 @@
                 fontSize: hex.r / 2,
                 fill: '#ffffff',
                 fontStyle: 'bold',
+                type: hexConfig(hex).type,
               }"
             ></v-text>
           </v-group>
@@ -157,6 +160,7 @@ export default {
           this.p_faction = game.p_faction;
           this.a_faction = game.a_faction;
         }
+        this.info_text = "";
       } else {
         this.p_score = null;
         this.a_score = null;
@@ -164,6 +168,11 @@ export default {
         this.title = this.playable ? "Available Matchup" : "Future Matchup";
         if (e.target.attrs["ender"]) {
           this.info_text = "Winning this matchup will end the campaign!";
+        } else if (hex_type === "f") {
+          this.info_text =
+            "You will choose the factions for this matchup. " +
+            "This matchup must involve you as Vesna and/or the Automa as " +
+            "Fenris!";
         } else {
           this.info_text = "";
         }

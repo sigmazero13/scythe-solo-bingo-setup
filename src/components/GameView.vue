@@ -138,6 +138,14 @@
           NOTE: If you win, this will end the campaign!
         </b-alert>
       </div>
+      <div v-if="invalid_game" class="invalid_reasons">
+        <b>The following must be corrected to save:</b>
+        <ul>
+          <li v-for="reason of invalid_game_reasons" :key="reason">
+            {{ reason }}
+          </li>
+        </ul>
+      </div>
       <div>
         <b-button @click="save" :disabled="invalid_game" variant="success">
           SAVE
@@ -291,19 +299,51 @@ export default {
     inf_bonus() {
       return InfluenceBonuses[this.bonus]["short"];
     },
-    invalid_game() {
-      return (
-        isBlank(this.p_faction) ||
-        isBlank(this.p_mat) ||
-        isBlank(this.a_faction) ||
-        isBlank(this.p_score) ||
-        isBlank(this.a_score) ||
-        this.p_faction === this.a_faction ||
-        (this.location === "factory" &&
-          !(this.p_faction === "v" || this.a_faction === "f")) ||
+    invalid_game_reasons() {
+      var reasons = [];
+      if (isBlank(this.p_faction)) {
+        reasons.push("You must select a player faction.");
+      }
+      if (isBlank(this.p_mat)) {
+        reasons.push("You must select a player mat.");
+      }
+      if (isBlank(this.a_faction)) {
+        reasons.push("You must select an automa faction.");
+      }
+      if (!isBlank(this.p_faction) && this.p_faction === this.a_faction) {
+        reasons.push(
+          "The player faction and automa faction must be different."
+        );
+      }
+      if (
+        this.location === "factory" &&
+        !(this.p_faction === "v" || this.a_faction === "f")
+      ) {
+        reasons.push(
+          "If playing on the Factory space, either the player must be Vesna or the automa must be Fenris."
+        );
+      }
+      if (isBlank(this.p_score)) {
+        reasons.push("You must enter a player score.");
+      }
+      if (isBlank(this.a_score)) {
+        reasons.push("You must enter an automa score.");
+      }
+      if (
         (this.airship_active === 0 && this.airship_passive !== 0) ||
         (this.airship_active !== 0 && this.airship_passive === 0)
-      );
+      ) {
+        reasons.push(
+          "When using airships, you must select both an active and passive option."
+        );
+      }
+
+      return reasons;
+    },
+    invalid_game() {
+      console.log(this.invalid_game_reasons);
+      console.log(this.invalid_game_reasons.length);
+      return this.invalid_game_reasons.length > 0;
     },
     invalid_matchup() {
       if (this.is_edit || isBlank(this.p_faction) || isBlank(this.a_faction)) {
@@ -437,5 +477,9 @@ export default {
 .field-offset {
   top: 5px;
   z-index: 10;
+}
+
+.invalid_reasons li {
+  text-align: left;
 }
 </style>

@@ -9,7 +9,7 @@ Campaign:
     ☐ Account for edited game, not "last game", when editing a game
   ✔ Alter next Automa level based on win/loss @done(22-06-13 18:39)
   ✔ Add a flag for "winning" in case of ties? @done(22-07-13 11:51)
-  ☐ Highlight "missing" fields in game view
+  ✔ Highlight "missing" fields in game view @done(23-04-02 13:13)
   ✔ Map Related, not related to drawing @done(22-11-10 23:47)
     ✔ Calculate best player score so far @done(22-07-14 21:18)
     ✔ Let player know if faction choices are valid @done(22-07-18 17:43)
@@ -100,7 +100,7 @@ Map Drawing:
     ✔ Don't show "blue" cells for finished campaign @done(23-03-08 23:44)
     ✔ Show the cells involved in a win @done(23-03-08 23:44)
     ✔ Show the cells involved in "best score" @done(23-03-08 23:44)
-  ☐ Show factions on factory space (after playing)
+  ☐ Update factions on faction space on save
   
   
 
