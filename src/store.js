@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import {
   availableCells,
+  bestCells,
   bestScore,
   scoreForCell,
   matchupWillEnd,
@@ -121,7 +122,7 @@ export default new Vuex.Store({
       }
 
       return (
-        scoreForCell(getters.cell_scores, cell.q, cell.r) +
+        scoreForCell(getters.cell_scores, cell.q, cell.r).score +
         getters.achievement_score
       );
     },
@@ -132,14 +133,23 @@ export default new Vuex.Store({
         getters.influence_score
       );
     },
+    best_player_cells: (state, getters) => {
+      return bestCells(getters.cell_scores, getters.campaign_finished);
+    },
     best_total_score: (state, getters) => {
       var best_score = bestScore(getters.cell_scores, true);
       return best_score >= 0
         ? best_score + getters.achievement_score + getters.influence_score
         : -1;
     },
+    best_partial_bingo_score: (state, getters) => {
+      return bestScore(getters.cell_scores, false);
+    },
     bingo_score: (state, getters) => {
       return bestScore(getters.cell_scores, true);
+    },
+    campaign_finished: (state, getters) => {
+      return getters.best_total_score >= 0;
     },
     matchup_will_end_campaign: (state, getters) => (factions) => {
       return matchupWillEnd(getters.cell_scores, factions);
@@ -173,7 +183,7 @@ export default new Vuex.Store({
     },
     next_automa_level: (state) => {
       if (state.log.length === 0) {
-        return 2;
+        return 3;
       }
 
       var last_game = state.log.slice(-1)[0];
@@ -218,15 +228,14 @@ export default new Vuex.Store({
     },
     saveGame(state) {
       const game_data = state.cur_game;
+      for (let key of ["a_score", "p_score", "a_level"]) {
+        game_data[key] = parseInt(game_data[key]);
+      }
       for (const [index, game] of state.log.entries()) {
         if (game.game_id === game_data.game_id) {
           // Update an existing game's data
           for (let key in game_data) {
-            var value = game_data[key];
-            if (key.includes("_score") || key.includes("a_level")) {
-              value = parseInt(value);
-            }
-            state.log[index][key] = value;
+            state.log[index][key] = game_data[key];
           }
 
           localStorage.setItem("log", JSON.stringify(state.log));
@@ -268,6 +277,11 @@ export default new Vuex.Store({
     },
     init(state) {
       state.log = JSON.parse(localStorage.getItem("log") || "[]");
+      for (let game_data of state.log) {
+        for (let key of ["a_score", "a_level", "p_score"]) {
+          game_data[key] = parseInt(game_data[key]);
+        }
+      }
       state.achieved = JSON.parse(localStorage.getItem("achieved") || "[]");
       if (localStorage.getItem("cur_game")) {
         state.cur_game = JSON.parse(localStorage.getItem("cur_game"));

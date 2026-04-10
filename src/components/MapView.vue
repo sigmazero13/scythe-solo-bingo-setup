@@ -20,6 +20,7 @@
                 stroke: '#000000',
                 fill: factionColor(hex.f1),
                 playable: available_hex(hex),
+                type: hexConfig(hex).type,
               }"
             ></v-circle>
             <v-circle
@@ -32,6 +33,7 @@
                 stroke: '#000000',
                 fill: factionColor(hex.f2),
                 playable: available_hex(hex),
+                type: hexConfig(hex).type,
               }"
             ></v-circle>
             <v-text
@@ -45,6 +47,7 @@
                 fontSize: hex.r / 2,
                 fill: '#ffffff',
                 fontStyle: 'bold',
+                type: hexConfig(hex).type,
               }"
             ></v-text>
           </v-group>
@@ -157,6 +160,7 @@ export default {
           this.p_faction = game.p_faction;
           this.a_faction = game.a_faction;
         }
+        this.info_text = "";
       } else {
         this.p_score = null;
         this.a_score = null;
@@ -164,6 +168,11 @@ export default {
         this.title = this.playable ? "Available Matchup" : "Future Matchup";
         if (e.target.attrs["ender"]) {
           this.info_text = "Winning this matchup will end the campaign!";
+        } else if (hex_type === "f") {
+          this.info_text =
+            "You will choose the factions for this matchup. " +
+            "This matchup must involve you as Vesna and/or the Automa as " +
+            "Fenris!";
         } else {
           this.info_text = "";
         }
@@ -239,7 +248,13 @@ export default {
 
       var game = this.game_by_matchup(hex.data);
       if (game) {
-        config["fill"] = game.p_win ? "#00aa00" : "#aa0000";
+        if (this.hexInBest(hex)) {
+          config["fill"] = "#00ff00";
+        } else {
+          config["fill"] = game.p_win ? "#00aa00" : "#aa0000";
+        }
+      } else if (this.campaign_finished) {
+        config["fill"] = "#555555";
       } else if (this.available_hex(hex)) {
         if (this.matchup_will_end_campaign(hex.data)) {
           config["fill"] = "#00aaee";
@@ -251,6 +266,16 @@ export default {
       }
 
       return config;
+    },
+    hexInBest(hex) {
+      var best = this.best_player_cells;
+      for (var cell of best) {
+        if (hex.qr[0] == cell[0] && hex.qr[1] == cell[1]) {
+          return true;
+        }
+      }
+
+      return false;
     },
     hexPlayed(hex) {
       return this.game_by_matchup(hex.data) !== null;
@@ -265,7 +290,13 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["game_by_matchup", "matchup_will_end_campaign", "played"]),
+    ...mapGetters([
+      "campaign_finished",
+      "game_by_matchup",
+      "matchup_will_end_campaign",
+      "best_player_cells",
+      "played",
+    ]),
     playableCells() {
       return this.splitCellsByColumn(availableCells(this.played));
     },
@@ -326,6 +357,7 @@ export default {
         return {
           id: cell.q + "-" + cell.r + "-" + cell.data,
           data: cell.data,
+          qr: [cell.q, cell.r],
           x: r * ((3.0 / 2) * (cell.q + 5)) + r,
           y: r * ((Math.sqrt(3) / 2) * cell.q + Math.sqrt(3) * (cell.r + 5)),
           r: r,
@@ -354,7 +386,7 @@ export default {
 div.map-canvas {
   /* width: 95%; */
   margin: auto;
-  background-color: #dddddd;
+  background-color: #ffffff;
 }
 
 div.choose-modal {

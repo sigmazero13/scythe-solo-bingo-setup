@@ -8,7 +8,7 @@
     </b-button>
     <br />
     <span id="scores" v-if="this.log.length > 0">
-      <b-alert v-if="best_total_score >= 0" :variant="bingo_variant" show>
+      <b-alert v-if="campaign_finished" :variant="bingo_variant" show>
         <b>The campaign is over!</b>
         <br />
         Bingo Score: {{ bingo_score }}
@@ -24,7 +24,10 @@
         <b>Final Campaign Score: {{ final_score }}</b>
       </b-alert>
       <span v-else>
-        <b>Best Player Score: {{ best_player_score }}</b>
+        <b>
+          <b-icon-info-square @click="showBreakdown" />
+          Best Player Score: {{ best_player_score }}
+        </b>
         <br />
         <b>Current Automa Score: {{ automa_score }}</b>
       </span>
@@ -52,7 +55,7 @@
         <b-icon-chevron-down @click="row.toggleDetails" v-else />
       </template>
 
-      <template #cell(player)="row" class="tablecell">
+      <template #cell(player)="row">
         <FactionIcon :icon="row.item.p_faction" :scale="0.25" />
         {{ row.item.p_score }}
       </template>
@@ -130,6 +133,18 @@
         </b-card>
       </template>
     </b-table>
+
+    <b-modal
+      id="score-breakdown-modal"
+      ref="score-breakdown-modal"
+      title="Score Breakdown"
+    >
+      Best Bingo Score: {{ best_partial_bingo_score }}
+      <br />
+      Achievement Score: {{ achievement_score }}
+      <br />
+      Influence Score: {{ influence_score }}
+    </b-modal>
 
     <b-modal
       id="confirm-delete-modal"
@@ -223,6 +238,9 @@ export default {
       this.game_id_to_delete = game_id;
       this.$refs["confirm-delete-modal"].show();
     },
+    showBreakdown() {
+      this.$refs["score-breakdown-modal"].show();
+    },
     deleteGame() {
       this.$store.commit("deleteGame", this.game_id_to_delete);
     },
@@ -282,7 +300,9 @@ export default {
       "achievement_score",
       "best_player_score",
       "best_total_score",
+      "best_partial_bingo_score",
       "bingo_score",
+      "campaign_finished",
       "influence_score",
     ]),
     log_items() {
